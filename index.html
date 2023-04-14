@@ -10,18 +10,17 @@
     <div id="content">
         <form class="inputToDo">
             <label>Name</label>
-            <input type="text">
+            <input type="text" id="nameInput">
             <label>Due Date</label>     
-            <input type="datetime">
+            <input type="datetime-local" id="dateInput">
             <label>Type</label>  
-            <select>
+            <select id="typeInput">
                 <option>Personal</option>
                 <option>Work</option>
                 <option>Social</option>
             </select>   
-            <button>Submit</button>
         </form>
+        <button class="submitBtn">Submit</button>
     </div>
-    <script src="main.js"></script>
 </body>
 </html>
