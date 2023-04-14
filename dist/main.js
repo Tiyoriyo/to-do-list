@@ -1,1 +1,1 @@
-console.log("bombo");
+(()=>{"use strict";console.log({name:"Buy a book",priority:"urgent",dueDate:"01-10-1999",type:"personal"})})();
