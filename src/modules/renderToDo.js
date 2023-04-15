@@ -25,22 +25,12 @@ export default function createToDo() {
 }
 
 function renderBottomItems(toDo, node) {
-  console.log(toDo);
-
   const properties = [toDo.dueDate, toDo.type];
   for (let i = 0; i < properties.length; i += 1) {
     const item = document.createElement('p');
     item.innerHTML = properties[i];
     node.appendChild(item);
   }
-
-//   const properties = toDo.getProperties('type', 'dueDate');
-//   console.log(properties);
-//   for (let j = 0; j < properties.length; j += 1) {
-//     const item = document.createElement('p');
-//     item.innerHTML = properties[j];
-//     node.appendChild(item);
-//   }
 }
 
 export function renderToDo() {
