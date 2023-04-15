@@ -54,9 +54,12 @@ export function renderToDo() {
     containerMiddle.classList.add('containerMiddle');
     containerRight.classList.add('containerRight');
 
-    const checkBox = document.createElement('input');
-    checkBox.classList.add('checkbox');
-    checkBox.type = 'radio';
+    containerLeft.innerHTML = `<div class="pretty p-default p-curve">
+    <input type="checkbox" />
+    <div class="state">
+        <label></label>
+    </div>
+</div>`;
 
     const name = document.createElement('p');
     const bottom = document.createElement('div');
@@ -65,7 +68,6 @@ export function renderToDo() {
     name.innerHTML = toDoList[i].name;
     renderBottomItems(toDoList[i], bottom, i);
 
-    containerLeft.append(checkBox);
     containerMiddle.append(name, bottom);
     container.append(containerLeft, containerMiddle, containerRight);
     content.append(container);
