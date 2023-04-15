@@ -51,7 +51,6 @@ export function renderToDo() {
 
     containerLeft.append(checkBox);
     containerMiddle.append(name, bottom);
-
     container.append(containerLeft, containerMiddle, containerRight);
     content.append(container);
   }
