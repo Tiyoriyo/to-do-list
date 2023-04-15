@@ -1,5 +1,6 @@
 import ToDo from './toDoObject';
 import starNoFill from '../images/starNoFill.png';
+import starFill from '../images/starFill.png';
 
 const toDoList = [];
 
@@ -40,6 +41,16 @@ function renderBottomItems(toDo, node) {
   }
 }
 
+function changeImage(e) {
+  if (e.target.id == 'NoFill') {
+    e.target.id = 'Fill';
+    e.target.src = starFill;
+  } else {
+    e.target.id = 'NoFill';
+    e.target.src = starNoFill;
+  }
+}
+
 export function renderToDo() {
   const content = document.createElement('div');
   content.classList.add('toDoContainer');
@@ -66,6 +77,11 @@ export function renderToDo() {
     const starNoFillImg = new Image();
     starNoFillImg.src = starNoFill;
     starNoFillImg.classList.add('star');
+    starNoFillImg.id = 'NoFill';
+
+    starNoFillImg.addEventListener('click', (e) => {
+      changeImage(e);
+    });
 
     containerRight.append(starNoFillImg);
 
