@@ -33,23 +33,24 @@ export function renderToDo() {
     container.classList.add('itemContainer');
 
     const containerLeft = document.createElement('div');
-    containerLeft.classList.add('containerLeft');
-    const checkBox = document.createElement('input');
-    checkBox.type = 'radio';
-    checkBox.classList.add('checkbox');
-    containerLeft.append(checkBox);
-
     const containerMiddle = document.createElement('div');
+    const containerRight = document.createElement('div');
+    containerLeft.classList.add('containerLeft');
     containerMiddle.classList.add('containerMiddle');
+    containerRight.classList.add('containerRight');
+
+    const checkBox = document.createElement('input');
+    checkBox.classList.add('checkbox');
+    checkBox.type = 'radio';
+
     const name = document.createElement('p');
-    name.classList.add('itemName');
     const bottom = document.createElement('div');
+    name.classList.add('itemName');
     bottom.classList.add('middleBottom');
     name.innerHTML = toDoList[i].name;
-    containerMiddle.append(name, bottom);
 
-    const containerRight = document.createElement('div');
-    containerRight.classList.add('containerRight');
+    containerLeft.append(checkBox);
+    containerMiddle.append(name, bottom);
 
     container.append(containerLeft, containerMiddle, containerRight);
     content.append(container);
