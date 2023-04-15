@@ -1,6 +1,6 @@
 import ToDo from './toDoObject';
 import starNoFill from '../images/starNoFill.png';
-import starFill from '../images/starFill.png';
+import starFill from '../images/star.png';
 
 const toDoList = [];
 
@@ -42,7 +42,7 @@ function renderBottomItems(toDo, node) {
 }
 
 function changeImage(e) {
-  if (e.target.id == 'NoFill') {
+  if (e.target.id === 'NoFill') {
     e.target.id = 'Fill';
     e.target.src = starFill;
   } else {
