@@ -24,6 +24,16 @@ export default function createToDo() {
   toDoList.push(newToDo);
 }
 
+function renderBottomItems(toDo, node, i) {
+  const properties = toDo.getProperties();
+  console.log(properties);
+  for (let j = 0; j < properties.length; j += 1) {
+    const item = document.createElement('p');
+    item.innerHTML = toDoList[i][j];
+    node.appendChild(item);
+  }
+}
+
 export function renderToDo() {
   const content = document.createElement('div');
   content.classList.add('toDoContainer');
@@ -48,6 +58,7 @@ export function renderToDo() {
     name.classList.add('itemName');
     bottom.classList.add('middleBottom');
     name.innerHTML = toDoList[i].name;
+    renderBottomItems(toDoList[i], bottom, i);
 
     containerLeft.append(checkBox);
     containerMiddle.append(name, bottom);
