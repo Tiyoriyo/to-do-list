@@ -1,8 +1,9 @@
-export default function ToDo(name, priority, dueDate, type) {
+export default function ToDo(name, priority, date, time, type) {
   return {
     name,
     priority,
-    dueDate,
+    date,
+    time,
     type,
   };
 }

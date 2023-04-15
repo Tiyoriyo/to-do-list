@@ -5,31 +5,37 @@ const toDoList = [];
 const getInputs = () => {
   const name = document.querySelector('#nameInput').value;
   const date = document.querySelector('#dateInput').value;
+  const time = document.querySelector('#timeInput').value;
   const type = document.querySelector('#typeInput').value;
 
-  return { name, date, type };
+  return {
+    name, date, time, type,
+  };
 };
 
 export default function createToDo() {
   const inputs = getInputs();
   const { name } = inputs;
   const { date } = inputs;
+  const { time } = inputs;
   const { type } = inputs;
 
   if (!name) {
     return;
   }
 
-  const newToDo = ToDo(name, false, date, type);
+  const newToDo = ToDo(name, false, date, time, type);
   toDoList.push(newToDo);
 }
 
 function renderBottomItems(toDo, node) {
-  const properties = [toDo.dueDate, toDo.type];
+  const properties = [toDo.date, toDo.time, toDo.type];
   for (let i = 0; i < properties.length; i += 1) {
-    const item = document.createElement('p');
-    item.innerHTML = properties[i];
-    node.appendChild(item);
+    if (properties[i]) {
+      const item = document.createElement('p');
+      item.innerHTML = properties[i];
+      node.appendChild(item);
+    }
   }
 }
 

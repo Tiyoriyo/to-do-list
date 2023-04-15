@@ -11,8 +11,10 @@
 }
 
 .toDoContainer {
+    padding: 20px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 .itemContainer {
@@ -28,4 +30,5 @@
 
 .middleBottom {
     display: flex;
+    gap: 5px;
 }
