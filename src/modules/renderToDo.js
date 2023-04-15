@@ -66,13 +66,34 @@ export function renderToDo() {
     containerMiddle.classList.add('containerMiddle');
     containerRight.classList.add('containerRight');
 
-    containerLeft.innerHTML = `
-    <div class="pretty p-default p-curve p-pulse">
-        <input type="checkbox" />
-        <div class="state">
-            <label></label>
-        </div>
-    </div>`;
+    // containerLeft.innerHTML = `
+    // <div class="pretty p-default p-curve p-pulse">
+    //     <input type="checkbox" class="checkbox" />
+    //     <div class="state">
+    //         <label></label>
+    //     </div>
+    // </div>`;
+
+    const checkContainer = document.createElement('div');
+    checkContainer.classList = 'pretty p-default p-curve p-pulse';
+    const checkInput = document.createElement('input');
+    checkInput.type = 'checkbox';
+    checkInput.classList.add('checkbox');
+    const labelDiv = document.createElement('div');
+    labelDiv.classList.add('state');
+    const labelItem = document.createElement('label');
+    labelDiv.append(labelItem);
+    checkContainer.append(checkInput, labelDiv);
+
+    checkInput.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        name.style.textDecoration = 'line-through';
+      } else {
+        name.style.textDecoration = '';
+      }
+    });
+
+    containerLeft.append(checkContainer);
 
     const starNoFillImg = new Image();
     starNoFillImg.src = starNoFill;
