@@ -1,4 +1,5 @@
 import ToDo from './toDoObject';
+import starNoFill from '../images/starNoFill.png';
 
 const toDoList = [];
 
@@ -54,12 +55,19 @@ export function renderToDo() {
     containerMiddle.classList.add('containerMiddle');
     containerRight.classList.add('containerRight');
 
-    containerLeft.innerHTML = `<div class="pretty p-default p-curve">
-    <input type="checkbox" />
-    <div class="state">
-        <label></label>
-    </div>
-</div>`;
+    containerLeft.innerHTML = `
+    <div class="pretty p-default p-curve p-pulse">
+        <input type="checkbox" />
+        <div class="state">
+            <label></label>
+        </div>
+    </div>`;
+
+    const starNoFillImg = new Image();
+    starNoFillImg.src = starNoFill;
+    starNoFillImg.classList.add('star');
+
+    containerRight.append(starNoFillImg);
 
     const name = document.createElement('p');
     const bottom = document.createElement('div');
