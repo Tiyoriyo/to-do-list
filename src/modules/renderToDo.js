@@ -24,12 +24,12 @@ export default function createToDo() {
   toDoList.push(newToDo);
 }
 
-function renderBottomItems(toDo, node, i) {
-  const properties = toDo.getProperties();
+function renderBottomItems(toDo, node) {
+  const properties = toDo.getProperties('type', 'dueDate');
   console.log(properties);
   for (let j = 0; j < properties.length; j += 1) {
     const item = document.createElement('p');
-    item.innerHTML = toDoList[i][j];
+    item.innerHTML = properties[j];
     node.appendChild(item);
   }
 }

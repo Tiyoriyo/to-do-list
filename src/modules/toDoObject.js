@@ -1,8 +1,26 @@
 export default function ToDo(name, priority, dueDate, type) {
-  const getProperty = (property) => `${property}`;
-  const getProperties = () => {
+  const getProperties = (...args) => {
     const Arr = [];
-    for (let i = 0; i < arguments.length; i += 1) { Arr.push(arguments[i]); }
+    console.log(...args);
+    // Loop through all Arguments Except name
+    for (let i = 0; i < args.length; i += 1) {
+      switch (args[i]) {
+        case 'name':
+          Arr.push(name);
+          break;
+        case 'priority':
+          Arr.push(priority);
+          break;
+        case 'dueDate':
+          Arr.push(dueDate);
+          break;
+        case 'type':
+          Arr.push(type);
+          break;
+        default:
+          break;
+      }
+    }
     return Arr;
   };
 
@@ -11,7 +29,6 @@ export default function ToDo(name, priority, dueDate, type) {
     priority,
     dueDate,
     type,
-    getProperty,
     getProperties,
   };
 }
