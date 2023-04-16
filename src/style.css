@@ -68,8 +68,16 @@
     margin-left: auto;
     margin-right: 10px;
     height: 100%;
+    gap: 5px;
+}
+
+.cancelButton {
+    font-size: 10px;
+    color: rgb(186, 185, 185);
+    cursor: pointer;
 }
 
 .star {
     width: 25px;
+    cursor: pointer;
 }

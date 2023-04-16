@@ -66,14 +66,6 @@ export function renderToDo() {
     containerMiddle.classList.add('containerMiddle');
     containerRight.classList.add('containerRight');
 
-    // containerLeft.innerHTML = `
-    // <div class="pretty p-default p-curve p-pulse">
-    //     <input type="checkbox" class="checkbox" />
-    //     <div class="state">
-    //         <label></label>
-    //     </div>
-    // </div>`;
-
     const checkContainer = document.createElement('div');
     checkContainer.classList = 'pretty p-default p-curve p-pulse';
     const checkInput = document.createElement('input');
@@ -84,14 +76,6 @@ export function renderToDo() {
     const labelItem = document.createElement('label');
     labelDiv.append(labelItem);
     checkContainer.append(checkInput, labelDiv);
-
-    checkInput.addEventListener('change', (e) => {
-      if (e.target.checked) {
-        name.style.textDecoration = 'line-through';
-      } else {
-        name.style.textDecoration = '';
-      }
-    });
 
     containerLeft.append(checkContainer);
 
@@ -104,7 +88,17 @@ export function renderToDo() {
       changeImage(e);
     });
 
-    containerRight.append(starNoFillImg);
+    const cancel = document.createElement('p');
+    cancel.classList.add('cancelButton');
+    cancel.innerHTML = '&#10006;';
+
+    cancel.addEventListener('click', (e) => {
+      const toDoListDom = document.querySelector('.toDoContainer');
+      toDoListDom.removeChild(e.target.parentNode.parentNode);
+      toDoList.splice(i, 1);
+    });
+
+    containerRight.append(starNoFillImg, cancel);
 
     const name = document.createElement('p');
     const bottom = document.createElement('div');
@@ -112,6 +106,14 @@ export function renderToDo() {
     bottom.classList.add('middleBottom');
     name.innerHTML = toDoList[i].name;
     renderBottomItems(toDoList[i], bottom, i);
+
+    checkInput.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        name.style.textDecoration = 'line-through';
+      } else {
+        name.style.textDecoration = '';
+      }
+    });
 
     containerMiddle.append(name, bottom);
     container.append(containerLeft, containerMiddle, containerRight);
