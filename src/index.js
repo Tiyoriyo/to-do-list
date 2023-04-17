@@ -8,7 +8,6 @@ function addNewToDo() {
   content.innerHTML = '';
   content.appendChild(renderToDo());
   addEventListeners();
-  document.querySelector('#nameInput').focus();
 }
 
 const button = document.querySelector('button');
@@ -18,5 +17,6 @@ const inputName = document.querySelector('#nameInput');
 inputName.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     addNewToDo();
+    document.querySelector('#nameInput').focus();
   }
 });
