@@ -2,7 +2,7 @@ import ToDo from './toDoObject';
 import starNoFill from '../images/starNoFill.png';
 import starFill from '../images/star.png';
 
-const toDoList = []; // List of active To Do items
+export const toDoList = []; // List of active To Do items
 
 const getInputs = () => { // Retrieves inputs for To Do
   const name = document.querySelector('#nameInput').value;
@@ -158,7 +158,7 @@ export function renderToDo() { // Rendering function to put To Dos on the screen
 export const addEventListeners = () => {
   function changeImage(e) { // Changes priority star image
     const i = nodeMethods.getItemContainerIndex(e.target);
-
+    console.log(i);
     switch (e.target.id) {
       case 'noFill':
         e.target.id = 'fill';
@@ -166,7 +166,7 @@ export const addEventListeners = () => {
         toDoList[i].priority = true;
         break;
       default:
-        e.target.id = 'fill';
+        e.target.id = 'noFill';
         e.target.src = starNoFill;
         toDoList[i].priority = false;
         break;
