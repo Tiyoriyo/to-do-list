@@ -6,12 +6,13 @@ export const toDoList = []; // List of active To Do items
 
 const getInputs = () => { // Retrieves inputs for To Do
   const name = document.querySelector('#nameInput').value;
-  const date = document.querySelector('#dateInput').value;
-  const time = document.querySelector('#timeInput').value;
-  const type = document.querySelector('#typeInput').value;
+  //   const date = document.querySelector('#dateInput').value;
+  //   const time = document.querySelector('#timeInput').value;
+  //   const type = document.querySelector('#typeInput').value;
 
   return {
-    name, date, time, type,
+    name,
+    // date, time, type,
   };
 };
 

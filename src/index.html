@@ -8,24 +8,36 @@
     <title>To Do List</title>
 </head>
 <body onload="document.querySelector('#nameInput').focus();">
-    <div class="inputToDo">
-        
-            <label>Name</label>
-            <input type="text" id="nameInput" name="nameInput">
-            <label>Due Date</label>     
-            <input type="date" id="dateInput">
-            <label>Time</label>
-            <input type="time" id="timeInput">
-            <label>Type</label>  
-            <select id="typeInput">
-                <option>Personal</option>
-                <option>Work</option>
-                <option>Social</option>
-            </select>   
-       
-        <button class="submitBtn">Submit</button>
-    </div>
-    <div id="content">
+    <div class="mainContainer">
+        <div class="sidebar">
+            <div class="headerDiv">
+                <h1 class="logo">To Do List</h2>
+            </div>
+            <div class="categoriesDiv">
+                <h2 class="listHeader">> Categories</h2>
+                <ul class="list">
+                    <li class="listItem">- All</li>
+                    <li class="listItem">- Personal</li>
+                    <li class="listItem">- Work</li>
+                    <li class="listItem">-Social</li>
+                </ul>
+            </div>
+            <div class="dueDiv">
+                <h2 class="listHeader">> Due</h2>
+                <ul class="list">
+                    <li class="listItem">- Today</li>
+                    <li class="listItem">- Tomorrow</li>
+                    <li class="listItem">- Later</li>
+                </ul>
+            </div>
+        </div>
+        <div class="mainContent">
+            <div id="content"></div>
+            <div class="inputTo">
+                <button class="submitBtn"></button>
+                <input type="text" id="nameInput" name="nameInput">
+            </div>"
+        </div>
     </div>
 </body>
 </html>
