@@ -84,6 +84,12 @@ const nodeMethods = (() => {
   return { removeNodeItem, getItemContainerIndex };
 })();
 
+function removeToDo(e) {
+  toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
+  nodeMethods.removeNodeItem(e);
+  console.log(toDoList);
+}
+
 export function renderToDo() {
   const content = document.createElement('div');
   content.classList.add('toDoContainer');
@@ -125,10 +131,7 @@ export function renderToDo() {
     cancel.classList.add('cancelButton');
     cancel.innerHTML = '&#10006;';
 
-    cancel.addEventListener('click', (e) => {
-      toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
-      nodeMethods.removeNodeItem(e);
-    });
+    cancel.addEventListener('click', removeToDo);
 
     containerRight.append(starNoFillImg, cancel);
 
