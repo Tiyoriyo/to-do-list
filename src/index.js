@@ -31,6 +31,7 @@ const inputName = document.querySelector('#nameInput');
 inputName.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     addNewToDo();
-    document.querySelector('#nameInput').focus();
+    inputName.focus();
+    inputName.value = '';
   }
 });
