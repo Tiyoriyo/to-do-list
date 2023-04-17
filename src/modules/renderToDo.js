@@ -66,9 +66,10 @@ const nodeMethods = (() => {
 
   function getItemContainer(node) { return node.parentNode.parentNode; }
 
-  function getItemContainerIndex(itemContainer) {
+  function getItemContainerIndex(input) {
     const node = document.querySelector('.toDoContainer');
     const nodeChildren = getNodeChildren(node);
+    const itemContainer = getItemContainer(input);
 
     return [...nodeChildren].indexOf(itemContainer);
   }
@@ -76,8 +77,7 @@ const nodeMethods = (() => {
   function removeNodeItem(e) {
     const node = document.querySelector('.toDoContainer');
     const nodeChildren = getNodeChildren(node);
-    const subjectItemContainer = getItemContainer(e.target);
-    const thisNodeIndex = getItemContainerIndex(subjectItemContainer);
+    const thisNodeIndex = getItemContainerIndex(e.target);
     node.removeChild(nodeChildren[thisNodeIndex]);
   }
 
@@ -126,8 +126,8 @@ export function renderToDo() {
     cancel.innerHTML = '&#10006;';
 
     cancel.addEventListener('click', (e) => {
+      toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
       nodeMethods.removeNodeItem(e);
-      toDoList.splice(nodeMethods.getItemContainerIndex(), 1);
     });
 
     containerRight.append(starNoFillImg, cancel);
