@@ -82,7 +82,7 @@ const removeToDo = (e) => { // Barrel function for removing to Do from list & sc
 };
 
 export function renderToDo() { // Rendering function to put To Dos on the screen
-  function renderCheckContainer() {
+  function renderLeftContainerItem(containerLeft) {
     const checkContainer = document.createElement('div');
     checkContainer.classList = 'pretty p-default p-curve p-pulse';
 
@@ -95,28 +95,22 @@ export function renderToDo() { // Rendering function to put To Dos on the screen
 
     labelDiv.append(labelItem);
     checkContainer.append(checkInput, labelDiv);
-
-    return checkContainer;
+    containerLeft.append(checkContainer);
   }
 
-  const content = document.createElement('div');
-  content.classList.add('toDoContainer');
+  function renderMiddleContainerItems(containerMiddle, i) {
+    const name = document.createElement('p');
+    const bottom = document.createElement('div');
 
-  for (let i = 0; i < toDoList.length; i += 1) {
-    const container = document.createElement('div');
-    container.classList.add('itemContainer');
+    name.classList.add('itemName');
+    bottom.classList.add('middleBottom');
+    name.innerHTML = toDoList[i].name;
 
-    const containerLeft = document.createElement('div');
-    const containerMiddle = document.createElement('div');
-    const containerRight = document.createElement('div');
-    containerLeft.classList.add('containerLeft');
-    containerMiddle.classList.add('containerMiddle');
-    containerRight.classList.add('containerRight');
+    renderBottomItems(toDoList[i], bottom, i);
+    containerMiddle.append(name, bottom);
+  }
 
-    const checkContainer = renderCheckContainer();
-
-    containerLeft.append(checkContainer);
-
+  function renderRightContainerItems(containerRight) {
     const starNoFillImg = new Image();
     starNoFillImg.src = starNoFill;
     starNoFillImg.classList.add('star');
@@ -127,16 +121,30 @@ export function renderToDo() { // Rendering function to put To Dos on the screen
     cancel.innerHTML = '&#10006;';
 
     containerRight.append(starNoFillImg, cancel);
+  }
 
-    const name = document.createElement('p');
-    const bottom = document.createElement('div');
-    name.classList.add('itemName');
-    bottom.classList.add('middleBottom');
-    name.innerHTML = toDoList[i].name;
-    renderBottomItems(toDoList[i], bottom, i);
-
-    containerMiddle.append(name, bottom);
+  function renderContainerItems(container, i) {
+    const containerLeft = document.createElement('div');
+    const containerMiddle = document.createElement('div');
+    const containerRight = document.createElement('div');
+    containerLeft.classList.add('containerLeft');
+    containerMiddle.classList.add('containerMiddle');
+    containerRight.classList.add('containerRight');
     container.append(containerLeft, containerMiddle, containerRight);
+
+    renderLeftContainerItem(containerLeft);
+    renderMiddleContainerItems(containerMiddle, i);
+    renderRightContainerItems(containerRight);
+  }
+
+  const content = document.createElement('div');
+  content.classList.add('toDoContainer');
+
+  for (let i = 0; i < toDoList.length; i += 1) {
+    const container = document.createElement('div');
+    container.classList.add('itemContainer');
+
+    renderContainerItems(container, i);
     content.append(container);
   }
 
