@@ -158,7 +158,6 @@ export function renderToDo() { // Rendering function to put To Dos on the screen
 export const addEventListeners = () => {
   function changeImage(e) { // Changes priority star image
     const i = nodeMethods.getItemContainerIndex(e.target);
-    console.log(i);
     switch (e.target.id) {
       case 'noFill':
         e.target.id = 'fill';
