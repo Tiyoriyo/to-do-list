@@ -30,7 +30,7 @@ export default function createToDo() {
   toDoList.push(newToDo);
 }
 
-function renderBottomItems(toDo, node) {
+const renderBottomItems = (toDo, node) => {
   const properties = [toDo.date, toDo.time, toDo.type];
   for (let i = 0; i < properties.length; i += 1) {
     if (properties[i]) {
@@ -39,25 +39,20 @@ function renderBottomItems(toDo, node) {
       node.appendChild(item);
     }
   }
-}
+};
 
-function changeImage(e) {
-  if (e.target.id === 'NoFill') {
-    e.target.id = 'Fill';
-    e.target.src = starFill;
-  } else {
-    e.target.id = 'NoFill';
-    e.target.src = starNoFill;
+const changeImage = (e) => {
+  switch (e.target.id) {
+    case 'NoFill':
+      e.target.id = 'Fill';
+      e.target.src = starFill;
+      break;
+    default:
+      e.target.id = 'NoFill';
+      e.target.src = starNoFill;
+      break;
   }
-}
-
-// function removeNodeItem(e) {
-//   const node = document.querySelector('.toDoContainer');
-//   const nodeList = node.childNodes;
-//   const thisNode = getItemContainer(e.target);
-//   const thisNodeIndex = [...nodeList].indexOf(thisNode);
-//   node.removeChild(nodeList[thisNodeIndex]);
-// }
+};
 
 const nodeMethods = (() => {
   function getNodeChildren(node) {
@@ -84,10 +79,10 @@ const nodeMethods = (() => {
   return { removeNodeItem, getItemContainerIndex };
 })();
 
-function removeToDo(e) {
+const removeToDo = (e) => {
   toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
   nodeMethods.removeNodeItem(e);
-}
+};
 
 export function renderToDo() {
   const content = document.createElement('div');
