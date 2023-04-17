@@ -87,7 +87,6 @@ const nodeMethods = (() => {
 function removeToDo(e) {
   toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
   nodeMethods.removeNodeItem(e);
-  console.log(toDoList);
 }
 
 export function renderToDo() {
