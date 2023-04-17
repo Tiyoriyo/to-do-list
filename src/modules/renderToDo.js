@@ -51,6 +51,39 @@ function changeImage(e) {
   }
 }
 
+// function removeNodeItem(e) {
+//   const node = document.querySelector('.toDoContainer');
+//   const nodeList = node.childNodes;
+//   const thisNode = getItemContainer(e.target);
+//   const thisNodeIndex = [...nodeList].indexOf(thisNode);
+//   node.removeChild(nodeList[thisNodeIndex]);
+// }
+
+const nodeMethods = (() => {
+  function getNodeChildren(node) {
+    return node.childNodes;
+  }
+
+  function getItemContainer(node) { return node.parentNode.parentNode; }
+
+  function getItemContainerIndex(itemContainer) {
+    const node = document.querySelector('.toDoContainer');
+    const nodeChildren = getNodeChildren(node);
+
+    return [...nodeChildren].indexOf(itemContainer);
+  }
+
+  function removeNodeItem(e) {
+    const node = document.querySelector('.toDoContainer');
+    const nodeChildren = getNodeChildren(node);
+    const subjectItemContainer = getItemContainer(e.target);
+    const thisNodeIndex = getItemContainerIndex(subjectItemContainer);
+    node.removeChild(nodeChildren[thisNodeIndex]);
+  }
+
+  return { removeNodeItem, getItemContainerIndex };
+})();
+
 export function renderToDo() {
   const content = document.createElement('div');
   content.classList.add('toDoContainer');
@@ -93,9 +126,8 @@ export function renderToDo() {
     cancel.innerHTML = '&#10006;';
 
     cancel.addEventListener('click', (e) => {
-      const toDoListDom = document.querySelector('.toDoContainer');
-      toDoListDom.removeChild(e.target.parentNode.parentNode);
-      toDoList.splice(i, 1);
+      nodeMethods.removeNodeItem(e);
+      toDoList.splice(nodeMethods.getItemContainerIndex(), 1);
     });
 
     containerRight.append(starNoFillImg, cancel);
