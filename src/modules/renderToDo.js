@@ -27,30 +27,6 @@ export default function createToDo() { // Creates a to do item and pushes it int
   toDoList.push(newToDo);
 }
 
-const renderBottomItems = (toDo, node) => { // Render ToDo Details
-  const properties = [toDo.date, toDo.time, toDo.type];
-  for (let i = 0; i < properties.length; i += 1) {
-    if (properties[i]) {
-      const item = document.createElement('p');
-      item.innerHTML = properties[i];
-      node.appendChild(item);
-    }
-  }
-};
-
-const changeImage = (e) => { // Changes priority star image
-  switch (e.target.id) {
-    case 'NoFill':
-      e.target.id = 'Fill';
-      e.target.src = starFill;
-      break;
-    default:
-      e.target.id = 'NoFill';
-      e.target.src = starNoFill;
-      break;
-  }
-};
-
 const nodeMethods = (() => { // Node Methods for removing to Do from list & screen
   function getNodeChildren(node) {
     return node.childNodes;
@@ -98,6 +74,17 @@ export function renderToDo() { // Rendering function to put To Dos on the screen
     containerLeft.append(checkContainer);
   }
 
+  function renderBottomItems(toDo, node) { // Render ToDo Details
+    const properties = [toDo.date, toDo.time, toDo.type];
+    for (let i = 0; i < properties.length; i += 1) {
+      if (properties[i]) {
+        const item = document.createElement('p');
+        item.innerHTML = properties[i];
+        node.appendChild(item);
+      }
+    }
+  }
+
   function renderMiddleContainerItems(containerMiddle, i) {
     const name = document.createElement('p');
     const bottom = document.createElement('div');
@@ -110,17 +97,34 @@ export function renderToDo() { // Rendering function to put To Dos on the screen
     containerMiddle.append(name, bottom);
   }
 
-  function renderRightContainerItems(containerRight) {
-    const starNoFillImg = new Image();
-    starNoFillImg.src = starNoFill;
-    starNoFillImg.classList.add('star');
-    starNoFillImg.id = 'NoFill';
+  function renderRightContainerItems(containerRight, i) {
+    function renderStar() {
+      const priorityStar = new Image();
+
+      switch (toDoList[i].priority) {
+        case false:
+          priorityStar.src = starNoFill;
+          priorityStar.id = 'noFill';
+          break;
+        case true:
+          priorityStar.src = starFill;
+          priorityStar.id = 'fill';
+          break;
+        default:
+          break;
+      }
+
+      priorityStar.classList.add('star');
+      containerRight.append(priorityStar);
+    }
+
+    renderStar();
 
     const cancel = document.createElement('p');
     cancel.classList.add('cancelButton');
     cancel.innerHTML = '&#10006;';
 
-    containerRight.append(starNoFillImg, cancel);
+    containerRight.append(cancel);
   }
 
   function renderContainerItems(container, i) {
@@ -134,7 +138,7 @@ export function renderToDo() { // Rendering function to put To Dos on the screen
 
     renderLeftContainerItem(containerLeft);
     renderMiddleContainerItems(containerMiddle, i);
-    renderRightContainerItems(containerRight);
+    renderRightContainerItems(containerRight, i);
   }
 
   const content = document.createElement('div');
@@ -152,6 +156,23 @@ export function renderToDo() { // Rendering function to put To Dos on the screen
 }
 
 export const addEventListeners = () => {
+  function changeImage(e) { // Changes priority star image
+    const i = nodeMethods.getItemContainerIndex(e.target);
+
+    switch (e.target.id) {
+      case 'noFill':
+        e.target.id = 'fill';
+        e.target.src = starFill;
+        toDoList[i].priority = true;
+        break;
+      default:
+        e.target.id = 'fill';
+        e.target.src = starNoFill;
+        toDoList[i].priority = false;
+        break;
+    }
+  }
+
   for (let i = 0; i < toDoList.length; i += 1) {
     const checkbox = document.querySelectorAll('.checkbox');
     const name = document.querySelectorAll('.itemName');
