@@ -87,7 +87,7 @@ body {
 
 .itemContainer {
     display: flex;
-    background: grey;
+    background: #4e4a44;
     width: 500px;
     height: 50px;
     border-radius: 5px;
