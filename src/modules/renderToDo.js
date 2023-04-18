@@ -68,7 +68,7 @@ export function renderToDo() { // Rendering function to put To Dos on the screen
     const labelItem = document.createElement('label');
     checkInput.type = 'checkbox';
     checkInput.classList.add('checkbox');
-    labelDiv.classList.add('state');
+    labelDiv.classList = 'state p-warning';
 
     labelDiv.append(labelItem);
     checkContainer.append(checkInput, labelDiv);
