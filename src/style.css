@@ -63,9 +63,22 @@ body {
 .mainContent {
     display: flex;
     flex-direction: column;
+    align-items: center;
     flex: auto;
     border-radius: 0 12px 12px 0;
     background-color: #ccc5b9;
+}
+
+.mainHeaderDiv {
+    width: 80%;
+    background-color: #4e4a44;
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.headerDiv {
+    color: white;
 }
 
 #content {
@@ -73,6 +86,7 @@ body {
     flex: auto;
     align-self: center;
     flex-direction: column;
+    overflow: hidden;
     width: 80%;
     
 }
@@ -100,11 +114,16 @@ body {
 
 
 .inputTo {
+    display: flex;
+    justify-content: center;
     align-self: center;
+    width: 80%;
+    margin-top: 10px;
 }
 
 .inputContainer {
     display: flex;
+    align-items: center;
     border: 0;
     border-radius: 4px;
     margin-bottom: 10px;
@@ -113,7 +132,17 @@ body {
     color: #e6e0d5;
     font-size: 16px;
     background-color: rgb(78, 74, 68, 0.5);
+    padding-left: 15px;
+    gap: 15px;
 }
+
+.leftSideInput {
+    display: flex;
+    align-items: center;
+    font-size: 50px;
+    height: 100%;
+}
+
 
 #nameInput {
     
@@ -121,7 +150,7 @@ body {
     border: 0;
     background: transparent;
     color: #e6e0d5;
-    font-size: 16px;
+    font-size: 20px;
     
 
 }
@@ -136,6 +165,10 @@ body {
 
 #nameInput:focus {
     outline: none;
+}
+
+.inputContainer:hover {
+    background-color: rgb(78, 74, 68, 0.4);
 }
 
 
@@ -153,13 +186,15 @@ body {
 .toDoContainer {
     padding: 20px;
     display: flex;
+    align-items: center;
+    justify-items: flex-start;
     flex-direction: column;
     gap: 2px;
 }
 
 .itemContainer {
     display: flex;
-    background: #4e4a44;
+    background: #89837c;
     width: 500px;
     height: 50px;
     border-radius: 5px;
@@ -171,6 +206,7 @@ body {
 .itemName {
     display: flex;
     align-items: center;
+    cursor: default;
 }
 
 .containerMiddle {
@@ -193,12 +229,15 @@ body {
     width: 50px;
     align-items: center;
     justify-content: center;
+    cursor: default;
 }
 
 .pretty {
     margin-right: 0;
     font-size: 18px;
 }
+
+
 
 .containerRight {
     display: flex;
@@ -212,11 +251,19 @@ body {
 
 .cancelButton {
     font-size: 10px;
+    cursor: default;
     color: rgb(186, 185, 185);
-    cursor: pointer;
+}
+
+.cancelButton:hover {
+    color: rgb(186, 185, 185, 0.5);
 }
 
 .star {
     width: 25px;
-    cursor: pointer;
+}
+
+.complete {
+    color: rgb(177, 177, 177);
+    text-decoration: line-through;
 }

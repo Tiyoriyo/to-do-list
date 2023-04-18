@@ -24,9 +24,6 @@ function addNewToDo() {
   addEventListeners();
 }
 
-const button = document.querySelector('button');
-button.addEventListener('click', addNewToDo);
-
 const inputName = document.querySelector('#nameInput');
 inputName.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
@@ -34,4 +31,11 @@ inputName.addEventListener('keypress', (e) => {
     inputName.focus();
     inputName.value = '';
   }
+});
+inputName.addEventListener('focus', () => {
+  inputName.placeholder = 'Try adding something';
+});
+
+inputName.addEventListener('focusout', () => {
+  inputName.placeholder = 'Add a task';
 });

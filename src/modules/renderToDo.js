@@ -185,9 +185,9 @@ export const addEventListeners = () => {
 
     checkbox[i].addEventListener('change', (e) => {
       if (e.target.checked) {
-        name[i].style.textDecoration = 'line-through';
+        name[i].classList.add('complete');
       } else {
-        name[i].style.textDecoration = '';
+        name[i].classList.remove('complete');
       }
     });
 
