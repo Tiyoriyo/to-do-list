@@ -1,4 +1,4 @@
-import createToDo, { renderToDo, addEventListeners } from './modules/domManipulation';
+import createToDo, { renderToDoContainers, addEventListeners } from './modules/domManipulation';
 import { toDoList } from './modules/toDoObject';
 import './style.css';
 
@@ -21,7 +21,7 @@ const content = document.querySelector('#content');
 function addNewToDo() {
   createToDo();
   content.innerHTML = '';
-  content.appendChild(renderToDo());
+  content.appendChild(renderToDoContainers());
   addEventListeners();
 }
 

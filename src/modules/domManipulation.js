@@ -84,7 +84,7 @@ const removeToDo = (e) => { // Barrel function for removing to Do from list & sc
   nodeMethods.removeNodeItem(e);
 };
 
-export function renderToDo() { // Rendering function to put To Dos on the screen
+const containerMethods = (() => {
   function renderLeftContainerItem(containerLeft) {
     const checkContainer = document.createElement('div');
     checkContainer.classList = 'pretty p-default p-curve p-pulse';
@@ -168,6 +168,16 @@ export function renderToDo() { // Rendering function to put To Dos on the screen
     renderRightContainerItems(containerRight, i);
   }
 
+  return {
+    renderLeftContainerItem,
+    renderBottomItems,
+    renderMiddleContainerItems,
+    renderRightContainerItems,
+    renderContainerItems,
+  };
+})();
+
+export function renderToDoContainers() { // Rendering function to put To Dos on the screen
   const content = document.createElement('div');
   content.classList.add('toDoContainer');
 
@@ -175,7 +185,7 @@ export function renderToDo() { // Rendering function to put To Dos on the screen
     const container = document.createElement('div');
     container.classList.add('itemContainer');
 
-    renderContainerItems(container, i);
+    containerMethods.renderContainerItems(container, i);
     content.append(container);
   }
 
