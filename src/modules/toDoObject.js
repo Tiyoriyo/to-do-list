@@ -7,3 +7,5 @@ export default function ToDo(name, priority, date, time, type) {
     type,
   };
 }
+
+export const toDoList = []; // List of active To Do items

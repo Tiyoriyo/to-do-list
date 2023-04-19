@@ -1,8 +1,7 @@
-import ToDo from './toDoObject';
+import ToDo, { toDoList } from './toDoObject';
+import renderSettings from './toDoSettings';
 import starNoFill from '../images/starNoFill.png';
 import starFill from '../images/star.png';
-
-export const toDoList = []; // List of active To Do items
 
 const getInputs = () => { // Retrieves inputs for To Do
   const name = document.querySelector('#nameInput').value;
@@ -54,6 +53,7 @@ const nodeMethods = (() => { // Node Methods for removing to Do from list & scre
 })();
 
 const removeToDo = (e) => { // Barrel function for removing to Do from list & screen
+  e.stopPropagation();
   toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
   nodeMethods.removeNodeItem(e);
 };
@@ -174,17 +174,39 @@ export const addEventListeners = () => {
   }
 
   for (let i = 0; i < toDoList.length; i += 1) {
+    const itemContainer = document.querySelectorAll('.itemContainer');
     const checkbox = document.querySelectorAll('.checkbox');
     const name = document.querySelectorAll('.itemName');
     const starButton = document.querySelectorAll('.star');
     const cancelButton = document.querySelectorAll('.cancelButton');
 
+    itemContainer[i].addEventListener('click', (e) => {
+      renderSettings(e, i);
+    });
+
     starButton[i].addEventListener('click', (e) => {
+      e.stopImmediatePropagation();
+      e.stopPropagation();
       changeImage(e);
     });
 
-    checkbox[i].addEventListener('change', (e) => {
-      if (e.target.checked) {
+    name[i].addEventListener('click', (e) => {
+      e.stopImmediatePropagation();
+      e.stopPropagation();
+    });
+
+    // checkbox[i].addEventListener('change', (e) => {
+    //   if (e.target.checked) {
+    //     name[i].classList.add('complete');
+    //   } else {
+    //     name[i].classList.remove('complete');
+    //   }
+    // });
+
+    checkbox[i].addEventListener('click', (e) => {
+      e.stopImmediatePropagation();
+      e.stopPropagation();
+      if (!e.target.checked) {
         name[i].classList.add('complete');
       } else {
         name[i].classList.remove('complete');

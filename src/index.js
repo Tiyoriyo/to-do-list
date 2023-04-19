@@ -1,4 +1,5 @@
-import createToDo, { toDoList, renderToDo, addEventListeners } from './modules/renderToDo';
+import createToDo, { renderToDo, addEventListeners } from './modules/renderToDo';
+import { toDoList } from './modules/toDoObject';
 import './style.css';
 
 const debug = (() => {
@@ -25,6 +26,7 @@ function addNewToDo() {
 }
 
 const inputName = document.querySelector('#nameInput');
+
 inputName.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     addNewToDo();
