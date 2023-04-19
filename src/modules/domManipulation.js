@@ -178,7 +178,7 @@ const eventListeners = (() => {
   };
 
   function renderSettings(e, i) {
-    popupS.window({
+    popupS.confirm({
       mode: 'alert',
       content: `
       <div class="settingsDiv">
@@ -190,16 +190,23 @@ const eventListeners = (() => {
           <label class="dateLabel">Date</input>
           <input class="dateInput" type="date" value="${toDoList[i].date}">
         </div>
+        <div class="inputField">
+          <label class="timeLabel">Time</input>
+          <input class="timeInput" type="time" value="${toDoList[i].time}">
+        </div>
       </div>`,
       onSubmit: () => {
         const content = document.querySelector('#content');
         const nameValue = document.querySelector('.nameInput').value;
         const dateValue = document.querySelector('.dateInput').value;
+        const timeValue = document.querySelector('.timeInput').value;
 
         toDoList[i].name = nameValue;
         toDoList[i].date = dateValue;
+        toDoList[i].time = timeValue;
         content.innerHTML = '';
         content.appendChild(renderToDoContainers());
+        // eslint-disable-next-line no-use-before-define
         addEventListeners();
       },
     });
