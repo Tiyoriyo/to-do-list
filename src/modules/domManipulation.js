@@ -3,6 +3,8 @@ import ToDo, { toDoList } from './toDoObject';
 import starNoFill from '../images/starNoFill.png';
 import starFill from '../images/star.png';
 
+const popupS = require('popups');
+
 const mainContainer = document.querySelector('.mainContainer');
 const body = document.querySelector('body');
 
