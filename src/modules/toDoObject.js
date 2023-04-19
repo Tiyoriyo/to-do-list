@@ -1,4 +1,4 @@
-export default function ToDo(name, priority, date, time, type) {
+export default function ToDo(name, priority, date, time, type) { // Create to Do Object
   return {
     name,
     priority,
