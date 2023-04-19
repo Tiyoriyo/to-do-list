@@ -78,12 +78,6 @@ const nodeMethods = (() => { // Node Methods for removing to Do from list & scre
   return { removeNodeItem, getItemContainerIndex };
 })();
 
-const removeToDo = (e) => { // Barrel function for removing to Do from list & screen
-  e.stopPropagation();
-  toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
-  nodeMethods.removeNodeItem(e);
-};
-
 const containerMethods = (() => {
   function renderLeftContainerItem(containerLeft) {
     const checkContainer = document.createElement('div');
@@ -177,6 +171,12 @@ const containerMethods = (() => {
   };
 })();
 
+const removeToDo = (e) => { // Barrel function for removing to Do from list & screen
+  e.stopPropagation();
+  toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
+  nodeMethods.removeNodeItem(e);
+};
+
 export function renderToDoContainers() { // Rendering function to put To Dos on the screen
   const content = document.createElement('div');
   content.classList.add('toDoContainer');
@@ -206,6 +206,17 @@ export const addEventListeners = () => {
         e.target.src = starNoFill;
         toDoList[i].priority = false;
         break;
+    }
+  }
+
+  function addNameCompleteEffect(e, i, name) {
+    e.stopImmediatePropagation();
+    e.stopPropagation();
+
+    if (e.target.checked) {
+      name[i].classList.add('complete');
+    } else {
+      name[i].classList.remove('complete');
     }
   }
 
@@ -239,15 +250,7 @@ export const addEventListeners = () => {
     //   }
     // });
 
-    checkbox[i].addEventListener('click', (e) => {
-      e.stopImmediatePropagation();
-      e.stopPropagation();
-      if (!e.target.checked) {
-        name[i].classList.add('complete');
-      } else {
-        name[i].classList.remove('complete');
-      }
-    });
+    checkbox[i].addEventListener('click', (e) => { addNameCompleteEffect(e, i, name); });
 
     cancelButton[i].addEventListener('click', removeToDo);
   }
