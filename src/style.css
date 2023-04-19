@@ -176,6 +176,9 @@ body {
 
 
 
+
+
+
 .inputToDo {
     display: flex;
     flex-direction: column;
@@ -193,6 +196,10 @@ body {
 
 .inputIcon:first-child {
     margin-left: auto;
+}
+
+.inputIcon:last-child {
+    margin-right: 10px;
 }
 
 .toDoContainer {

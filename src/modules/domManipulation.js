@@ -3,6 +3,7 @@ import ToDo, { toDoList } from './toDoObject';
 import starNoFill from '../images/starNoFill.png';
 import starFill from '../images/star.png';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 const popupS = require('popups');
 
 const mainContainer = document.querySelector('.mainContainer');
@@ -174,20 +175,26 @@ function addSettingsScreen() {
 }
 
 function renderSettings(e, i) {
-  addSettingsScreen();
-  const settingsDiv = document.querySelector('.settingsDiv');
+  // addSettingsScreen();
+  // const settingsDiv = document.querySelector('.settingsDiv');
 
-  const nameLabel = document.createElement('label');
-  nameLabel.textContent = 'name';
-  const nameInput = document.createElement('input');
-  nameInput.value = toDoList[i].name;
-  const dateLabel = document.createElement('label');
-  dateLabel.textContent = 'Date';
-  const dateInput = document.createElement('input');
-  dateInput.type = 'date';
-  dateInput.value = toDoList[i].date;
+  // const nameLabel = document.createElement('label');
+  // nameLabel.textContent = 'name';
+  // const nameInput = document.createElement('input');
+  // nameInput.value = toDoList[i].name;
+  // const dateLabel = document.createElement('label');
+  // dateLabel.textContent = 'Date';
+  // const dateInput = document.createElement('input');
+  // dateInput.type = 'date';
+  // dateInput.value = toDoList[i].date;
 
-  settingsDiv.append(nameLabel, nameInput, dateLabel, dateInput);
+  // settingsDiv.append(nameLabel, nameInput, dateLabel, dateInput);
+
+  popupS.window({
+    mode: 'alert',
+    content: 'aye',
+
+  });
 }
 
 const getInputs = () => { // Retrieves inputs for To Do
