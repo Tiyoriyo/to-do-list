@@ -1,57 +1,10 @@
+/* eslint-disable no-underscore-dangle */
 import ToDo, { toDoList } from './toDoObject';
 import starNoFill from '../images/starNoFill.png';
 import starFill from '../images/star.png';
 
 const mainContainer = document.querySelector('.mainContainer');
 const body = document.querySelector('body');
-
-function addSettingsScreen() {
-  mainContainer.classList.add('blur');
-  const settingsContainer = document.createElement('div');
-  settingsContainer.classList.add('settingsContainer');
-
-  const settingsDiv = document.createElement('div');
-  settingsDiv.classList.add('settingsDiv');
-
-  settingsContainer.append(settingsDiv);
-  body.appendChild(settingsContainer);
-}
-
-function renderSettings(e, i) {
-  addSettingsScreen();
-
-  const settingsDiv = document.querySelector('.settingsDiv');
-  const nameLabel = document.createElement('label');
-  nameLabel.textContent = 'name';
-  const nameInput = document.createElement('input');
-  nameInput.value = toDoList[i].name;
-
-  settingsDiv.append(nameLabel, nameInput);
-}
-
-const getInputs = () => { // Retrieves inputs for To Do
-  const name = document.querySelector('#nameInput').value;
-  //   const date = document.querySelector('#dateInput').value;
-  //   const time = document.querySelector('#timeInput').value;
-  //   const type = document.querySelector('#typeInput').value;
-
-  return {
-    name,
-    // date, time, type,
-  };
-};
-
-export default function createToDo() { // Creates a to do item and pushes it into Array List
-  const { name } = getInputs();
-  const { date } = getInputs();
-  const { time } = getInputs();
-  const { type } = getInputs();
-
-  if (!name) { return; }
-
-  const newToDo = ToDo(name, false, date, time, type);
-  toDoList.push(newToDo);
-}
 
 const nodeMethods = (() => { // Node Methods for removing to Do from list & screen
   function getNodeChildren(node) {
@@ -171,6 +124,90 @@ const containerMethods = (() => {
   };
 })();
 
+const eventListeners = (() => {
+  const stopBubbling = (e) => {
+    e.stopImmediatePropagation();
+    e.stopPropagation();
+  };
+
+  const changeImage = (e) => { // Changes priority star image
+    stopBubbling(e);
+    const i = nodeMethods.getItemContainerIndex(e.target);
+    switch (e.target.id) {
+      case 'noFill':
+        e.target.id = 'fill';
+        e.target.src = starFill;
+        toDoList[i].priority = true;
+        break;
+      default:
+        e.target.id = 'noFill';
+        e.target.src = starNoFill;
+        toDoList[i].priority = false;
+        break;
+    }
+  };
+
+  const addNameCompleteEffect = (e, i, name) => {
+    stopBubbling(e);
+
+    if (e.target.checked) {
+      name[i].classList.add('complete');
+    } else {
+      name[i].classList.remove('complete');
+    }
+  };
+
+  return { changeImage, addNameCompleteEffect, stopBubbling };
+})();
+
+function addSettingsScreen() {
+  mainContainer.classList.add('blur');
+  const settingsContainer = document.createElement('div');
+  settingsContainer.classList.add('settingsContainer');
+
+  const settingsDiv = document.createElement('div');
+  settingsDiv.classList.add('settingsDiv');
+
+  settingsContainer.append(settingsDiv);
+  body.appendChild(settingsContainer);
+}
+
+function renderSettings(e, i) {
+  addSettingsScreen();
+
+  const settingsDiv = document.querySelector('.settingsDiv');
+  const nameLabel = document.createElement('label');
+  nameLabel.textContent = 'name';
+  const nameInput = document.createElement('input');
+  nameInput.value = toDoList[i].name;
+
+  settingsDiv.append(nameLabel, nameInput);
+}
+
+const getInputs = () => { // Retrieves inputs for To Do
+  const name = document.querySelector('#nameInput').value;
+  //   const date = document.querySelector('#dateInput').value;
+  //   const time = document.querySelector('#timeInput').value;
+  //   const type = document.querySelector('#typeInput').value;
+
+  return {
+    name,
+    // date, time, type,
+  };
+};
+
+export default function createToDo() { // Creates a to do item and pushes it into Array List
+  const { name } = getInputs();
+  const { date } = getInputs();
+  const { time } = getInputs();
+  const { type } = getInputs();
+
+  if (!name) { return; }
+
+  const newToDo = ToDo(name, false, date, time, type);
+  toDoList.push(newToDo);
+}
+
 const removeToDo = (e) => { // Barrel function for removing to Do from list & screen
   e.stopPropagation();
   toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
@@ -193,33 +230,6 @@ export function renderToDoContainers() { // Rendering function to put To Dos on 
 }
 
 export const addEventListeners = () => {
-  function changeImage(e) { // Changes priority star image
-    const i = nodeMethods.getItemContainerIndex(e.target);
-    switch (e.target.id) {
-      case 'noFill':
-        e.target.id = 'fill';
-        e.target.src = starFill;
-        toDoList[i].priority = true;
-        break;
-      default:
-        e.target.id = 'noFill';
-        e.target.src = starNoFill;
-        toDoList[i].priority = false;
-        break;
-    }
-  }
-
-  function addNameCompleteEffect(e, i, name) {
-    e.stopImmediatePropagation();
-    e.stopPropagation();
-
-    if (e.target.checked) {
-      name[i].classList.add('complete');
-    } else {
-      name[i].classList.remove('complete');
-    }
-  }
-
   for (let i = 0; i < toDoList.length; i += 1) {
     const itemContainer = document.querySelectorAll('.itemContainer');
     const checkbox = document.querySelectorAll('.checkbox');
@@ -227,30 +237,13 @@ export const addEventListeners = () => {
     const starButton = document.querySelectorAll('.star');
     const cancelButton = document.querySelectorAll('.cancelButton');
 
-    itemContainer[i].addEventListener('click', (e) => {
-      renderSettings(e, i);
-    });
+    itemContainer[i].addEventListener('click', (e) => { renderSettings(e, i); });
 
-    starButton[i].addEventListener('click', (e) => {
-      e.stopImmediatePropagation();
-      e.stopPropagation();
-      changeImage(e);
-    });
+    starButton[i].addEventListener('click', (e) => { eventListeners.changeImage(e); });
 
-    name[i].addEventListener('click', (e) => {
-      e.stopImmediatePropagation();
-      e.stopPropagation();
-    });
+    name[i].addEventListener('click', (e) => { eventListeners.stopBubbling(e); });
 
-    // checkbox[i].addEventListener('change', (e) => {
-    //   if (e.target.checked) {
-    //     name[i].classList.add('complete');
-    //   } else {
-    //     name[i].classList.remove('complete');
-    //   }
-    // });
-
-    checkbox[i].addEventListener('click', (e) => { addNameCompleteEffect(e, i, name); });
+    checkbox[i].addEventListener('click', (e) => { eventListeners.addNameCompleteEffect(e, i, name); });
 
     cancelButton[i].addEventListener('click', removeToDo);
   }
