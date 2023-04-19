@@ -6,34 +6,6 @@ import starFill from '../images/star.png';
 // eslint-disable-next-line import/no-extraneous-dependencies
 const popupS = require('popups');
 
-const mainContainer = document.querySelector('.mainContainer');
-const body = document.querySelector('body');
-
-const nodeMethods = (() => { // Node Methods for removing to Do from list & screen
-  function getNodeChildren(node) {
-    return node.childNodes;
-  }
-
-  function getItemContainer(node) { return node.parentNode.parentNode; }
-
-  function getItemContainerIndex(input) {
-    const node = document.querySelector('.toDoContainer');
-    const nodeChildren = getNodeChildren(node);
-    const itemContainer = getItemContainer(input);
-
-    return [...nodeChildren].indexOf(itemContainer);
-  }
-
-  function removeNodeItem(e) {
-    const node = document.querySelector('.toDoContainer');
-    const nodeChildren = getNodeChildren(node);
-    const thisNodeIndex = getItemContainerIndex(e.target);
-    node.removeChild(nodeChildren[thisNodeIndex]);
-  }
-
-  return { removeNodeItem, getItemContainerIndex };
-})();
-
 const containerMethods = (() => {
   function renderLeftContainerItem(containerLeft) {
     const checkContainer = document.createElement('div');
@@ -127,6 +99,46 @@ const containerMethods = (() => {
   };
 })();
 
+export function renderToDoContainers() { // Rendering function to put To Dos on the screen
+  const content = document.createElement('div');
+  content.classList.add('toDoContainer');
+
+  for (let i = 0; i < toDoList.length; i += 1) {
+    const container = document.createElement('div');
+    container.classList.add('itemContainer');
+
+    containerMethods.renderContainerItems(container, i);
+    content.append(container);
+  }
+
+  return content;
+}
+
+const nodeMethods = (() => { // Node Methods for removing to Do from list & screen
+  function getNodeChildren(node) {
+    return node.childNodes;
+  }
+
+  function getItemContainer(node) { return node.parentNode.parentNode; }
+
+  function getItemContainerIndex(input) {
+    const node = document.querySelector('.toDoContainer');
+    const nodeChildren = getNodeChildren(node);
+    const itemContainer = getItemContainer(input);
+
+    return [...nodeChildren].indexOf(itemContainer);
+  }
+
+  function removeNodeItem(e) {
+    const node = document.querySelector('.toDoContainer');
+    const nodeChildren = getNodeChildren(node);
+    const thisNodeIndex = getItemContainerIndex(e.target);
+    node.removeChild(nodeChildren[thisNodeIndex]);
+  }
+
+  return { removeNodeItem, getItemContainerIndex };
+})();
+
 const eventListeners = (() => {
   const stopBubbling = (e) => {
     e.stopImmediatePropagation();
@@ -159,43 +171,64 @@ const eventListeners = (() => {
     }
   };
 
-  return { changeImage, addNameCompleteEffect, stopBubbling };
+  const removeToDo = (e) => { // Barrel function for removing to Do from list & screen
+    e.stopPropagation();
+    toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
+    nodeMethods.removeNodeItem(e);
+  };
+
+  function renderSettings(e, i) {
+    popupS.window({
+      mode: 'alert',
+      content: `
+      <div class="settingsDiv">
+        <div class="inputField">
+          <label class="nameLabel">Name</input>
+          <input class="nameInput" value="${toDoList[i].name}">
+        </div>
+        <div class="inputField">
+          <label class="dateLabel">Date</input>
+          <input class="dateInput" type="date" value="${toDoList[i].date}">
+        </div>
+      </div>`,
+      onSubmit: () => {
+        const content = document.querySelector('#content');
+        const nameValue = document.querySelector('.nameInput').value;
+        const dateValue = document.querySelector('.dateInput').value;
+
+        toDoList[i].name = nameValue;
+        toDoList[i].date = dateValue;
+        content.innerHTML = '';
+        content.appendChild(renderToDoContainers());
+        addEventListeners();
+      },
+    });
+  }
+
+  return {
+    changeImage, addNameCompleteEffect, stopBubbling, removeToDo, renderSettings,
+  };
 })();
 
-function addSettingsScreen() {
-  mainContainer.classList.add('blur');
-  const settingsContainer = document.createElement('div');
-  settingsContainer.classList.add('settingsContainer');
+export const addEventListeners = () => {
+  for (let i = 0; i < toDoList.length; i += 1) {
+    const itemContainer = document.querySelectorAll('.itemContainer');
+    const checkbox = document.querySelectorAll('.checkbox');
+    const name = document.querySelectorAll('.itemName');
+    const starButton = document.querySelectorAll('.star');
+    const cancelButton = document.querySelectorAll('.cancelButton');
 
-  const settingsDiv = document.createElement('div');
-  settingsDiv.classList.add('settingsDiv');
+    itemContainer[i].addEventListener('click', (e) => { eventListeners.renderSettings(e, i); });
 
-  settingsContainer.append(settingsDiv);
-  body.appendChild(settingsContainer);
-}
+    starButton[i].addEventListener('click', (e) => { eventListeners.changeImage(e); });
 
-function renderSettings(e, i) {
-  // addSettingsScreen();
-  // const settingsDiv = document.querySelector('.settingsDiv');
+    name[i].addEventListener('click', (e) => { eventListeners.stopBubbling(e); });
 
-  // const nameLabel = document.createElement('label');
-  // nameLabel.textContent = 'name';
-  // const nameInput = document.createElement('input');
-  // nameInput.value = toDoList[i].name;
-  // const dateLabel = document.createElement('label');
-  // dateLabel.textContent = 'Date';
-  // const dateInput = document.createElement('input');
-  // dateInput.type = 'date';
-  // dateInput.value = toDoList[i].date;
+    checkbox[i].addEventListener('click', (e) => { eventListeners.addNameCompleteEffect(e, i, name); });
 
-  // settingsDiv.append(nameLabel, nameInput, dateLabel, dateInput);
-
-  popupS.window({
-    mode: 'alert',
-    content: 'aye',
-
-  });
-}
+    cancelButton[i].addEventListener('click', (e) => { eventListeners.removeToDo(e); });
+  }
+};
 
 const getInputs = () => { // Retrieves inputs for To Do
   const name = document.querySelector('#nameInput').value;
@@ -220,44 +253,3 @@ export default function createToDo() { // Creates a to do item and pushes it int
   const newToDo = ToDo(name, false, date, time, type);
   toDoList.push(newToDo);
 }
-
-const removeToDo = (e) => { // Barrel function for removing to Do from list & screen
-  e.stopPropagation();
-  toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
-  nodeMethods.removeNodeItem(e);
-};
-
-export function renderToDoContainers() { // Rendering function to put To Dos on the screen
-  const content = document.createElement('div');
-  content.classList.add('toDoContainer');
-
-  for (let i = 0; i < toDoList.length; i += 1) {
-    const container = document.createElement('div');
-    container.classList.add('itemContainer');
-
-    containerMethods.renderContainerItems(container, i);
-    content.append(container);
-  }
-
-  return content;
-}
-
-export const addEventListeners = () => {
-  for (let i = 0; i < toDoList.length; i += 1) {
-    const itemContainer = document.querySelectorAll('.itemContainer');
-    const checkbox = document.querySelectorAll('.checkbox');
-    const name = document.querySelectorAll('.itemName');
-    const starButton = document.querySelectorAll('.star');
-    const cancelButton = document.querySelectorAll('.cancelButton');
-
-    itemContainer[i].addEventListener('click', (e) => { renderSettings(e, i); });
-
-    starButton[i].addEventListener('click', (e) => { eventListeners.changeImage(e); });
-
-    name[i].addEventListener('click', (e) => { eventListeners.stopBubbling(e); });
-
-    checkbox[i].addEventListener('click', (e) => { eventListeners.addNameCompleteEffect(e, i, name); });
-
-    cancelButton[i].addEventListener('click', removeToDo);
-  }
-};
