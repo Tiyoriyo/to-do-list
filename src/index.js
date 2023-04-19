@@ -1,4 +1,4 @@
-import createToDo, { renderToDo, addEventListeners } from './modules/renderToDo';
+import createToDo, { renderToDo, addEventListeners } from './modules/domManipulation';
 import { toDoList } from './modules/toDoObject';
 import './style.css';
 
