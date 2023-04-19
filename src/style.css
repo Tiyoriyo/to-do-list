@@ -183,6 +183,18 @@ body {
     width: 20%;
 }
 
+.inputIcon {
+    width: 24px;
+}
+
+.margin-l-auto {
+    margin-left: auto;
+}
+
+.inputIcon:first-child {
+    margin-left: auto;
+}
+
 .toDoContainer {
     padding: 20px;
     display: flex;
