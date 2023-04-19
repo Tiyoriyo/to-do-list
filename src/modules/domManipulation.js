@@ -149,7 +149,6 @@ const eventListeners = (() => {
 
   const addNameCompleteEffect = (e, i, name) => {
     stopBubbling(e);
-
     if (e.target.checked) {
       name[i].classList.add('complete');
     } else {
@@ -174,14 +173,19 @@ function addSettingsScreen() {
 
 function renderSettings(e, i) {
   addSettingsScreen();
-
   const settingsDiv = document.querySelector('.settingsDiv');
+
   const nameLabel = document.createElement('label');
   nameLabel.textContent = 'name';
   const nameInput = document.createElement('input');
   nameInput.value = toDoList[i].name;
+  const dateLabel = document.createElement('label');
+  dateLabel.textContent = 'Date';
+  const dateInput = document.createElement('input');
+  dateInput.type = 'date';
+  dateInput.value = toDoList[i].date;
 
-  settingsDiv.append(nameLabel, nameInput);
+  settingsDiv.append(nameLabel, nameInput, dateLabel, dateInput);
 }
 
 const getInputs = () => { // Retrieves inputs for To Do
