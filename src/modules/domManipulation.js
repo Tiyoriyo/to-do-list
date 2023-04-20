@@ -184,25 +184,44 @@ const eventListeners = (() => {
       <div class="settingsDiv">
         <h2>Settings</h2>
         <div class="inputField">
-          <label class="nameLabel">Name</input>
+          <label class="nameLabel">Name</label>
           <input class="settingsInput nameInput" value="${toDoList[i].name}">
         </div>
         <div class="inputField">
-          <label class="dateLabel">Date</input>
+          <label class="nameLabel">Type</label>
+          <select class="settingsInput typeInput">
+            <option value="None">None</option>
+            <option value="Personal">Personal</option>
+            <option value="Work">Work</option>
+            <option value="Social">Social</option>
+          </select>
+        </div>
+        <div class="inputField">
+          <label class="dateLabel">Date</label>
           <input class="settingsInput dateInput" type="date" value="${toDoList[i].date}">
         </div>
         <div class="inputField">
-          <label class="timeLabel">Time</input>
+          <label class="timeLabel">Time</label>
           <input class="settingsInput timeInput" type="time" value="${toDoList[i].time}">
         </div>
       </div>`,
+      onOpen: () => {
+        const options = document.querySelectorAll('option');
+        for (let j = 0; j < options.length; j += 1) {
+          if (options[j].value === toDoList[i].type) { options[j].selected = true; }
+        }
+      },
       onSubmit: () => {
         const content = document.querySelector('#content');
         const nameValue = document.querySelector('.nameInput').value;
         const dateValue = document.querySelector('.dateInput').value;
         const timeValue = document.querySelector('.timeInput').value;
+        let typeValue = document.querySelector('.typeInput').value;
+
+        if (typeValue === 'None') { typeValue = undefined; }
 
         toDoList[i].name = nameValue;
+        toDoList[i].type = typeValue;
         toDoList[i].date = dateValue;
         toDoList[i].time = timeValue;
         content.innerHTML = '';
