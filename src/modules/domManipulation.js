@@ -7,6 +7,11 @@ import starFill from '../images/star.png';
 const popupS = require('popups');
 
 const containerMethods = (() => {
+  function clearContent() {
+    const content = document.querySelector('#content');
+    content.innerHTML = '';
+  }
+
   function renderLeftContainerItem(containerLeft) {
     const checkContainer = document.createElement('div');
     checkContainer.classList = 'pretty p-default p-curve p-pulse';
@@ -91,6 +96,7 @@ const containerMethods = (() => {
   }
 
   return {
+    clearContent,
     renderLeftContainerItem,
     renderBottomItems,
     renderMiddleContainerItems,
@@ -174,7 +180,10 @@ const eventListeners = (() => {
   const removeToDo = (e) => { // Barrel function for removing to Do from list & screen
     e.stopPropagation();
     toDoList.splice(nodeMethods.getItemContainerIndex(e.target), 1);
-    nodeMethods.removeNodeItem(e);
+    containerMethods.clearContent();
+    document.querySelector('#content').appendChild(renderToDoContainers());
+    // eslint-disable-next-line no-use-before-define
+    addEventListeners();
   };
 
   function renderSettings(e, i) {
