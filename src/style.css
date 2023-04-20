@@ -303,6 +303,21 @@ body {
     outline: none;
 }
 
+.nameLabel, .dateLabel, .timeLabel {
+    display: inline-block;
+    width: 35px;
+    margin-right: 10px;
+}
+
+.nameInput {
+    width: 200px;
+    padding: 2px 5px 2px 5px;
+}
+
+.typeInput, .dateInput, .timeInput {
+    padding: 2px 5px 2px 5px;
+}
+
 .popupButtonSet {
     display: flex;
     margin-top: 10px;
@@ -318,6 +333,10 @@ body {
 }
 
 .popupOkButton {
-    background-color: rgb(0, 204, 0);
+    background-color: rgb(106, 200, 106);
+}
+
+.popupCancelButton {
+    background-color: rgb(241, 118, 118);
 }
 
