@@ -26,6 +26,9 @@ function addNewToDo() {
   addEventListeners();
 }
 
+content.appendChild(renderToDoContainers());
+addEventListeners();
+
 const inputName = document.querySelector('#nameInput');
 
 inputName.addEventListener('keypress', (e) => {
