@@ -182,17 +182,18 @@ const eventListeners = (() => {
       mode: 'alert',
       content: `
       <div class="settingsDiv">
+        <h2>Settings</h2>
         <div class="inputField">
           <label class="nameLabel">Name</input>
-          <input class="nameInput" value="${toDoList[i].name}">
+          <input class="settingsInput nameInput" value="${toDoList[i].name}">
         </div>
         <div class="inputField">
           <label class="dateLabel">Date</input>
-          <input class="dateInput" type="date" value="${toDoList[i].date}">
+          <input class="settingsInput dateInput" type="date" value="${toDoList[i].date}">
         </div>
         <div class="inputField">
           <label class="timeLabel">Time</input>
-          <input class="timeInput" type="time" value="${toDoList[i].time}">
+          <input class="settingsInput timeInput" type="time" value="${toDoList[i].time}">
         </div>
       </div>`,
       onSubmit: () => {
@@ -209,6 +210,9 @@ const eventListeners = (() => {
         // eslint-disable-next-line no-use-before-define
         addEventListeners();
       },
+      additionalButtonHolderClass: 'popupButtonSet',
+      additionalButtonOkClass: 'popupOkButton', // classNames, that gets appended to the ok button
+      additionalButtonCancelClass: 'popupCancelButton',
     });
   }
 
