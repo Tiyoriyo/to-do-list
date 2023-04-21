@@ -1,6 +1,7 @@
 const taskArray = [];
+const completeTaskArray = [];
 
-const Task = (name, type, date, time, notes) => {
+const Task = (name, type, date, time, notes, status) => {
   const task = {
     name,
     priority: false,
@@ -8,6 +9,7 @@ const Task = (name, type, date, time, notes) => {
     date,
     time,
     notes,
+    status,
   };
 
   task.setProperty = (property, input) => {
@@ -30,6 +32,9 @@ const Task = (name, type, date, time, notes) => {
       case 'notes':
         task.notes = input;
         break;
+      case 'status':
+        task.status = input;
+        break;
       default:
         break;
     }
@@ -45,4 +50,11 @@ const createTask = (name, type, date, time, notes) => {
 
 const removeTask = (index) => {
   taskArray.splice(index, 1);
+};
+
+const taskComplete = (index) => {
+  const arrayItem = taskArray[index];
+  taskArray[index].status = true;
+  taskArray.splice(index, 1);
+  completeTaskArray.push(arrayItem);
 };
