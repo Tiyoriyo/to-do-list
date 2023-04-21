@@ -34,6 +34,10 @@ const Task = (name, type, date, time, notes) => {
     task.date = newDate;
   };
 
+  task.setTime = (newTime) => {
+    task.time = newTime;
+  };
+
   return task;
 };
 
