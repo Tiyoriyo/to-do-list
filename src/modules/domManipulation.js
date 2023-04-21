@@ -266,6 +266,9 @@ export const inputEventListeners = (() => {
       <label class="dateLabel">Date</label>
       <input class="settingsInput dateInput" type="date">
     </div>`,
+      additionalButtonHolderClass: 'popupButtonSet',
+      additionalButtonOkClass: 'popupOkButton', // classNames, that gets appended to the ok button
+      additionalButtonCancelClass: 'popupCancelButton',
     });
   }
 

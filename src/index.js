@@ -1,5 +1,8 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { format, addDays } from 'date-fns';
 import createToDo, { renderToDoContainers, addEventListeners, inputEventListeners } from './modules/domManipulation';
 import { toDoList } from './modules/toDoObject';
+
 import './style.css';
 import './popupS.css';
 
@@ -30,11 +33,29 @@ content.appendChild(renderToDoContainers());
 addEventListeners();
 
 const inputName = document.querySelector('#nameInput');
-const dateInput = document.querySelector('#dateInputIcon');
 
-dateInput.addEventListener('click', () => {
-  inputEventListeners.renderDateInput();
+// dateTooltip methods
+const dateIcon = document.querySelector('#dateInputIcon');
+const dateTooltip = document.querySelector('.dateTooltip');
+const tomorrowBtn = document.querySelector('.tomorrowBtn');
+const datePicker = document.querySelector('.datePicker');
+
+dateIcon.addEventListener('click', () => {
+  const classString = dateTooltip.classList.value;
+  if (classString.includes('hide')) { dateTooltip.classList.remove('hide'); }
 });
+
+tomorrowBtn.addEventListener('click', () => {
+  const today = new Date();
+  let tomorrow = addDays(today, 1);
+  tomorrow = format(tomorrow, 'yyyy-MM-dd');
+  datePicker.value = tomorrow;
+});
+
+const timeInput = document.querySelector('.timePicker');
+const timeIcon = document.querySelector('#timeInputIcon');
+
+timeIcon.addEventListener('click', () => { timeInput.showPicker(); });
 
 inputName.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
