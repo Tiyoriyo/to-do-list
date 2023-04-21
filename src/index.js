@@ -18,17 +18,7 @@ const Task = (name, type, date, time, notes) => {
     task.name = string;
   };
 
-  task.setType = (string) => {
-    switch (string) {
-      case 'personal' || 'work' || 'social':
-        console.log('win');
-        task.type = string;
-        break;
-      default:
-        console.log('fail');
-        break;
-    }
-  };
+  task.setType = (string) => { if (string === 'personal' || string === 'work' || string === 'social') { task.type = string; } };
 
   task.setDate = (newDate) => {
     task.date = newDate;
