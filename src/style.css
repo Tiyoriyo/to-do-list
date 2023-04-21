@@ -194,11 +194,15 @@ body {
     margin-left: auto;
 }
 
-.inputIcon:first-child {
-    margin-left: auto;
+.inputIconDiv {
+    display: flex;
+    align-items: center;
 }
 
-.inputIcon:last-child {
+.inputIconContainer {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
     margin-right: 10px;
 }
 
@@ -336,6 +340,7 @@ body {
 
 .popupButtonSet {
     display: flex;
+    justify-content: center;
     margin-top: 10px;
     gap: 10px;
 }
