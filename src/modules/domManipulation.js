@@ -29,7 +29,7 @@ const containerMethods = (() => {
   }
 
   function renderBottomItems(toDo, node) { // Render ToDo Details
-    const properties = [toDo.date, toDo.time, toDo.type];
+    const properties = [toDo.type, toDo.date, toDo.time];
     for (let i = 0; i < properties.length; i += 1) {
       if (properties[i]) {
         const item = document.createElement('p');
