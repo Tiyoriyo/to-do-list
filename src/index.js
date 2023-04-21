@@ -42,3 +42,7 @@ const createTask = (name, type, date, time, notes) => {
   const task = Task(name, type, date, time, notes);
   taskArray.push(task);
 };
+
+const removeTask = (index) => {
+  taskArray.splice(index, 1);
+};
