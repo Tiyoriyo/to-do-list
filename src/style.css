@@ -303,19 +303,35 @@ body {
     outline: none;
 }
 
-.nameLabel, .dateLabel, .timeLabel {
-    display: inline-block;
+.nameLabel, .dateLabel, .timeLabel, .notesLabel {
     width: 35px;
-    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.inputField {
+    display: flex;
+    gap: 5px;
 }
 
 .nameInput {
+    flex: auto;
     width: 200px;
     padding: 2px 5px 2px 5px;
 }
 
 .typeInput, .dateInput, .timeInput {
     padding: 2px 5px 2px 5px;
+}
+
+.typeInput, .dateInput, .timeInput, .nameInput, .inputTextArea {
+    font-style: italic;
+}
+
+.inputTextArea {
+    max-width: 253.33px;
+    min-width: 253.33px;
+    max-height: 138px;
+    min-height: 42px;
 }
 
 .popupButtonSet {

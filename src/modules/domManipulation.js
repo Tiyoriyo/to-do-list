@@ -197,6 +197,16 @@ const eventListeners = (() => {
           <input class="settingsInput nameInput" value="${toDoList[i].name}">
         </div>
         <div class="inputField">
+          <label class="dateLabel">Date</label>
+          <input class="settingsInput dateInput" type="date" value="${toDoList[i].date}">
+          <label class="timeLabel">Time</label>
+          <input class="settingsInput timeInput" type="time" value="${toDoList[i].time}">
+        </div>
+        <div class="notesInputField inputField">
+          <label class="notesLabel">Notes</label>
+          <textarea class="settingsInput inputTextArea"></textarea>
+        </div>
+        <div class="inputField">
           <label class="nameLabel">Type</label>
           <select class="settingsInput typeInput">
             <option value="None">None</option>
@@ -204,14 +214,6 @@ const eventListeners = (() => {
             <option value="Work">Work</option>
             <option value="Social">Social</option>
           </select>
-        </div>
-        <div class="inputField">
-          <label class="dateLabel">Date</label>
-          <input class="settingsInput dateInput" type="date" value="${toDoList[i].date}">
-        </div>
-        <div class="inputField">
-          <label class="timeLabel">Time</label>
-          <input class="settingsInput timeInput" type="time" value="${toDoList[i].time}">
         </div>
       </div>`,
       onOpen: () => {
