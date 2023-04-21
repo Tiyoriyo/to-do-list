@@ -204,7 +204,7 @@ const eventListeners = (() => {
         </div>
         <div class="notesInputField inputField">
           <label class="notesLabel">Notes</label>
-          <textarea class="settingsInput inputTextArea"></textarea>
+          <textarea class="settingsInput inputTextArea">${toDoList[i].notes}</textarea>
         </div>
         <div class="inputField">
           <label class="nameLabel">Type</label>
@@ -227,6 +227,7 @@ const eventListeners = (() => {
         const nameValue = document.querySelector('.nameInput').value;
         const dateValue = document.querySelector('.dateInput').value;
         const timeValue = document.querySelector('.timeInput').value;
+        const notesValue = document.querySelector('.inputTextArea').value;
         let typeValue = document.querySelector('.typeInput').value;
 
         if (typeValue === 'None') { typeValue = undefined; }
@@ -235,6 +236,7 @@ const eventListeners = (() => {
         toDoList[i].type = typeValue;
         toDoList[i].date = dateValue;
         toDoList[i].time = timeValue;
+        toDoList[i].notes = notesValue;
         content.innerHTML = '';
         content.appendChild(renderToDoContainers());
         // eslint-disable-next-line no-use-before-define

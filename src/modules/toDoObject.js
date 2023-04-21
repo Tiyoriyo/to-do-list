@@ -5,9 +5,10 @@ export default function ToDo(name, priority, date, time, type) { // Create to Do
     date,
     time,
     type,
+    notes: '',
   };
 }
 
 export const toDoList = [{
-  name: 'xzvf', priority: false, date: undefined, time: undefined, type: undefined,
+  name: 'xzvf', priority: false, date: undefined, time: undefined, type: undefined, notes: '',
 }]; // List of active To Do items
