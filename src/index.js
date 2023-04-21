@@ -1,6 +1,6 @@
 const taskArray = [];
 
-const Task = (name, priority, type, date, time, notes) => {
+const Task = (name, type, date, time, notes) => {
   const task = {
     name,
     priority: false,
@@ -14,10 +14,31 @@ const Task = (name, priority, type, date, time, notes) => {
     task.priority = !task.priority;
   };
 
+  task.setName = (string) => {
+    task.name = string;
+  };
+
+  task.setType = (string) => {
+    switch (string) {
+      case 'personal' || 'work' || 'social':
+        console.log('win');
+        task.type = string;
+        break;
+      default:
+        console.log('fail');
+        break;
+    }
+  };
+
   return task;
 };
 
-const createTask = (name) => {
-  const task = Task(name);
+const createTask = (name, type, date, time, notes) => {
+  const task = Task(name, type, date, time, notes);
   taskArray.push(task);
 };
+
+const task = createTask('bombo');
+console.log(taskArray);
+taskArray[0].setType('personal');
+console.log(taskArray);
