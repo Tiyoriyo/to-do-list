@@ -10,22 +10,29 @@ const Task = (name, type, date, time, notes) => {
     notes,
   };
 
-  task.setPriority = () => {
-    task.priority = !task.priority;
-  };
-
-  task.setName = (string) => {
-    task.name = string;
-  };
-
-  task.setType = (string) => { if (string === 'personal' || string === 'work' || string === 'social') { task.type = string; } };
-
-  task.setDate = (newDate) => {
-    task.date = newDate;
-  };
-
-  task.setTime = (newTime) => {
-    task.time = newTime;
+  task.setProperty = (property, input) => {
+    switch (property) {
+      case 'name':
+        task.name = input;
+        break;
+      case 'priority':
+        task.priority = !task.priority;
+        break;
+      case 'type':
+        if (input === 'personal' || input === 'work' || input === 'social') { task.type = input; }
+        break;
+      case 'date':
+        task.date = input;
+        break;
+      case 'time':
+        task.time = input;
+        break;
+      case 'notes':
+        task.notes = input;
+        break;
+      default:
+        break;
+    }
   };
 
   return task;
