@@ -280,7 +280,7 @@ export const addEventListeners = () => {
     const starButton = document.querySelectorAll('.star');
     const cancelButton = document.querySelectorAll('.cancelButton');
 
-    itemContainer[i].addEventListener('click', (e) => { eventListeners.renderSettings(i); });
+    itemContainer[i].addEventListener('click', () => { eventListeners.renderSettings(i); });
 
     starButton[i].addEventListener('click', (e) => { eventListeners.changeImage(e); });
 
