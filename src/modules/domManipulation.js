@@ -6,6 +6,11 @@ import starFill from '../images/star.png';
 // eslint-disable-next-line import/no-extraneous-dependencies
 const popupS = require('popups');
 
+const currentInput = {
+  date: undefined,
+  time: undefined,
+};
+
 const containerMethods = (() => {
   function clearContent() {
     const content = document.querySelector('#content');
@@ -186,7 +191,7 @@ const eventListeners = (() => {
     addEventListeners();
   };
 
-  function renderSettings(e, i) {
+  function renderSettings(i) {
     popupS.confirm({
       mode: 'alert',
       content: `
@@ -253,6 +258,20 @@ const eventListeners = (() => {
   };
 })();
 
+export const inputEventListeners = (() => {
+  function renderDateInput() {
+    popupS.confirm({
+      content: `
+    <div class="inputField">
+      <label class="dateLabel">Date</label>
+      <input class="settingsInput dateInput" type="date">
+    </div>`,
+    });
+  }
+
+  return { renderDateInput };
+})();
+
 export const addEventListeners = () => {
   for (let i = 0; i < toDoList.length; i += 1) {
     const itemContainer = document.querySelectorAll('.itemContainer');
@@ -261,7 +280,7 @@ export const addEventListeners = () => {
     const starButton = document.querySelectorAll('.star');
     const cancelButton = document.querySelectorAll('.cancelButton');
 
-    itemContainer[i].addEventListener('click', (e) => { eventListeners.renderSettings(e, i); });
+    itemContainer[i].addEventListener('click', (e) => { eventListeners.renderSettings(i); });
 
     starButton[i].addEventListener('click', (e) => { eventListeners.changeImage(e); });
 
@@ -275,13 +294,14 @@ export const addEventListeners = () => {
 
 const getInputs = () => { // Retrieves inputs for To Do
   const name = document.querySelector('#nameInput').value;
-  //   const date = document.querySelector('#dateInput').value;
-  //   const time = document.querySelector('#timeInput').value;
+  const { date } = currentInput;
+  const { time } = currentInput;
   //   const type = document.querySelector('#typeInput').value;
 
   return {
     name,
-    // date, time, type,
+    date,
+    time,
   };
 };
 

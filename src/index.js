@@ -1,4 +1,4 @@
-import createToDo, { renderToDoContainers, addEventListeners } from './modules/domManipulation';
+import createToDo, { renderToDoContainers, addEventListeners, inputEventListeners } from './modules/domManipulation';
 import { toDoList } from './modules/toDoObject';
 import './style.css';
 import './popupS.css';
@@ -30,6 +30,11 @@ content.appendChild(renderToDoContainers());
 addEventListeners();
 
 const inputName = document.querySelector('#nameInput');
+const dateInput = document.querySelector('#dateInputIcon');
+
+dateInput.addEventListener('click', () => {
+  inputEventListeners.renderDateInput();
+});
 
 inputName.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
