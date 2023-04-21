@@ -30,6 +30,10 @@ const Task = (name, type, date, time, notes) => {
     }
   };
 
+  task.setDate = (newDate) => {
+    task.date = newDate;
+  };
+
   return task;
 };
 
@@ -37,8 +41,3 @@ const createTask = (name, type, date, time, notes) => {
   const task = Task(name, type, date, time, notes);
   taskArray.push(task);
 };
-
-const task = createTask('bombo');
-console.log(taskArray);
-taskArray[0].setType('personal');
-console.log(taskArray);
