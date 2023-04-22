@@ -105,12 +105,22 @@ const getTodayTasks = () => {
   });
 
   console.log(todayTasks);
+  return todayTasks;
 };
 
 const getTomorrowTasks = () => {
-  const tomorrowDate = addDays(new Date(), 1);
-  const tomorrowTasks = taskArray.filter((task) => task.date === tomorrowDate);
+  const todayDate = new Date();
+  const tomorrowDate = addDays(new Date(todayDate), 1);
+  const tomorrowTasks = taskArray.filter((task) => {
+    if (task.date.getFullYear() == tomorrowDate.getFullYear()
+    && task.date.getMonth() == tomorrowDate.getMonth()
+    && task.date.getDate() == tomorrowDate.getDate()) {
+      return true;
+    }
+    return false;
+  });
   console.log(tomorrowTasks);
+  return tomorrowTasks;
 };
 
 const getLaterTasks = () => {
@@ -159,14 +169,14 @@ function getHourMinute(inputString) {
   return { hourString, minuteString };
 }
 
-// const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
-// const task2 = createTask('2', 'social', new Date(2023, 3, 21), '12:20');
-// const task3 = createTask('3', 'work', new Date(2024, 3, 2));
-// const task4 = createTask('4', 'social', new Date(2023, 3, 22));
-// const task5 = createTask('5', 'work', new Date(2033, 3, 2));
-// const task6 = createTask('6', 'work', new Date(2013, 3, 2));
-// const task7 = createTask('7', 'work', new Date(2023, 3, 22), '22:42');
-// const task8 = createTask('8', 'work', new Date(2023, 3, 22));
+const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
+const task2 = createTask('2', 'social', new Date(2023, 3, 21), '12:20');
+const task3 = createTask('3', 'work', new Date(2024, 3, 2));
+const task4 = createTask('4', 'social', new Date(2023, 3, 23));
+const task5 = createTask('5', 'work', new Date(2033, 3, 2));
+const task6 = createTask('6', 'work', new Date(2013, 3, 2));
+const task7 = createTask('7', 'work', new Date(2023, 3, 22), '22:42');
+const task8 = createTask('8', 'work', new Date(2023, 3, 22));
 
 const updateItems = () => {
   for (let i = 0; i < taskArray.length; i += 1) {
@@ -182,6 +192,8 @@ updateItems();
 setInterval(() => {
   updateItems();
 }, 1000);
+
+getTomorrowTasks();
 
 // const timeInput = document.querySelector('#timeInput');
 // const button = document.querySelector('#submit');
