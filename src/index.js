@@ -144,7 +144,13 @@ const compareDate = (a, b) => {
 };
 
 const getDueTasks = () => {
-  const dueTasks = taskArray.filter((task) => task.date);
+  const today = new Date();
+  const dueTasks = taskArray.filter((task) => {
+    if (task.getDateTime() > today) {
+      return true;
+    }
+    return false;
+  });
   const result = dueTasks.sort(compareDate);
   console.log(result);
 };
