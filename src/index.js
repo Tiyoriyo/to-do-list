@@ -100,7 +100,10 @@ const getAllTasks = () => {
 
 const getTodayTasks = () => {
   const today = new Date();
-  const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(0, 0, 0);
+
   const todayTasks = taskArray.filter((task) => {
     const taskDateTime = task.getDateTime();
     if (taskDateTime >= today && taskDateTime < tomorrow) {
@@ -109,17 +112,18 @@ const getTodayTasks = () => {
     return false;
   });
 
-  console.log(todayTasks);
   return todayTasks;
 };
 
 const getTomorrowTasks = () => {
-  const todayDate = new Date();
-  const tomorrowDate = addDays(new Date(todayDate), 1);
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
   const tomorrowTasks = taskArray.filter((task) => {
-    if (task.date.getFullYear() === tomorrowDate.getFullYear()
-    && task.date.getMonth() === tomorrowDate.getMonth()
-    && task.date.getDate() === tomorrowDate.getDate()) {
+    const taskDateTime = task.getDateTime();
+    if (taskDateTime.getFullYear() === tomorrow.getFullYear()
+    && taskDateTime.getMonth() === tomorrow.getMonth()
+    && taskDateTime.getDate() === tomorrow.getDate()) {
       return true;
     }
     return false;
@@ -129,7 +133,9 @@ const getTomorrowTasks = () => {
 };
 
 const getLaterTasks = () => {
-  const tomorrowDate = addDays(new Date(), 1);
+  const today = new Date();
+  const tomorrowDate = new Date(today);
+  tomorrowDate.setDate(tomorrowDate.getDate() + 1);
   const laterTasks = taskArray.filter((task) => task.date > tomorrowDate);
   console.log(laterTasks);
 };
@@ -204,7 +210,7 @@ setInterval(() => {
   updateItems();
 }, 1000);
 
-getDueTasks();
+getTomorrowTasks();
 
 // const timeInput = document.querySelector('#timeInput');
 // const button = document.querySelector('#submit');
