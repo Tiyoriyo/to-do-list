@@ -1,4 +1,7 @@
-const { addDays, format } = require('date-fns');
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+// eslint-disable-next-line import/no-extraneous-dependencies
+const { addDays, format, parseISO } = require('date-fns');
 
 const taskArray = [];
 const completeTaskArray = [];
@@ -122,13 +125,27 @@ const getTypeTasks = (string) => {
   console.log(result);
 };
 
-const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
-const task2 = createTask('2', 'social', new Date(2023, 3, 23));
-const task3 = createTask('3', 'work', new Date(2024, 3, 2));
-const task4 = createTask('4', 'social', new Date(2023, 3, 22));
-const task5 = createTask('5', 'work', new Date(2033, 3, 2));
-const task6 = createTask('6', 'work', new Date(2013, 3, 2));
-const task7 = createTask('7', 'work', new Date(2023, 5, 2));
-const task8 = createTask('8', 'work', new Date(2023, 3, 22));
+// setInterval(() => {
+//   for (let i = 0; i < taskArray.length; i += 1) {
+//     if (taskArray[i].date >= new Date()) { removeTask(i); }
+//   }
+// }, 1000);
 
-getTodayTasks();
+// const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
+// const task2 = createTask('2', 'social', new Date(2023, 3, 23));
+// const task3 = createTask('3', 'work', new Date(2024, 3, 2));
+// const task4 = createTask('4', 'social', new Date(2023, 3, 22));
+// const task5 = createTask('5', 'work', new Date(2033, 3, 2));
+// const task6 = createTask('6', 'work', new Date(2013, 3, 2));
+// const task7 = createTask('7', 'work', new Date(2023, 5, 2));
+// const task8 = createTask('8', 'work', new Date(2023, 3, 22));
+
+// const timeInput = document.querySelector('#timeInput');
+// const button = document.querySelector('#submit');
+
+function convertTime(timeString) {
+  const [hourString, minuteString] = timeString.split(':');
+  const morningStatus = (hourString > 12) ? 'PM' : 'AM';
+  const newTimeString = `${hourString % 12}:${minuteString} ${morningStatus}`;
+  return newTimeString;
+}
