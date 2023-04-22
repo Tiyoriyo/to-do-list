@@ -51,7 +51,8 @@ const Task = (name, type, date, time, notes, status) => {
   task.getDateTime = () => {
     const { hourString } = getHourMinute(time);
     const { minuteString } = getHourMinute(time);
-    const dateTimeCombined = new Date(date.setHours(hourString, minuteString, 0));
+    const dateTimeCombined = new Date(task.date.valueOf());
+    dateTimeCombined.setHours(hourString, minuteString, 0);
     return dateTimeCombined;
   };
 
@@ -61,15 +62,19 @@ const Task = (name, type, date, time, notes, status) => {
 const createTask = (name, type, date, time, notes) => {
   if (!date && !time) {
     const task = Task(name, type, new Date(), '24:00', notes);
+    task.date.setHours(0, 0, 0);
     taskArray.push(task);
   } else if (date && !time) {
     const task = Task(name, type, date, '12:00', notes);
+    task.date.setHours(0, 0, 0);
     taskArray.push(task);
   } else if (!date && time) {
     const task = Task(name, type, new Date(), time, notes);
+    task.date.setHours(0, 0, 0);
     taskArray.push(task);
   } else {
     const task = Task(name, type, date, time, notes);
+    task.date.setHours(0, 0, 0);
     taskArray.push(task);
   }
 };
@@ -112,9 +117,9 @@ const getTomorrowTasks = () => {
   const todayDate = new Date();
   const tomorrowDate = addDays(new Date(todayDate), 1);
   const tomorrowTasks = taskArray.filter((task) => {
-    if (task.date.getFullYear() == tomorrowDate.getFullYear()
-    && task.date.getMonth() == tomorrowDate.getMonth()
-    && task.date.getDate() == tomorrowDate.getDate()) {
+    if (task.date.getFullYear() === tomorrowDate.getFullYear()
+    && task.date.getMonth() === tomorrowDate.getMonth()
+    && task.date.getDate() === tomorrowDate.getDate()) {
       return true;
     }
     return false;
@@ -193,7 +198,7 @@ setInterval(() => {
   updateItems();
 }, 1000);
 
-getTomorrowTasks();
+getDueTasks();
 
 // const timeInput = document.querySelector('#timeInput');
 // const button = document.querySelector('#submit');
