@@ -88,6 +88,26 @@ const getDueTasks = () => {
   console.log(result);
 };
 
+const getTypeTasks = (string) => {
+  let result;
+  switch (string) {
+    case 'personal':
+      result = taskArray.filter((task) => task.type === 'personal');
+      break;
+    case 'work':
+      result = taskArray.filter((task) => task.type === 'work');
+      break;
+    case 'social':
+      result = taskArray.filter((task) => task.type === 'social');
+      break;
+    default:
+      result = taskArray;
+      break;
+  }
+
+  console.log(result);
+};
+
 const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
 const task2 = createTask('2', 'social', new Date(2023, 3, 23));
 const task3 = createTask('3', 'work', new Date(2024, 3, 2));
@@ -96,4 +116,4 @@ const task5 = createTask('5', 'work', new Date(2033, 3, 2));
 const task6 = createTask('6', 'work', new Date(2013, 3, 2));
 const task7 = createTask('7', 'work', new Date(2023, 5, 2));
 
-getLaterTasks();
+getTypeTasks('work');
