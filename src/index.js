@@ -1,3 +1,5 @@
+const { addDays, format } = require('date-fns');
+
 const taskArray = [];
 const completeTaskArray = [];
 
@@ -58,3 +60,17 @@ const taskComplete = (index) => {
   taskArray.splice(index, 1);
   completeTaskArray.push(arrayItem);
 };
+
+const getTomorrowTasks = () => {
+  const tomorrowDate = format(addDays(new Date(), 1), 'P');
+  const tomorrowTasks = taskArray.filter((task) => task.date === tomorrowDate);
+  console.log(tomorrowTasks);
+};
+
+const task1 = createTask('1', 'personal', format(new Date(2023, 3, 29), 'P'));
+const task2 = createTask('2', 'social', format(new Date(2023, 3, 23), 'P'));
+const task3 = createTask('3', 'work');
+const task4 = createTask('4');
+
+console.log(taskArray[0].date);
+getTomorrowTasks();
