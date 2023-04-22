@@ -3,6 +3,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const {
   addDays, format, addYears, compareAsc, parse, getYear,
+// eslint-disable-next-line import/no-extraneous-dependencies
 } = require('date-fns');
 
 const taskArray = [];
@@ -111,7 +112,7 @@ const getTodayTasks = () => {
     }
     return false;
   });
-
+  console.log(todayTasks);
   return todayTasks;
 };
 
@@ -119,6 +120,7 @@ const getTomorrowTasks = () => {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
+
   const tomorrowTasks = taskArray.filter((task) => {
     const taskDateTime = task.getDateTime();
     if (taskDateTime.getFullYear() === tomorrow.getFullYear()
@@ -136,8 +138,11 @@ const getLaterTasks = () => {
   const today = new Date();
   const tomorrowDate = new Date(today);
   tomorrowDate.setDate(tomorrowDate.getDate() + 1);
-  const laterTasks = taskArray.filter((task) => task.date > tomorrowDate);
+  tomorrowDate.setHours(0, 0, 0);
+
+  const laterTasks = taskArray.filter((task) => task.getDateTime() > tomorrowDate);
   console.log(laterTasks);
+  return laterTasks;
 };
 
 const compareDate = (a, b) => {
@@ -189,7 +194,7 @@ function getHourMinute(inputString) {
 const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
 const task2 = createTask('2', 'social', new Date(2023, 3, 21), '12:20');
 const task3 = createTask('3', 'work', new Date(2024, 3, 2));
-const task4 = createTask('4', 'social', new Date(2023, 3, 23));
+const task4 = createTask('4', 'social', new Date(2023, 3, 24));
 const task5 = createTask('5', 'work', new Date(2033, 3, 2));
 const task6 = createTask('6', 'work', new Date(2013, 3, 2));
 const task7 = createTask('7', 'work', new Date(2023, 3, 22), '22:42');
@@ -210,7 +215,7 @@ setInterval(() => {
   updateItems();
 }, 1000);
 
-getTomorrowTasks();
+getLaterTasks();
 
 // const timeInput = document.querySelector('#timeInput');
 // const button = document.querySelector('#submit');
