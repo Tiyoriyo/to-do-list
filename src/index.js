@@ -52,7 +52,6 @@ const Task = (name, type, date, time, notes, status) => {
     const { hourString } = getHourMinute(time);
     const { minuteString } = getHourMinute(time);
     const dateTimeCombined = new Date(date.setHours(hourString, minuteString, 0));
-    console.log(dateTimeCombined);
     return dateTimeCombined;
   };
 
@@ -152,24 +151,23 @@ function getHourMinute(inputString) {
   return { hourString, minuteString };
 }
 
-// setInterval(() => {
-//   for (let i = 0; i < taskArray.length; i += 1) {
-//     if (taskArray[i].getDateTime() <= format(new Date(), 'Pp')) {
-//       overdueArray.push(taskArray[i]);
-//       removeTask(i);
-//     }
-//   }
-//   console.log(overdueArray);
-// }, 1000);
-
 // const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
 // const task2 = createTask('2', 'social', new Date(2023, 3, 23), '14:22');
 // const task3 = createTask('3', 'work', new Date(2024, 3, 2));
 // const task4 = createTask('4', 'social', new Date(2023, 3, 22));
 // const task5 = createTask('5', 'work', new Date(2033, 3, 2));
 // const task6 = createTask('6', 'work', new Date(2013, 3, 2));
-// const task7 = createTask('7', 'work');
+// const task7 = createTask('7', 'work', new Date(2023, 3, 22), '21:33');
 // const task8 = createTask('8', 'work', new Date(2023, 3, 22));
+
+setInterval(() => {
+  for (let i = 0; i < taskArray.length; i += 1) {
+    if (taskArray[i].getDateTime() <= new Date()) {
+      overdueArray.push(taskArray[i]);
+      removeTask(i);
+    }
+  }
+}, 1000);
 
 // const timeInput = document.querySelector('#timeInput');
 // const button = document.querySelector('#submit');
@@ -177,5 +175,3 @@ function getHourMinute(inputString) {
 // button.addEventListener('click', () => {
 //   console.log(timeInput.value);
 // });
-
-// console.log(taskArray[6].getDateTime());
