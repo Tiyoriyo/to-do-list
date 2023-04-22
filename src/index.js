@@ -145,14 +145,9 @@ const getLaterTasks = () => {
   return laterTasks;
 };
 
-const compareDate = (a, b) => {
-  if (a.date < b.date) {
-    return -1;
-  } if (a.date > b.date) {
-    return 1;
-  }
-  return 0;
-};
+const compareDate = (a, b) => (a.getDateTime() > b.getDateTime() ? 1
+  : a.getDateTime() < b.getDateTime() ? -1
+    : 0);
 
 const getDueTasks = () => {
   const today = new Date();
@@ -214,8 +209,6 @@ updateItems();
 setInterval(() => {
   updateItems();
 }, 1000);
-
-getLaterTasks();
 
 // const timeInput = document.querySelector('#timeInput');
 // const button = document.querySelector('#submit');
