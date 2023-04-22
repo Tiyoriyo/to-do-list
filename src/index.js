@@ -1,4 +1,4 @@
-const { addDays, format } = require('date-fns');
+const { addDays, format, compareAsc } = require('date-fns');
 
 const taskArray = [];
 const completeTaskArray = [];
@@ -67,10 +67,24 @@ const getTomorrowTasks = () => {
   console.log(tomorrowTasks);
 };
 
-const task1 = createTask('1', 'personal', format(new Date(2023, 3, 29), 'P'));
-const task2 = createTask('2', 'social', format(new Date(2023, 3, 23), 'P'));
-const task3 = createTask('3', 'work');
-const task4 = createTask('4');
+const compareDate = (a, b) => {
+  if (a.date < b.date) {
+    return -1;
+  } if (a.date > b.date) {
+    return 1;
+  }
+  return 0;
+};
 
-console.log(taskArray[0].date);
-getTomorrowTasks();
+const getDueTasks = () => {
+  const dueTasks = taskArray.filter((task) => task.date);
+  const result = dueTasks.sort(compareDate);
+  console.log(result);
+};
+
+const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
+const task2 = createTask('2', 'social', new Date(2023, 3, 23));
+const task3 = createTask('3', 'work', new Date(2024, 3, 2));
+const task4 = createTask('4', 'social', new Date(1999, 1, 1));
+
+getDueTasks();
