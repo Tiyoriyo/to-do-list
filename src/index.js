@@ -1,4 +1,4 @@
-const { addDays, format, compareAsc } = require('date-fns');
+const { addDays, format } = require('date-fns');
 
 const taskArray = [];
 const completeTaskArray = [];
@@ -61,6 +61,14 @@ const taskComplete = (index) => {
   completeTaskArray.push(arrayItem);
 };
 
+const getCompleteTasks = () => {
+  console.log(completeTaskArray);
+};
+
+const getAllTasks = () => {
+  console.log(taskArray);
+};
+
 const getTomorrowTasks = () => {
   const tomorrowDate = format(addDays(new Date(), 1), 'P');
   const tomorrowTasks = taskArray.filter((task) => task.date === tomorrowDate);
@@ -108,12 +116,10 @@ const getTypeTasks = (string) => {
   console.log(result);
 };
 
-const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
-const task2 = createTask('2', 'social', new Date(2023, 3, 23));
-const task3 = createTask('3', 'work', new Date(2024, 3, 2));
-const task4 = createTask('4', 'social', new Date(1999, 1, 1));
-const task5 = createTask('5', 'work', new Date(2033, 3, 2));
-const task6 = createTask('6', 'work', new Date(2013, 3, 2));
-const task7 = createTask('7', 'work', new Date(2023, 5, 2));
-
-getTypeTasks('work');
+// const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
+// const task2 = createTask('2', 'social', new Date(2023, 3, 23));
+// const task3 = createTask('3', 'work', new Date(2024, 3, 2));
+// const task4 = createTask('4', 'social', new Date(1999, 1, 1));
+// const task5 = createTask('5', 'work', new Date(2033, 3, 2));
+// const task6 = createTask('6', 'work', new Date(2013, 3, 2));
+// const task7 = createTask('7', 'work', new Date(2023, 5, 2));
