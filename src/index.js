@@ -145,9 +145,14 @@ const getLaterTasks = () => {
   return laterTasks;
 };
 
-const compareDate = (a, b) => (a.getDateTime() > b.getDateTime() ? 1
-  : a.getDateTime() < b.getDateTime() ? -1
-    : 0);
+const compareDate = (a, b) => {
+  if (a.getDateTime() > b.getDateTime()) {
+    return 1;
+  } if (a.getDateTime() < b.getDateTime()) {
+    return -1;
+  }
+  return 0;
+};
 
 const getDueTasks = () => {
   const today = new Date();
