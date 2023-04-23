@@ -61,23 +61,18 @@ const Task = (name, type, date, time, notes, status) => {
 };
 
 const createTask = (name, type, date, time, notes) => {
+  let task;
   if (!date && !time) {
-    const task = Task(name, type, new Date(), '24:00', notes);
-    task.date.setHours(0, 0, 0);
-    taskArray.push(task);
+    task = Task(name, type, new Date(), '24:00', notes);
   } else if (date && !time) {
-    const task = Task(name, type, date, '12:00', notes);
-    task.date.setHours(0, 0, 0);
-    taskArray.push(task);
+    task = Task(name, type, date, '12:00', notes);
   } else if (!date && time) {
-    const task = Task(name, type, new Date(), time, notes);
-    task.date.setHours(0, 0, 0);
-    taskArray.push(task);
+    task = Task(name, type, new Date(), time, notes);
   } else {
-    const task = Task(name, type, date, time, notes);
-    task.date.setHours(0, 0, 0);
-    taskArray.push(task);
+    task = Task(name, type, date, time, notes);
   }
+  task.date.setHours(0, 0, 0);
+  taskArray.push(task);
 };
 
 const removeTask = (index) => {
@@ -214,6 +209,8 @@ updateItems();
 setInterval(() => {
   updateItems();
 }, 1000);
+
+console.log(taskArray);
 
 // const timeInput = document.querySelector('#timeInput');
 // const button = document.querySelector('#submit');
