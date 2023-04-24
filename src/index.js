@@ -81,7 +81,7 @@ const createTask = (name, type, date, time, notes) => {
     getDateTime() {
       const { hourString } = this.getHourMinute(this.time);
       const { minuteString } = this.getHourMinute(this.time);
-      const dateTimeCombined = new Date(date.valueOf());
+      const dateTimeCombined = new Date(this.date);
       dateTimeCombined.setHours(hourString, minuteString, 0);
       return dateTimeCombined;
     },
@@ -211,6 +211,8 @@ const task5 = createTask('5', 'work', new Date(2033, 3, 2));
 const task6 = createTask('6', 'work', new Date(2013, 3, 2));
 const task7 = createTask('7', 'work', new Date(2023, 3, 22), '22:42');
 const task8 = createTask('8', 'work', new Date(2023, 3, 22));
+const task9 = createTask('9', 'social');
+console.log(taskArray[8]);
 
 const updateItems = () => {
   for (let i = 0; i < taskArray.length; i += 1) {
@@ -221,6 +223,10 @@ const updateItems = () => {
   }
 };
 
+getDueTasks();
+getLaterTasks();
+getTodayTasks();
+getTomorrowTasks();
 updateItems();
 
 setInterval(() => {
