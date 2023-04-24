@@ -28,61 +28,9 @@ const populateTaskArray = (() => {
 const completeTaskArray = [];
 const overdueArray = [];
 
-const Task = (name, type, date, time, notes, status) => {
-  const task = {
-    name,
-    priority: false,
-    type,
-    date,
-    time,
-    notes,
-    status,
-  };
-
-  task.setProperty = (property, input) => {
-    console.log(this);
-    switch (property) {
-      case 'name':
-        task.name = input;
-        break;
-      case 'priority':
-        task.priority = !task.priority;
-        break;
-      case 'type':
-        if (input === 'personal' || input === 'work' || input === 'social') { task.type = input; }
-        break;
-      case 'date':
-        task.date = input;
-        break;
-      case 'time':
-        task.time = input;
-        break;
-      case 'notes':
-        task.notes = input;
-        break;
-      case 'status':
-        task.status = input;
-        break;
-      default:
-        break;
-    }
-  };
-
-  task.getHourMinute = (inputString) => {
-    const [hourString, minuteString] = inputString.split(':');
-    return { hourString, minuteString };
-  };
-
-  task.getDateTime = () => {
-    const { hourString } = task.getHourMinute(time);
-    const { minuteString } = task.getHourMinute(time);
-    const dateTimeCombined = new Date(task.date.valueOf());
-    dateTimeCombined.setHours(hourString, minuteString, 0);
-    return dateTimeCombined;
-  };
-
-  return task;
-};
+const Task = (name, type, date, time, notes, status) => ({
+  name, priority: false, type, date, time, notes, status,
+});
 
 const createTask = (name, type, date, time, notes) => {
   let task;
@@ -95,6 +43,51 @@ const createTask = (name, type, date, time, notes) => {
   } else {
     task = Task(name, type, date, time, notes);
   }
+
+  const proto = {
+    setProperty(property, input) {
+      switch (property) {
+        case 'name':
+          this.name = input;
+          break;
+        case 'priority':
+          this.priority = !this.priority;
+          break;
+        case 'type':
+          if (input === 'personal' || input === 'work' || input === 'social') { this.type = input; }
+          break;
+        case 'date':
+          this.date = input;
+          break;
+        case 'time':
+          this.time = input;
+          break;
+        case 'notes':
+          this.notes = input;
+          break;
+        case 'status':
+          this.status = input;
+          break;
+        default:
+          break;
+      }
+    },
+
+    getHourMinute() {
+      const [hourString, minuteString] = this.time.split(':');
+      return { hourString, minuteString };
+    },
+
+    getDateTime() {
+      const { hourString } = this.getHourMinute(this.time);
+      const { minuteString } = this.getHourMinute(this.time);
+      const dateTimeCombined = new Date(date.valueOf());
+      dateTimeCombined.setHours(hourString, minuteString, 0);
+      return dateTimeCombined;
+    },
+  };
+
+  Object.setPrototypeOf(task, proto);
   task.date.setHours(0, 0, 0);
   taskArray.push(task);
   // localStorage.setObj('taskArray', taskArray);
@@ -114,10 +107,12 @@ const taskComplete = (index) => {
 
 const getCompleteTasks = () => {
   console.log(completeTaskArray);
+  return completeTaskArray;
 };
 
 const getAllTasks = () => {
   console.log(taskArray);
+  return taskArray;
 };
 
 const getTodayTasks = () => {
@@ -185,6 +180,7 @@ const getDueTasks = () => {
   });
   const result = dueTasks.sort(compareDate);
   console.log(result);
+  return result;
 };
 
 const getTypeTasks = (string) => {
@@ -203,12 +199,12 @@ const getTypeTasks = (string) => {
       result = taskArray;
       break;
   }
-
   console.log(result);
+  return result;
 };
 
 const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
-const task2 = createTask('2', 'social', new Date(2023, 3, 21), '12:20');
+const task2 = createTask('2', 'social', new Date(2023, 3, 25), '12:20');
 const task3 = createTask('3', 'work', new Date(2024, 3, 2));
 const task4 = createTask('4', 'social', new Date(2023, 3, 24));
 const task5 = createTask('5', 'work', new Date(2033, 3, 2));
@@ -230,8 +226,6 @@ updateItems();
 setInterval(() => {
   updateItems();
 }, 1000);
-
-console.log(localStorage.getObj('taskArray'));
 
 // const timeInput = document.querySelector('#timeInput');
 // const button = document.querySelector('#submit');
