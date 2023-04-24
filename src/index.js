@@ -100,9 +100,16 @@ const removeTask = (index) => {
 
 const taskComplete = (index) => {
   const arrayItem = taskArray[index];
-  taskArray[index].status = true;
+  taskArray[index].setProperty('status', true);
   taskArray.splice(index, 1);
   completeTaskArray.push(arrayItem);
+};
+
+const taskUncomplete = (index) => {
+  const arrayItem = completeTaskArray[index];
+  completeTaskArray[index].setProperty('status', false);
+  completeTaskArray.splice(index, 1);
+  taskArray.push(arrayItem);
 };
 
 const getCompleteTasks = () => {
@@ -212,7 +219,6 @@ const task6 = createTask('6', 'work', new Date(2013, 3, 2));
 const task7 = createTask('7', 'work', new Date(2023, 3, 22), '22:42');
 const task8 = createTask('8', 'work', new Date(2023, 3, 22));
 const task9 = createTask('9', 'social');
-console.log(taskArray[8]);
 
 const updateItems = () => {
   for (let i = 0; i < taskArray.length; i += 1) {
@@ -223,10 +229,6 @@ const updateItems = () => {
   }
 };
 
-getDueTasks();
-getLaterTasks();
-getTodayTasks();
-getTomorrowTasks();
 updateItems();
 
 setInterval(() => {
