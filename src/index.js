@@ -13,17 +13,62 @@ Storage.prototype.getObj = function (key) {
   return JSON.parse(this.getItem(key));
 };
 
+const proto = {
+  setProperty(property, input) {
+    switch (property) {
+      case 'name':
+        this.name = input;
+        break;
+      case 'priority':
+        this.priority = !this.priority;
+        break;
+      case 'type':
+        if (input === 'personal' || input === 'work' || input === 'social') { this.type = input; }
+        break;
+      case 'date':
+        this.date = input;
+        break;
+      case 'time':
+        this.time = input;
+        break;
+      case 'notes':
+        this.notes = input;
+        break;
+      case 'status':
+        this.status = input;
+        break;
+      default:
+        break;
+    }
+  },
+
+  getHourMinute() {
+    const [hourString, minuteString] = this.time.split(':');
+    return { hourString, minuteString };
+  },
+
+  getDateTime() {
+    const { hourString } = this.getHourMinute(this.time);
+    const { minuteString } = this.getHourMinute(this.time);
+    const dateTimeCombined = new Date(this.date);
+    dateTimeCombined.setHours(hourString, minuteString, 0);
+    return dateTimeCombined;
+  },
+};
+
 const taskArray = [];
 
 const populateTaskArray = (() => {
   const getArray = localStorage.getObj('taskArray');
-  console.log(getArray);
+  if (!getArray) { return; }
   for (let i = 0; i < getArray.length; i += 1) {
     const date = new Date(getArray[i].date);
     getArray[i].date = date;
+    Object.setPrototypeOf(getArray[i], proto);
     taskArray.push(getArray[i]);
   }
-});
+  console.log(getArray);
+})();
 
 const completeTaskArray = [];
 const overdueArray = [];
@@ -44,54 +89,10 @@ const createTask = (name, type, date, time, notes) => {
     task = Task(name, type, date, time, notes);
   }
 
-  const proto = {
-    setProperty(property, input) {
-      switch (property) {
-        case 'name':
-          this.name = input;
-          break;
-        case 'priority':
-          this.priority = !this.priority;
-          break;
-        case 'type':
-          if (input === 'personal' || input === 'work' || input === 'social') { this.type = input; }
-          break;
-        case 'date':
-          this.date = input;
-          break;
-        case 'time':
-          this.time = input;
-          break;
-        case 'notes':
-          this.notes = input;
-          break;
-        case 'status':
-          this.status = input;
-          break;
-        default:
-          break;
-      }
-    },
-
-    getHourMinute() {
-      const [hourString, minuteString] = this.time.split(':');
-      return { hourString, minuteString };
-    },
-
-    getDateTime() {
-      const { hourString } = this.getHourMinute(this.time);
-      const { minuteString } = this.getHourMinute(this.time);
-      const dateTimeCombined = new Date(this.date);
-      dateTimeCombined.setHours(hourString, minuteString, 0);
-      return dateTimeCombined;
-    },
-  };
-
   Object.setPrototypeOf(task, proto);
   task.date.setHours(0, 0, 0);
   taskArray.push(task);
-  // localStorage.setObj('taskArray', taskArray);
-  // console.log(localStorage);
+  localStorage.setObj('taskArray', taskArray);
 };
 
 const removeTask = (index) => {
@@ -210,15 +211,15 @@ const getTypeTasks = (string) => {
   return result;
 };
 
-const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
-const task2 = createTask('2', 'social', new Date(2023, 3, 25), '12:20');
-const task3 = createTask('3', 'work', new Date(2024, 3, 2));
-const task4 = createTask('4', 'social', new Date(2023, 3, 24));
-const task5 = createTask('5', 'work', new Date(2033, 3, 2));
-const task6 = createTask('6', 'work', new Date(2013, 3, 2));
-const task7 = createTask('7', 'work', new Date(2023, 3, 22), '22:42');
-const task8 = createTask('8', 'work', new Date(2023, 3, 22));
-const task9 = createTask('9', 'social');
+// const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
+// const task2 = createTask('2', 'social', new Date(2023, 3, 25), '12:20');
+// const task3 = createTask('3', 'work', new Date(2024, 3, 2));
+// const task4 = createTask('4', 'social', new Date(2023, 3, 24));
+// const task5 = createTask('5', 'work', new Date(2033, 3, 2));
+// const task6 = createTask('6', 'work', new Date(2013, 3, 2));
+// const task7 = createTask('7', 'work', new Date(2023, 3, 22), '22:42');
+// const task8 = createTask('8', 'work', new Date(2023, 3, 22));
+// const task9 = createTask('9', 'social');
 
 const updateItems = () => {
   for (let i = 0; i < taskArray.length; i += 1) {
