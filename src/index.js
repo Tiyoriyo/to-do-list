@@ -13,9 +13,10 @@ Storage.prototype.getObj = function (key) {
   return JSON.parse(this.getItem(key));
 };
 
-const taskArray = [];
-const completeTaskArray = [];
-const overdueArray = [];
+let taskArray = [];
+
+let completeTaskArray = [];
+let overdueArray = [];
 const proto = {
   setProperty(property, input) {
     switch (property) {
@@ -59,6 +60,15 @@ const proto = {
   },
 };
 
+const updateItems = () => {
+  for (let i = 0; i < taskArray.length; i += 1) {
+    if (taskArray[i].getDateTime() <= new Date()) {
+      overdueArray.push(taskArray[i]);
+      removeTask(i);
+    }
+  }
+};
+
 window.onbeforeunload = function () {
   localStorage.setObj('taskArray', taskArray);
   localStorage.setObj('completeTaskArray', completeTaskArray);
@@ -70,33 +80,44 @@ window.onload = function () {
   const StorageCompleteTaskArray = localStorage.getObj('completeTaskArray');
   const StorageOverdueTaskArray = localStorage.getObj('overdueArray');
 
-  if (StorageTaskArray) {
+  if (StorageTaskArray.length > 0) {
+    taskArray = [];
     for (let i = 0; i < StorageTaskArray.length; i += 1) {
       const date = new Date(StorageTaskArray[i].date);
       StorageTaskArray[i].date = date;
       Object.setPrototypeOf(StorageTaskArray[i], proto);
-      taskArray.unshift(StorageTaskArray[i]);
+      taskArray.push(StorageTaskArray[i]);
     }
   }
 
-  if (StorageCompleteTaskArray) {
+  if (StorageCompleteTaskArray.length > 0) {
+    completeTaskArray = [];
     for (let i = 0; i < StorageCompleteTaskArray.length; i += 1) {
       const date = new Date(StorageCompleteTaskArray[i].date);
       StorageCompleteTaskArray[i].date = date;
       Object.setPrototypeOf(StorageCompleteTaskArray[i], proto);
-      taskArray.unshift(StorageCompleteTaskArray[i]);
+      completeTaskArray.push(StorageCompleteTaskArray[i]);
     }
   }
 
-  if (StorageOverdueTaskArray) {
+  if (StorageOverdueTaskArray.length > 0) {
+    console.log(StorageOverdueTaskArray);
+    console.log(overdueArray);
+    overdueArray = [];
     for (let i = 0; i < StorageOverdueTaskArray.length; i += 1) {
       const date = new Date(StorageOverdueTaskArray[i].date);
       StorageOverdueTaskArray[i].date = date;
       Object.setPrototypeOf(StorageOverdueTaskArray[i], proto);
-      taskArray.unshift(StorageOverdueTaskArray[i]);
+      overdueArray.push(StorageOverdueTaskArray[i]);
     }
   }
+
+  updateItems();
 };
+
+setInterval(() => {
+  updateItems();
+}, 1);
 
 const Task = (name, type, date, time, notes, status) => ({
   name, priority: false, type, date, time, notes, status,
@@ -244,25 +265,17 @@ const getTypeTasks = (string) => {
 // const task7 = createTask('7', 'work', new Date(2023, 3, 22), '22:42');
 // const task8 = createTask('8', 'work', new Date(2023, 3, 22));
 // const task9 = createTask('9', 'social');
-
-const updateItems = () => {
-  for (let i = 0; i < taskArray.length; i += 1) {
-    if (taskArray[i].getDateTime() <= new Date()) {
-      overdueArray.push(taskArray[i]);
-      removeTask(i);
-    }
-  }
-};
-
-updateItems();
-
-setInterval(() => {
-  updateItems();
-}, 1000);
-
 // const timeInput = document.querySelector('#timeInput');
 // const button = document.querySelector('#submit');
 
 // button.addEventListener('click', () => {
 //   console.log(timeInput.value);
 // });
+
+const debug = () => {
+  console.log(taskArray);
+  console.log(overdueArray);
+  console.log(completeTaskArray);
+};
+
+window.debug = debug;
