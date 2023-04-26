@@ -13,10 +13,9 @@ Storage.prototype.getObj = function (key) {
   return JSON.parse(this.getItem(key));
 };
 
-let taskArray = [];
-
-let completeTaskArray = [];
-let overdueArray = [];
+const taskArray = [];
+const completeTaskArray = [];
+const overdueArray = [];
 const proto = {
   setProperty(property, input) {
     switch (property) {
@@ -69,50 +68,62 @@ const updateItems = () => {
   }
 };
 
-window.onbeforeunload = function () {
-  localStorage.setObj('taskArray', taskArray);
-  localStorage.setObj('completeTaskArray', completeTaskArray);
-  localStorage.setObj('overdueArray', overdueArray);
+const clearArray = (array) => {
+  while (array.length > 0) {
+    array.pop();
+  }
+};
+
+const insertArrayItem = (item) => {
+  taskArray.push(item);
 };
 
 window.onload = function () {
   const StorageTaskArray = localStorage.getObj('taskArray');
   const StorageCompleteTaskArray = localStorage.getObj('completeTaskArray');
   const StorageOverdueTaskArray = localStorage.getObj('overdueArray');
-
+  console.log(StorageTaskArray);
+  console.log(StorageCompleteTaskArray);
+  console.log(StorageOverdueTaskArray);
   if (StorageTaskArray.length > 0) {
-    taskArray = [];
+    console.log('There is');
+    clearArray(taskArray);
     for (let i = 0; i < StorageTaskArray.length; i += 1) {
       const date = new Date(StorageTaskArray[i].date);
       StorageTaskArray[i].date = date;
       Object.setPrototypeOf(StorageTaskArray[i], proto);
-      taskArray.push(StorageTaskArray[i]);
+      taskArray[i] = StorageTaskArray[i];
     }
   }
 
   if (StorageCompleteTaskArray.length > 0) {
-    completeTaskArray = [];
+    console.log('There is');
+    clearArray(completeTaskArray);
     for (let i = 0; i < StorageCompleteTaskArray.length; i += 1) {
       const date = new Date(StorageCompleteTaskArray[i].date);
       StorageCompleteTaskArray[i].date = date;
       Object.setPrototypeOf(StorageCompleteTaskArray[i], proto);
-      completeTaskArray.push(StorageCompleteTaskArray[i]);
+      completeTaskArray[i] = StorageCompleteTaskArray[i];
     }
   }
 
   if (StorageOverdueTaskArray.length > 0) {
-    console.log(StorageOverdueTaskArray);
-    console.log(overdueArray);
-    overdueArray = [];
+    console.log('There is');
+    clearArray(overdueArray);
     for (let i = 0; i < StorageOverdueTaskArray.length; i += 1) {
       const date = new Date(StorageOverdueTaskArray[i].date);
       StorageOverdueTaskArray[i].date = date;
       Object.setPrototypeOf(StorageOverdueTaskArray[i], proto);
-      overdueArray.push(StorageOverdueTaskArray[i]);
+      overdueArray[i] = StorageOverdueTaskArray[i];
     }
   }
-
   updateItems();
+};
+
+window.onbeforeunload = function () {
+  localStorage.setObj('taskArray', taskArray);
+  localStorage.setObj('completeTaskArray', completeTaskArray);
+  localStorage.setObj('overdueArray', overdueArray);
 };
 
 setInterval(() => {
@@ -145,6 +156,7 @@ const removeTask = (index) => {
 };
 
 const taskComplete = (index) => {
+  console.log(taskArray);
   const arrayItem = taskArray[index];
   taskArray[index].setProperty('status', true);
   taskArray.splice(index, 1);
@@ -274,8 +286,14 @@ const getTypeTasks = (string) => {
 
 const debug = () => {
   console.log(taskArray);
-  console.log(overdueArray);
   console.log(completeTaskArray);
+  console.log(overdueArray);
 };
+
+const testComplete = (i) => {
+  taskComplete(i);
+};
+
+newThing();
 
 window.debug = debug;
