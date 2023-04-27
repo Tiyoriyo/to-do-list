@@ -74,8 +74,6 @@ const clearArray = (array) => {
   }
 };
 
-localStorage.clear();
-
 window.onload = function () {
   let StorageTaskArray = localStorage.getObj('taskArray');
   let StorageCompleteTaskArray = localStorage.getObj('completeTaskArray');
@@ -93,11 +91,7 @@ window.onload = function () {
     StorageOverdueTaskArray = [];
   }
 
-  console.log(StorageTaskArray);
-  console.log(StorageCompleteTaskArray);
-  console.log(StorageOverdueTaskArray);
   if (StorageTaskArray.length > 0) {
-    console.log('There is');
     clearArray(taskArray);
     for (let i = 0; i < StorageTaskArray.length; i += 1) {
       const date = new Date(StorageTaskArray[i].date);
@@ -108,7 +102,6 @@ window.onload = function () {
   }
 
   if (StorageCompleteTaskArray.length > 0) {
-    console.log('There is');
     clearArray(completeTaskArray);
     for (let i = 0; i < StorageCompleteTaskArray.length; i += 1) {
       const date = new Date(StorageCompleteTaskArray[i].date);
@@ -119,7 +112,6 @@ window.onload = function () {
   }
 
   if (StorageOverdueTaskArray.length > 0) {
-    console.log('There is');
     clearArray(overdueArray);
     for (let i = 0; i < StorageOverdueTaskArray.length; i += 1) {
       const date = new Date(StorageOverdueTaskArray[i].date);
@@ -163,7 +155,6 @@ const createTask = (name, type, date, time, notes) => {
 };
 
 const taskComplete = (index) => {
-  console.log(taskArray);
   const arrayItem = taskArray[index];
   taskArray[index].setProperty('status', true);
   taskArray.splice(index, 1);
@@ -177,15 +168,9 @@ const taskUncomplete = (index) => {
   taskArray.push(arrayItem);
 };
 
-const getCompleteTasks = () => {
-  console.log(completeTaskArray);
-  return completeTaskArray;
-};
+const getCompleteTasks = () => completeTaskArray;
 
-const getAllTasks = () => {
-  console.log(taskArray);
-  return taskArray;
-};
+const getAllTasks = () => taskArray;
 
 const getTodayTasks = () => {
   const today = new Date();
@@ -200,7 +185,7 @@ const getTodayTasks = () => {
     }
     return false;
   });
-  console.log(todayTasks);
+
   return todayTasks;
 };
 
@@ -218,7 +203,7 @@ const getTomorrowTasks = () => {
     }
     return false;
   });
-  console.log(tomorrowTasks);
+
   return tomorrowTasks;
 };
 
@@ -229,7 +214,7 @@ const getLaterTasks = () => {
   tomorrowDate.setHours(0, 0, 0);
 
   const laterTasks = taskArray.filter((task) => task.getDateTime() > tomorrowDate);
-  console.log(laterTasks);
+
   return laterTasks;
 };
 
@@ -251,7 +236,6 @@ const getDueTasks = () => {
     return false;
   });
   const result = dueTasks.sort(compareDate);
-  console.log(result);
   return result;
 };
 
