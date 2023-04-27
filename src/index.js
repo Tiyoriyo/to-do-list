@@ -74,10 +74,25 @@ const clearArray = (array) => {
   }
 };
 
+localStorage.clear();
+
 window.onload = function () {
-  const StorageTaskArray = localStorage.getObj('taskArray');
-  const StorageCompleteTaskArray = localStorage.getObj('completeTaskArray');
-  const StorageOverdueTaskArray = localStorage.getObj('overdueArray');
+  let StorageTaskArray = localStorage.getObj('taskArray');
+  let StorageCompleteTaskArray = localStorage.getObj('completeTaskArray');
+  let StorageOverdueTaskArray = localStorage.getObj('overdueArray');
+
+  if (!StorageTaskArray) {
+    StorageTaskArray = [];
+  }
+
+  if (!StorageCompleteTaskArray) {
+    StorageCompleteTaskArray = [];
+  }
+
+  if (!StorageOverdueTaskArray) {
+    StorageOverdueTaskArray = [];
+  }
+
   console.log(StorageTaskArray);
   console.log(StorageCompleteTaskArray);
   console.log(StorageOverdueTaskArray);
@@ -265,11 +280,5 @@ const debug = () => {
   console.log(completeTaskArray);
   console.log(overdueArray);
 };
-
-const testComplete = (i) => {
-  taskComplete(i);
-};
-
-console.log(completeTaskArray);
 
 window.debug = debug;
