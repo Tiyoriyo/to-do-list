@@ -63,7 +63,7 @@ const updateItems = () => {
   for (let i = 0; i < taskArray.length; i += 1) {
     if (taskArray[i].getDateTime() <= new Date()) {
       overdueArray.push(taskArray[i]);
-      removeTask(i);
+      taskArray.splice(i, 1);
     }
   }
 };
@@ -72,10 +72,6 @@ const clearArray = (array) => {
   while (array.length > 0) {
     array.pop();
   }
-};
-
-const insertArrayItem = (item) => {
-  taskArray.push(item);
 };
 
 window.onload = function () {
@@ -149,10 +145,6 @@ const createTask = (name, type, date, time, notes) => {
   Object.setPrototypeOf(task, proto);
   task.date.setHours(0, 0, 0);
   taskArray.push(task);
-};
-
-const removeTask = (index) => {
-  taskArray.splice(index, 1);
 };
 
 const taskComplete = (index) => {
@@ -268,22 +260,6 @@ const getTypeTasks = (string) => {
   return result;
 };
 
-// const task1 = createTask('1', 'personal', new Date(2023, 3, 29));
-// const task2 = createTask('2', 'social', new Date(2023, 3, 25), '12:20');
-// const task3 = createTask('3', 'work', new Date(2024, 3, 2));
-// const task4 = createTask('4', 'social', new Date(2023, 3, 24));
-// const task5 = createTask('5', 'work', new Date(2033, 3, 2));
-// const task6 = createTask('6', 'work', new Date(2013, 3, 2));
-// const task7 = createTask('7', 'work', new Date(2023, 3, 22), '22:42');
-// const task8 = createTask('8', 'work', new Date(2023, 3, 22));
-// const task9 = createTask('9', 'social');
-// const timeInput = document.querySelector('#timeInput');
-// const button = document.querySelector('#submit');
-
-// button.addEventListener('click', () => {
-//   console.log(timeInput.value);
-// });
-
 const debug = () => {
   console.log(taskArray);
   console.log(completeTaskArray);
@@ -294,6 +270,6 @@ const testComplete = (i) => {
   taskComplete(i);
 };
 
-newThing();
+console.log(completeTaskArray);
 
 window.debug = debug;
