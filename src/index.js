@@ -2,6 +2,10 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import './style.css';
+import logo from './images/logo.png';
+
+const logoImg = document.querySelector('.logoImg');
+logoImg.src = logo;
 
 const {
   addDays, format, addYears, compareAsc, parse, getYear,
