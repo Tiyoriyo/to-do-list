@@ -1,6 +1,12 @@
+@font-face {
+    font-family: 'oswald';
+    src: url(./fonts/Oswald-VariableFont_wght.ttf);
+}
+
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Oswald';
 }
 
 body {
@@ -11,6 +17,12 @@ body {
     background-color: #fefdf9;
 }
 
+/* Universal Styles */
+
+.whiteFont {
+    color: #e6e0d5;
+}
+
 .mainContainer {
     display: flex;
     width: 1100px;
@@ -18,16 +30,21 @@ body {
     border: 1px solid black;
 }
 
+/* Sidebar CSS Styles */
 
-
-.containerLeft { /* Sidebar CSS Styles */
+.containerLeft { 
     display: flex;
     flex-direction: column;
     flex: 1 1 25%;
     background-color: #403D39;
 }
 
-
+.logoImg {
+    align-self: center;
+    width: 80%;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
 
 .containerRight {
     display: flex;
