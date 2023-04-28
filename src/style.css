@@ -62,6 +62,7 @@ body {
     align-items: flex-end;
     margin-right: 15px;
     margin-bottom: 30px;
+    margin-top: 5px;
     list-style-type: none;
     font-size: 20px;
 }
