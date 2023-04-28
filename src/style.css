@@ -72,7 +72,7 @@ body {
 
 /* ^^^ Sidebar CSS Styles ^^^ */
 
-
+/* vvv Content Container CSS Styles vvv */
 
 .containerRight {
     display: flex;
@@ -80,4 +80,12 @@ body {
     flex: 1 1 80%;
     background-color: rgb(204, 197, 185);
 }
+
+.inputContainer {
+    display: flex;
+}
+
+
+
+/* ^^^ Content Container CSS Styles VVV */
 
