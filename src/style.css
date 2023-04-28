@@ -28,6 +28,7 @@ body {
     width: 1100px;
     height: 650px;
     border-radius: 15px;
+    box-shadow: 0 0 15px rgba(111, 107, 101, 0.3);
     overflow: hidden;
 }
 
@@ -51,6 +52,6 @@ body {
     display: flex;
     flex-direction: column;
     flex: 1 1 80%;
-    background-color: #CCC5B9;
+    background-color: rgb(204, 197, 185);
 }
 
