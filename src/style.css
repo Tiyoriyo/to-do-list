@@ -18,12 +18,21 @@ body {
     border: 1px solid black;
 }
 
-.containerLeft {
+
+
+.containerLeft { /* Sidebar CSS Styles */
+    display: flex;
+    flex-direction: column;
     flex: 1 1 25%;
     background-color: #403D39;
 }
 
+
+
 .containerRight {
+    display: flex;
+    flex-direction: column;
     flex: 1 1 80%;
     background-color: #CCC5B9;
 }
+
