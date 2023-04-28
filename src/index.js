@@ -3,14 +3,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import './style.css';
 import logo from './images/logo.png';
+import dateImg from './images/date.png';
+import timeImg from './images/time.png';
 
 const logoImg = document.querySelector('.logoImg');
+const dateIcon = document.querySelector('.dateIcon');
+const timeIcon = document.querySelector('.timeIcon');
 logoImg.src = logo;
-
-const {
-  addDays, format, addYears, compareAsc, parse, getYear,
-// eslint-disable-next-line import/no-extraneous-dependencies
-} = require('date-fns');
+dateIcon.src = dateImg;
+timeIcon.src = timeImg;
 
 Storage.prototype.setObj = function (key, obj) {
   return this.setItem(key, JSON.stringify(obj));
