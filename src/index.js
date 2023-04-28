@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line import/no-extraneous-dependencies
+import './style.css';
+
 const {
   addDays, format, addYears, compareAsc, parse, getYear,
 // eslint-disable-next-line import/no-extraneous-dependencies
