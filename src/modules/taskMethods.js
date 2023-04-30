@@ -1,4 +1,8 @@
 /* eslint-disable no-unused-vars */
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { format } from 'date-fns';
+
 /* eslint-disable func-names */
 Storage.prototype.setObj = function (key, obj) {
   return this.setItem(key, JSON.stringify(obj));
@@ -50,6 +54,32 @@ const proto = {
     const dateTimeCombined = new Date(this.date);
     dateTimeCombined.setHours(hourString, minuteString, 0);
     return dateTimeCombined;
+  },
+
+  getFormattedDate() {
+    return format(this.getDateTime(), 'P');
+  },
+
+  getFormattedTime() {
+    return format(this.getDateTime(), 'p');
+  },
+
+  getType() {
+    let result;
+    switch (this.type) {
+      case 'social':
+        result = 'Social';
+        break;
+      case 'work':
+        result = 'Work';
+        break;
+      case 'personal':
+        result = 'Personal';
+        break;
+      default:
+        break;
+    }
+    return result;
   },
 };
 
@@ -123,10 +153,6 @@ window.onbeforeunload = function () {
   localStorage.setObj('overdueArray', overdueArray);
 };
 
-setInterval(() => {
-  updateItems();
-}, 1);
-
 const Task = (name, type, date, time, notes, status) => ({
   name, priority: false, type, date, time, notes, status,
 });
@@ -185,6 +211,8 @@ const getTodayTasks = () => {
 };
 
 export default function getTaskArray() { return taskArray; }
+
+export function getOverdueArray() { return overdueArray; }
 
 const getTomorrowTasks = () => {
   const today = new Date();

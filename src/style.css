@@ -111,6 +111,19 @@ body {
     margin-left: 15px;
 }
 
+.contentContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.lowerContent {
+    display: flex;
+    font-size: 12px;
+    font-style: italic;
+}
+
 .inputContainer {
     display: flex;
     align-items: center;

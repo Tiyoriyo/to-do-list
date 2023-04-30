@@ -1,12 +1,12 @@
+/* eslint-disable no-unused-vars */
 import './style.css';
 import logo from './images/logo.png';
-
 import starFill from './images/starFill.png';
 import starNoFill from './images/starNoFill.png';
-
 import typeImg from './images/edit.png';
 import dateImg from './images/date.png';
 import timeImg from './images/time.png';
+import getTaskArray, { getOverdueArray } from './modules/taskMethods';
 
 const logoImg = document.querySelector('.logoImg');
 const typeIcon = document.querySelector('.typeIcon');
@@ -17,7 +17,19 @@ typeIcon.src = typeImg;
 dateIcon.src = dateImg;
 timeIcon.src = timeImg;
 
+const taskArray = getTaskArray();
+const overdueArray = getOverdueArray();
 const taskContainer = document.querySelector('.taskContainer');
+
+const updateItems = () => {
+  for (let i = 0; i < taskArray.length; i += 1) {
+    if (taskArray[i].getDateTime() <= new Date()) {
+      overdueArray.push(taskArray[i]);
+      taskArray.splice(i, 1);
+      renderAllTasks();
+    }
+  }
+};
 
 const addCheckbox = () => {
   const htmlString = `
@@ -35,11 +47,13 @@ const addCheckbox = () => {
 const addItemContent = (i) => {
   const upperContent = document.createElement('div');
   const lowerContent = document.createElement('div');
+  upperContent.classList.add('upperContent');
+  lowerContent.classList.add('lowerContent');
 
-  const name = document.createElement('p');
-  const type = document.createElement('p');
-  const date = document.createElement('p');
-  const time = document.createElement('p');
+  upperContent.innerHTML = `${taskArray[i].name}`;
+  lowerContent.innerHTML = `${taskArray[i].getType()} - ${taskArray[i].getFormattedDate()} - ${taskArray[i].getFormattedTime()}`;
+
+  return upperContent.outerHTML + lowerContent.outerHTML;
 };
 
 const renderTask = (i) => {
@@ -56,10 +70,27 @@ const renderTask = (i) => {
   cancelContainer.classList.add('cancelContainer');
 
   checkboxContainer.innerHTML = addCheckbox();
-  contentContainer.innerHTML = addItemContent();
+  contentContainer.innerHTML = addItemContent(i);
 
   mainContainer.append(checkboxContainer, contentContainer, priorityContainer, cancelContainer);
   return mainContainer;
 };
 
-taskContainer.append(renderTask(), renderTask());
+const renderAllTasks = () => {
+  taskContainer.innerHTML = '';
+  for (let i = 0; i < taskArray.length; i += 1) {
+    taskContainer.append(renderTask(i));
+  }
+};
+
+renderAllTasks();
+
+setInterval(() => {
+  updateItems();
+}, 1);
+
+const debug = () => {
+  console.log(taskArray);
+};
+
+window.debug = debug;
