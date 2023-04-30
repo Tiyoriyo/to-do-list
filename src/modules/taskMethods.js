@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable func-names */
 Storage.prototype.setObj = function (key, obj) {
   return this.setItem(key, JSON.stringify(obj));
@@ -67,7 +68,7 @@ const clearArray = (array) => {
   }
 };
 
-window.onload = function () {
+(() => {
   let StorageTaskArray = localStorage.getObj('taskArray');
   let StorageCompleteTaskArray = localStorage.getObj('completeTaskArray');
   let StorageOverdueTaskArray = localStorage.getObj('overdueArray');
@@ -114,7 +115,7 @@ window.onload = function () {
     }
   }
   updateItems();
-};
+})();
 
 window.onbeforeunload = function () {
   localStorage.setObj('taskArray', taskArray);
@@ -145,6 +146,7 @@ const createTask = (name, type, date, time, notes) => {
   Object.setPrototypeOf(task, proto);
   task.date.setHours(0, 0, 0);
   taskArray.push(task);
+  console.log(taskArray);
 };
 
 const taskComplete = (index) => {
@@ -181,6 +183,8 @@ const getTodayTasks = () => {
 
   return todayTasks;
 };
+
+export default function getTaskArray() { return taskArray; }
 
 const getTomorrowTasks = () => {
   const today = new Date();
