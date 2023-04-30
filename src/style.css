@@ -95,13 +95,27 @@ body {
     display: flex;
     flex-direction: column;
     flex: auto;
+    gap: 5px;
+}
+
+.itemContainer {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: #e6e0d5;
+}
+
+.checkboxContainer {
+    margin-left: 15px;
 }
 
 .inputContainer {
     display: flex;
     align-items: center;
     background-color: #928c83;
-    width: 80%;
+    width: 60%;
     height: 50px;
     border-radius: 10px;
     gap: 15px;
@@ -111,9 +125,10 @@ body {
 
 .addButton {
     margin-left: 15px;
-    margin-bottom: 1px;
-    font-size: 50px;
-    font-weight: bold;
+    margin-top: 2px;
+    font-size: 42px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
 }
 
 .inputText {
@@ -122,6 +137,10 @@ body {
     border: none;
     font-size: 16px;
     width: 100%;
+}
+
+.inputText::placeholder {
+    color: white;
 }
 
 .inputText:focus {
@@ -135,7 +154,7 @@ body {
     gap: 10px;
 }
 
-.dateIcon, .timeIcon {   
+.typeIcon, .dateIcon, .timeIcon {   
     width: 24px;
 }
 
