@@ -68,7 +68,7 @@ const clearArray = (array) => {
   }
 };
 
-(() => {
+const loadTaskArrays = (() => {
   let StorageTaskArray = localStorage.getObj('taskArray');
   let StorageCompleteTaskArray = localStorage.getObj('completeTaskArray');
   let StorageOverdueTaskArray = localStorage.getObj('overdueArray');
