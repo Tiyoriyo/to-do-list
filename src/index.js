@@ -70,16 +70,16 @@ const addCheckbox = (arrayType, i) => {
   return mainDiv;
 };
 
-const addItemContent = (arrayType, i) => {
+const addItemContent = (array, i) => {
   const upperContent = document.createElement('div');
   const lowerContent = document.createElement('div');
   upperContent.classList.add('whiteFont');
   lowerContent.classList.add('lowerContent', 'whiteFont');
 
-  upperContent.innerHTML = `${arrayType[i].name}`;
-  lowerContent.innerHTML = `${arrayType[i].getType()} - ${arrayType[i].getFormattedDate()} - ${arrayType[i].getFormattedTime()}`;
+  upperContent.innerHTML = `${array[i].name}`;
+  lowerContent.innerHTML = `${array[i].getType()} - ${array[i].getFormattedDate()} - ${array[i].getFormattedTime()}`;
 
-  if (arrayType === completeTaskArray) {
+  if (array === completeTaskArray) {
     upperContent.classList.add('completed');
     lowerContent.classList.add('completed');
   }

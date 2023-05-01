@@ -77,6 +77,7 @@ const proto = {
         result = 'Personal';
         break;
       default:
+        result = 'General';
         break;
     }
     return result;
@@ -157,17 +158,32 @@ const Task = (name, type, date, time, notes, status) => ({
   name, priority: false, type, date, time, notes, status,
 });
 
-const createTask = (name, type, date, time, notes) => {
+const createTask = (inputName, inputType, inputDate, inputTime) => {
   let task;
-  if (!date && !time) {
-    task = Task(name, type, new Date(), '24:00', notes);
-  } else if (date && !time) {
-    task = Task(name, type, date, '12:00', notes);
-  } else if (!date && time) {
-    task = Task(name, type, new Date(), time, notes);
-  } else {
-    task = Task(name, type, date, time, notes);
+  const name = inputName;
+  const type = inputType || 'General';
+  const date = inputDate || new Date();
+  let time;
+
+  if (inputTime) {
+    time = inputTime;
+  } else if (!inputTime && !inputDate) {
+    time = '24:00';
+  } else if (!inputTime && inputDate) {
+    time = '12:00';
   }
+
+  //   if (!date && !time) {
+  //     task = Task(name, type, new Date(), '24:00');
+  //   } else if (date && !time) {
+  //     task = Task(name, type, date, '12:00');
+  //   } else if (!date && time) {
+  //     task = Task(name, type, new Date(), time);
+  //   } else {
+  //     task = Task(name, type, date, time);
+  //   }
+
+  task = Task(name, type, date, time);
 
   Object.setPrototypeOf(task, proto);
   task.date.setHours(0, 0, 0);
