@@ -172,23 +172,27 @@ let type;
 let date;
 let time;
 
+const resetInputs = () => {
+  inputTextField.value = '';
+  type = undefined;
+  date = undefined;
+  time = undefined;
+};
+
 const addButton = document.querySelector('.addButton');
 addButton.addEventListener('click', () => {
   if (inputTextField.value.length > 0) {
-    createTask(inputTextField.value);
-    inputTextField.value = '';
+    createTask(inputTextField.value, type, date, time);
+    resetInputs();
     render(mode);
   }
 });
 
 const inputTextField = document.querySelector('.inputText');
 inputTextField.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
+  if (e.key === 'Enter' && inputTextField.value.length > 0) {
     createTask(inputTextField.value, type, date, time);
-    inputTextField.value = '';
-    type = undefined;
-    date = undefined;
-    time = undefined;
+    resetInputs();
     render(mode);
   }
 });
@@ -212,16 +216,12 @@ typeInput.addEventListener('click', () => {
     `,
     labelOk: 'Confirm',
     onOpen: () => {
-      const select = document.querySelector('.popupSelect');
-      if (!type) {
-        select.value = 'none';
-      } else {
-        select.value = type;
-      }
+      const input = document.querySelector('.popupSelect');
+      if (type) { input.value = type; }
     },
     onSubmit: () => {
-      const select = document.querySelector('.popupSelect');
-      type = select.value;
+      const input = document.querySelector('.popupSelect');
+      type = input.value;
     },
     additionalButtonHolderClass: 'popupButtons',
     additionalButtonCancelClass: 'cancelBtn',
@@ -237,18 +237,14 @@ dateInput.addEventListener('click', () => {
     <button class="clearBtn">Clear</button>`,
     labelOk: 'Confirm',
     onOpen: () => {
-      const datePicker = document.querySelector('.popupDate');
+      const input = document.querySelector('.popupDate');
       const clearBtn = document.querySelector('.clearBtn');
-      if (date) { datePicker.value = format(date, 'yyyy-MM-dd'); }
-      clearBtn.addEventListener('click', () => { datePicker.value = ''; });
+      if (date) { input.value = format(date, 'yyyy-MM-dd'); } // Formats date to be compatible as date input Value
+      clearBtn.addEventListener('click', () => { input.value = ''; });
     },
     onSubmit: () => {
       const input = document.querySelector('.popupDate');
-      if (!input.value) {
-        date = undefined;
-      } else {
-        date = new Date(input.value);
-      }
+      if (input.value) { date = new Date(input.value); }
     },
     additionalButtonHolderClass: 'popupButtons',
     additionalButtonCancelClass: 'cancelBtn',
@@ -265,7 +261,6 @@ timeInput.addEventListener('click', () => {
     labelOk: 'Confirm',
     onOpen: () => {
       const input = document.querySelector('.popupTime');
-      const clearBtn = document.querySelector('.clearBtn');
       input.value = time;
     },
     onSubmit: () => {
