@@ -104,6 +104,11 @@ body {
     gap: 5px;
 }
 
+.taskContainerTitle {
+    color: #53504a;
+    margin-top: 30px;
+}
+
 .itemContainer {
     display: flex;
     align-items: center;

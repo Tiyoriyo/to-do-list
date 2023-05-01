@@ -25,7 +25,7 @@ const updateItems = () => {
     if (taskArray[i].getDateTime() <= new Date()) {
       overdueArray.push(taskArray[i]);
       taskArray.splice(i, 1);
-      renderAllTasks();
+      render(mode);
     }
   }
 };
