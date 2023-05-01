@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import './style.css';
 import popupS from 'popups';
+import { format } from 'date-fns';
 import logo from './images/logo.png';
 import starFill from './images/starFill.png';
 import starNoFill from './images/starNoFill.png';
@@ -200,12 +201,14 @@ typeInput.addEventListener('click', () => {
   popupS.window({
     mode: 'confirm',
     content: `
-    <select class="popupSelect">
-      <option value='none'>None</option>
-      <option value='personal'>Personal</option>
-      <option value='work'>Work</option>
-      <option value='social'>Social</option>
-    </select>
+    <div class="popupContainer">
+      <select class="popupSelect">
+        <option value='none'>None</option>
+        <option value='personal'>Personal</option>
+        <option value='work'>Work</option>
+        <option value='social'>Social</option>
+      </select>
+    </div>
     `,
     labelOk: 'Confirm',
     onOpen: () => {
@@ -223,7 +226,6 @@ typeInput.addEventListener('click', () => {
     additionalButtonHolderClass: 'popupButtons',
     additionalButtonCancelClass: 'cancelBtn',
     additionalButtonOkClass: 'confirmBtn',
-
   });
 });
 
@@ -237,7 +239,7 @@ dateInput.addEventListener('click', () => {
     onOpen: () => {
       const datePicker = document.querySelector('.popupDate');
       const clearBtn = document.querySelector('.clearBtn');
-      datePicker.value = date;
+      if (date) { datePicker.value = format(date, 'yyyy-MM-dd'); }
       clearBtn.addEventListener('click', () => { datePicker.value = ''; });
     },
     onSubmit: () => {
@@ -251,7 +253,28 @@ dateInput.addEventListener('click', () => {
     additionalButtonHolderClass: 'popupButtons',
     additionalButtonCancelClass: 'cancelBtn',
     additionalButtonOkClass: 'confirmBtn',
+  });
+});
 
+const timeInput = document.querySelector('.timeIcon');
+timeInput.addEventListener('click', () => {
+  popupS.window({
+    mode: 'confirm',
+    content: `<input type="time" class="popupTime">
+    <button class="clearBtn">Clear</button>`,
+    labelOk: 'Confirm',
+    onOpen: () => {
+      const input = document.querySelector('.popupTime');
+      const clearBtn = document.querySelector('.clearBtn');
+      input.value = time;
+    },
+    onSubmit: () => {
+      const input = document.querySelector('.popupTime');
+      time = input.value;
+    },
+    additionalButtonHolderClass: 'popupButtons',
+    additionalButtonCancelClass: 'cancelBtn',
+    additionalButtonOkClass: 'confirmBtn',
   });
 });
 
