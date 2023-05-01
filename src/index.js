@@ -6,7 +6,7 @@ import starNoFill from './images/starNoFill.png';
 import typeImg from './images/edit.png';
 import dateImg from './images/date.png';
 import timeImg from './images/time.png';
-import getTaskArray, { getOverdueArray } from './modules/taskMethods';
+import getTaskArray, { getOverdueArray, getCompleteTasks } from './modules/taskMethods';
 
 const logoImg = document.querySelector('.logoImg');
 const typeIcon = document.querySelector('.typeIcon');
@@ -18,6 +18,7 @@ dateIcon.src = dateImg;
 timeIcon.src = timeImg;
 
 const taskArray = getTaskArray();
+const completeTaskArray = getCompleteTasks();
 const overdueArray = getOverdueArray();
 const taskContainer = document.querySelector('.taskContainer');
 
@@ -32,31 +33,41 @@ const updateItems = () => {
 };
 
 const addCheckbox = () => {
-  const htmlString = `
-  <div class="pretty p-default p-curve p-pulse p-bigger">
-    <input type="checkbox" />
-    <div class="state">
-      <label></label>
-    </div>
-  </div> 
-  `;
+  const mainDiv = document.createElement('div');
+  const input = document.createElement('input');
+  const subDiv = document.createElement('div');
+  const label = document.createElement('label');
 
-  return htmlString;
+  mainDiv.className = 'pretty p-default p-curve p-pulse p-bigger';
+  input.type = 'checkbox';
+  subDiv.classList.add('state');
+
+  mainDiv.append(input, subDiv);
+  subDiv.append(label);
+  return mainDiv;
 };
 
-const addItemContent = (i) => {
+const addItemContent = (arrayType, i) => {
   const upperContent = document.createElement('div');
   const lowerContent = document.createElement('div');
   upperContent.classList.add('upperContent');
   lowerContent.classList.add('lowerContent');
 
-  upperContent.innerHTML = `${taskArray[i].name}`;
-  lowerContent.innerHTML = `${taskArray[i].getType()} - ${taskArray[i].getFormattedDate()} - ${taskArray[i].getFormattedTime()}`;
+  upperContent.innerHTML = `${arrayType[i].name}`;
+  lowerContent.innerHTML = `${arrayType[i].getType()} - ${arrayType[i].getFormattedDate()} - ${arrayType[i].getFormattedTime()}`;
 
   return upperContent.outerHTML + lowerContent.outerHTML;
 };
 
-const renderTask = (i) => {
+const addPriorityImg = () => {
+  const star = new Image();
+  star.src = starNoFill;
+  star.classList.add('star');
+
+  return star.outerHTML;
+};
+
+const renderTask = (arrayType, i) => {
   const mainContainer = document.createElement('div');
   const checkboxContainer = document.createElement('div');
   const contentContainer = document.createElement('div');
@@ -66,11 +77,13 @@ const renderTask = (i) => {
   mainContainer.classList.add('itemContainer');
   checkboxContainer.classList.add('checkboxContainer');
   contentContainer.classList.add('contentContainer');
-  priorityContainer.classList.add('priorityContainer');
-  cancelContainer.classList.add('cancelContainer');
+  priorityContainer.classList.add('priorityContainer', 'preventSelect');
+  cancelContainer.classList.add('cancelContainer', 'preventSelect');
 
-  checkboxContainer.innerHTML = addCheckbox();
-  contentContainer.innerHTML = addItemContent(i);
+  checkboxContainer.appendChild(addCheckbox());
+  contentContainer.innerHTML = addItemContent(arrayType, i);
+  priorityContainer.innerHTML = addPriorityImg(arrayType, i);
+  cancelContainer.innerHTML = '&#10005;';
 
   mainContainer.append(checkboxContainer, contentContainer, priorityContainer, cancelContainer);
   return mainContainer;
@@ -78,12 +91,26 @@ const renderTask = (i) => {
 
 const renderAllTasks = () => {
   taskContainer.innerHTML = '';
-  for (let i = 0; i < taskArray.length; i += 1) {
-    taskContainer.append(renderTask(i));
+  if (taskArray.length > 0) {
+    const title = document.createElement('h2');
+    title.textContent = 'Tasks Due';
+    taskContainer.append(title);
+    for (let i = 0; i < taskArray.length; i += 1) {
+      taskContainer.append(renderTask(taskArray, i));
+    }
+  }
+
+  if (completeTaskArray.length > 0) {
+    const title = document.createElement('h2');
+    title.textContent = 'Completed Tasks';
+    taskContainer.append(title);
+    for (let i = 0; i < completeTaskArray.length; i += 1) {
+      taskContainer.append(renderTask(completeTaskArray, i));
+    }
   }
 };
 
-renderAllTasks();
+window.onload = renderAllTasks();
 
 setInterval(() => {
   updateItems();

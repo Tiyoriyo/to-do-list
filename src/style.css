@@ -95,16 +95,17 @@ body {
     display: flex;
     flex-direction: column;
     flex: auto;
+    width: 65%;
     gap: 5px;
 }
 
 .itemContainer {
     display: flex;
     align-items: center;
-    width: 300px;
+    width: 100%;
     height: 50px;
     border-radius: 5px;
-    background-color: #e6e0d5;
+    background-color: #938e84;
 }
 
 .checkboxContainer {
@@ -118,10 +119,33 @@ body {
     height: 100%;
 }
 
+.upperContent, .lowerContent {
+    color: white;
+}
+
 .lowerContent {
     display: flex;
     font-size: 12px;
     font-style: italic;
+}
+
+.priorityContainer {
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+}
+
+.star {
+    width: 28px;
+}
+
+.cancelContainer {
+    display: flex;
+    font-size: 10px;
+    color: white;
+    align-self: flex-start;
+    margin-right: 5px;
+    margin-top: 1px;
 }
 
 .inputContainer {
