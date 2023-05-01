@@ -159,7 +159,6 @@ const Task = (name, type, date, time, notes, status) => ({
 });
 
 const createTask = (inputName, inputType, inputDate, inputTime) => {
-  let task;
   const name = inputName;
   const type = inputType || 'General';
   const date = inputDate || new Date();
@@ -183,7 +182,7 @@ const createTask = (inputName, inputType, inputDate, inputTime) => {
   //     task = Task(name, type, date, time);
   //   }
 
-  task = Task(name, type, date, time);
+  const task = Task(name, type, date, time);
 
   Object.setPrototypeOf(task, proto);
   task.date.setHours(0, 0, 0);
