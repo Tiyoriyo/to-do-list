@@ -120,6 +120,10 @@ const renderTask = (array, i) => {
   contentContainer.innerHTML = addItemContent(array, i);
   priorityContainer.appendChild(addPriorityImg(array, i));
   cancelContainer.innerHTML = '&#10005;';
+  cancelContainer.addEventListener('click', () => {
+    array.splice(i, 1);
+    render(mode);
+  });
 
   return mainContainer;
 };

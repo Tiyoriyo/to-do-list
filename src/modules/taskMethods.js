@@ -187,7 +187,6 @@ export function createTask(inputName, inputType, inputDate, inputTime) {
   Object.setPrototypeOf(task, proto);
   task.date.setHours(0, 0, 0);
   taskArray.push(task);
-  console.log(taskArray);
 }
 
 export function taskComplete(index) {
