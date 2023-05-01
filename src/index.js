@@ -145,6 +145,7 @@ setInterval(() => {
 
 const debug = () => {
   console.log(taskArray);
+  console.log(completeTaskArray);
 };
 
 window.debug = debug;

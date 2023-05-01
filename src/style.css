@@ -35,7 +35,7 @@ body {
 
 .completed {
     text-decoration: line-through;
-    color: rgb(196, 196, 196);
+    color: #bcb6ab;
 }
 
 .mainContainer {
@@ -108,7 +108,7 @@ body {
     display: flex;
     align-items: center;
     width: 100%;
-    height: 50px;
+    height: 45px;
     border-radius: 5px;
     background-color: #938e84;
 }
@@ -167,7 +167,7 @@ body {
     margin-top: 2px;
     font-size: 42px;
     font-family: Arial, Helvetica, sans-serif;
-    color: white;
+    color: #e6e0d5;
 }
 
 .inputText {
@@ -176,11 +176,11 @@ body {
     border: none;
     font-size: 16px;
     width: 100%;
-    color: white;
+    color: #e6e0d5;
 }
 
 .inputText::placeholder {
-    color: white;
+    color: #e6e0d5;
 }
 
 .inputText:focus {
