@@ -20,11 +20,6 @@ typeIcon.src = typeImg;
 dateIcon.src = dateImg;
 timeIcon.src = timeImg;
 
-const taskArray = getTaskArray();
-const completeTaskArray = getCompleteTasks();
-const overdueArray = getOverdueArray();
-const taskContainer = document.querySelector('.taskContainer');
-
 const updateItems = () => {
   for (let i = 0; i < taskArray.length; i += 1) {
     if (taskArray[i].getDateTime() <= new Date()) {
@@ -34,6 +29,12 @@ const updateItems = () => {
     }
   }
 };
+
+const taskArray = getTaskArray();
+const completeTaskArray = getCompleteTasks();
+const overdueArray = getOverdueArray();
+
+const taskContainer = document.querySelector('.taskContainer');
 
 const addCheckbox = (arrayType, i) => {
   const mainDiv = document.createElement('div');
@@ -116,7 +117,7 @@ const renderTask = (arrayType, i) => {
   return mainContainer;
 };
 
-const renderAllTasks = () => {
+const renderAll = () => {
   taskContainer.innerHTML = '';
   if (taskArray.length > 0) {
     const title = document.createElement('h2');
@@ -137,7 +138,17 @@ const renderAllTasks = () => {
   }
 };
 
-window.onload = renderAllTasks();
+const render = (filter) => {
+  switch (filter) {
+    case 'all':
+      renderAll();
+      break;
+    default:
+      break;
+  }
+};
+
+window.onload = render('all');
 
 setInterval(() => {
   updateItems();
