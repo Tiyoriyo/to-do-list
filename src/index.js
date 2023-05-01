@@ -87,20 +87,32 @@ const addItemContent = (arrayType, i) => {
   return upperContent.outerHTML + lowerContent.outerHTML;
 };
 
-const addPriorityImg = () => {
+const addPriorityImg = (array, i) => {
   const star = new Image();
-  star.src = starNoFill;
+  star.src = array[i].priority ? starFill : starNoFill;
   star.classList.add('star');
 
-  return star.outerHTML;
+  star.addEventListener('click', (e) => {
+    if (!array[i].priority) {
+      array[i].setProperty('priority');
+      star.src = starFill;
+    } else if (array[i].priority) {
+      array[i].setProperty('priority');
+      e.target.src = starNoFill;
+    }
+  });
+
+  return star;
 };
 
-const renderTask = (arrayType, i) => {
+const renderTask = (array, i) => {
   const mainContainer = document.createElement('div');
+
   const checkboxContainer = document.createElement('div');
   const contentContainer = document.createElement('div');
   const priorityContainer = document.createElement('div');
   const cancelContainer = document.createElement('div');
+  mainContainer.append(checkboxContainer, contentContainer, priorityContainer, cancelContainer);
 
   mainContainer.classList.add('itemContainer');
   checkboxContainer.classList.add('checkboxContainer');
@@ -108,17 +120,16 @@ const renderTask = (arrayType, i) => {
   priorityContainer.classList.add('priorityContainer', 'preventSelect');
   cancelContainer.classList.add('cancelContainer', 'preventSelect');
 
-  checkboxContainer.appendChild(addCheckbox(arrayType, i));
-  contentContainer.innerHTML = addItemContent(arrayType, i);
-  priorityContainer.innerHTML = addPriorityImg(arrayType, i);
+  checkboxContainer.appendChild(addCheckbox(array, i));
+  contentContainer.innerHTML = addItemContent(array, i);
+  priorityContainer.appendChild(addPriorityImg(array, i));
   cancelContainer.innerHTML = '&#10005;';
 
-  mainContainer.append(checkboxContainer, contentContainer, priorityContainer, cancelContainer);
   return mainContainer;
 };
 
 const renderAll = () => {
-  if (taskArray) {
+  if (taskArray.length) {
     const title = document.createElement('h2');
     taskContainer.append(title);
     title.classList.add('taskContainerTitle');
@@ -128,7 +139,7 @@ const renderAll = () => {
     }
   }
 
-  if (completeTaskArray) {
+  if (completeTaskArray.length) {
     const title = document.createElement('h2');
     taskContainer.append(title);
     title.classList.add('taskContainerTitle');

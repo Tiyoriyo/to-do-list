@@ -137,7 +137,8 @@ body {
 }
 
 .star {
-    width: 28px;
+    width: 24px;
+    cursor: pointer;
 }
 
 .cancelContainer {
