@@ -36,7 +36,7 @@ const updateItems = () => {
 const taskArray = getTaskArray();
 const completeTaskArray = getCompleteTasks();
 const overdueArray = getOverdueArray();
-const mode = 'all';
+let mode = 'all';
 
 const taskContainer = document.querySelector('.taskContainer');
 
@@ -138,10 +138,10 @@ const renderTask = (array, i) => {
         <div class="popupInputfield">
           <label class="popupLabel">Type</label>
           <select class="popupSelect">
-            <option value='General'>None</option>
-            <option value='Personal'>Personal</option>
-            <option value='Work'>Work</option>
-            <option value='Social'>Social</option>
+            <option value='general'>None</option>
+            <option value='personal'>Personal</option>
+            <option value='work'>Work</option>
+            <option value='social'>Social</option>
           </select>
         </div>
         <div class="popupInputfield">
@@ -167,12 +167,27 @@ const renderTask = (array, i) => {
         const type = document.querySelector('.popupSelect');
         const date = document.querySelector('.popupDate');
         const time = document.querySelector('.popupTime');
-        const notes = document.querySelector('.popupNotes');
+        const notes = document.querySelector('.popupTextArea');
 
         name.value = array[i].name;
-        type.value = array[i].getType();
+        type.value = array[i].getType().toLowerCase();
         date.value = format(array[i].getDateTime(), 'yyyy-MM-dd');
         time.value = array[i].getTime();
+        notes.value = array[i].notes;
+      },
+      onSubmit: () => {
+        const name = document.querySelector('.popupName');
+        const type = document.querySelector('.popupSelect');
+        const date = document.querySelector('.popupDate');
+        const time = document.querySelector('.popupTime');
+        const notes = document.querySelector('.popupTextArea');
+
+        array[i].setProperty('name', name.value);
+        array[i].setProperty('type', type.value);
+        array[i].setProperty('date', new Date(date.value));
+        array[i].setProperty('time', time.value);
+        array[i].setProperty('notes', notes.value);
+        render();
       },
     });
   });
@@ -208,9 +223,9 @@ const renderAll = () => {
   }
 };
 
-const render = (filter) => {
+const render = () => {
   taskContainer.innerHTML = '';
-  switch (filter) {
+  switch (mode) {
     case 'all':
       renderAll();
       break;
@@ -331,7 +346,7 @@ timeInput.addEventListener('click', () => {
 
 // ------------------ InputField Scripts ------------------
 
-window.onload = render(mode);
+window.onload = render();
 
 const debug = () => {
   console.log(taskArray);
