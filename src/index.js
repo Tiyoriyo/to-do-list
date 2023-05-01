@@ -118,20 +118,21 @@ const renderTask = (arrayType, i) => {
 };
 
 const renderAll = () => {
-  taskContainer.innerHTML = '';
-  if (taskArray.length > 0) {
+  if (taskArray) {
     const title = document.createElement('h2');
-    title.textContent = 'Tasks Due';
     taskContainer.append(title);
+    title.classList.add('taskContainerTitle');
+    title.textContent = 'Tasks Due';
     for (let i = 0; i < taskArray.length; i += 1) {
       taskContainer.append(renderTask(taskArray, i));
     }
   }
 
-  if (completeTaskArray.length > 0) {
+  if (completeTaskArray) {
     const title = document.createElement('h2');
-    title.textContent = 'Completed Tasks';
     taskContainer.append(title);
+    title.classList.add('taskContainerTitle');
+    title.textContent = 'Completed Tasks';
     for (let i = 0; i < completeTaskArray.length; i += 1) {
       taskContainer.append(renderTask(completeTaskArray, i));
     }
@@ -139,6 +140,7 @@ const renderAll = () => {
 };
 
 const render = (filter) => {
+  taskContainer.innerHTML = '';
   switch (filter) {
     case 'all':
       renderAll();
