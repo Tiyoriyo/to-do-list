@@ -196,6 +196,36 @@ inputTextField.addEventListener('focus', () => { inputTextField.placeholder = 'T
 inputTextField.addEventListener('focusout', () => { inputTextField.placeholder = 'Add a task'; });
 
 const typeInput = document.querySelector('.typeIcon');
+typeInput.addEventListener('click', () => {
+  popupS.window({
+    mode: 'confirm',
+    content: `
+    <select class="popupSelect">
+      <option value='none'>None</option>
+      <option value='personal'>Personal</option>
+      <option value='work'>Work</option>
+      <option value='social'>Social</option>
+    </select>
+    `,
+    labelOk: 'Confirm',
+    onOpen: () => {
+      const select = document.querySelector('.popupSelect');
+      if (!type) {
+        select.value = 'none';
+      } else {
+        select.value = type;
+      }
+    },
+    onSubmit: () => {
+      const select = document.querySelector('.popupSelect');
+      type = select.value;
+    },
+    additionalButtonHolderClass: 'popupButtons',
+    additionalButtonCancelClass: 'cancelBtn',
+    additionalButtonOkClass: 'confirmBtn',
+
+  });
+});
 
 const dateInput = document.querySelector('.dateIcon');
 dateInput.addEventListener('click', () => {
@@ -212,7 +242,11 @@ dateInput.addEventListener('click', () => {
     },
     onSubmit: () => {
       const input = document.querySelector('.popupDate');
-      date = input.value;
+      if (!input.value) {
+        date = undefined;
+      } else {
+        date = new Date(input.value);
+      }
     },
     additionalButtonHolderClass: 'popupButtons',
     additionalButtonCancelClass: 'cancelBtn',
