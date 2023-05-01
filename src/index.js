@@ -167,6 +167,15 @@ setInterval(() => {
 
 // InputContainer Script
 
+const addButton = document.querySelector('.addButton');
+addButton.addEventListener('click', () => {
+  if (inputTextField.value.length > 0) {
+    createTask(inputTextField.value);
+    inputTextField.value = '';
+    render(mode);
+  }
+});
+
 const inputTextField = document.querySelector('.inputText');
 inputTextField.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
