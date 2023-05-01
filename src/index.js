@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
 import './style.css';
+import popupS from 'popups';
 import logo from './images/logo.png';
 import starFill from './images/starFill.png';
 import starNoFill from './images/starNoFill.png';
@@ -166,6 +167,9 @@ setInterval(() => {
 }, 1);
 
 // InputContainer Script
+let type;
+let date;
+let time;
 
 const addButton = document.querySelector('.addButton');
 addButton.addEventListener('click', () => {
@@ -179,14 +183,43 @@ addButton.addEventListener('click', () => {
 const inputTextField = document.querySelector('.inputText');
 inputTextField.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
-    createTask(inputTextField.value);
+    createTask(inputTextField.value, type, date, time);
     inputTextField.value = '';
+    type = undefined;
+    date = undefined;
+    time = undefined;
     render(mode);
   }
 });
 
 inputTextField.addEventListener('focus', () => { inputTextField.placeholder = 'Try adding a task'; });
 inputTextField.addEventListener('focusout', () => { inputTextField.placeholder = 'Add a task'; });
+
+const typeInput = document.querySelector('.typeIcon');
+
+const dateInput = document.querySelector('.dateIcon');
+dateInput.addEventListener('click', () => {
+  popupS.window({
+    mode: 'confirm',
+    content: `<input type="date" class="popupDate">
+    <button class="clearBtn">Clear</button>`,
+    labelOk: 'Confirm',
+    onOpen: () => {
+      const datePicker = document.querySelector('.popupDate');
+      const clearBtn = document.querySelector('.clearBtn');
+      datePicker.value = date;
+      clearBtn.addEventListener('click', () => { datePicker.value = ''; });
+    },
+    onSubmit: () => {
+      const input = document.querySelector('.popupDate');
+      date = input.value;
+    },
+    additionalButtonHolderClass: 'popupButtons',
+    additionalButtonCancelClass: 'cancelBtn',
+    additionalButtonOkClass: 'confirmBtn',
+
+  });
+});
 
 window.onload = render(mode);
 
