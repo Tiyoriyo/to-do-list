@@ -175,19 +175,19 @@ const createTask = (name, type, date, time, notes) => {
   console.log(taskArray);
 };
 
-const taskComplete = (index) => {
+export function taskComplete(index) {
   const arrayItem = taskArray[index];
   taskArray[index].setProperty('status', true);
   taskArray.splice(index, 1);
   completeTaskArray.push(arrayItem);
-};
+}
 
-const taskUncomplete = (index) => {
+export function taskUncomplete(index) {
   const arrayItem = completeTaskArray[index];
   completeTaskArray[index].setProperty('status', false);
   completeTaskArray.splice(index, 1);
   taskArray.push(arrayItem);
-};
+}
 
 export function getCompleteTasks() { return completeTaskArray; }
 

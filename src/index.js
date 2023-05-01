@@ -6,7 +6,9 @@ import starNoFill from './images/starNoFill.png';
 import typeImg from './images/edit.png';
 import dateImg from './images/date.png';
 import timeImg from './images/time.png';
-import getTaskArray, { getOverdueArray, getCompleteTasks } from './modules/taskMethods';
+import getTaskArray, {
+  getOverdueArray, getCompleteTasks, taskComplete, taskUncomplete,
+} from './modules/taskMethods';
 
 const logoImg = document.querySelector('.logoImg');
 const typeIcon = document.querySelector('.typeIcon');
@@ -32,7 +34,7 @@ const updateItems = () => {
   }
 };
 
-const addCheckbox = () => {
+const addCheckbox = (arrayType, i) => {
   const mainDiv = document.createElement('div');
   const input = document.createElement('input');
   const subDiv = document.createElement('div');
@@ -44,6 +46,25 @@ const addCheckbox = () => {
 
   mainDiv.append(input, subDiv);
   subDiv.append(label);
+
+  if (arrayType === completeTaskArray) {
+    input.checked = true;
+  }
+
+  input.addEventListener('change', (e) => {
+    if (e.target.checked) {
+      taskComplete(i);
+      setTimeout(() => {
+        renderAllTasks();
+      }, 250);
+    } else if (!e.target.checked) {
+      taskUncomplete(i);
+      setTimeout(() => {
+        renderAllTasks();
+      }, 250);
+    }
+  });
+
   return mainDiv;
 };
 
@@ -80,7 +101,7 @@ const renderTask = (arrayType, i) => {
   priorityContainer.classList.add('priorityContainer', 'preventSelect');
   cancelContainer.classList.add('cancelContainer', 'preventSelect');
 
-  checkboxContainer.appendChild(addCheckbox());
+  checkboxContainer.appendChild(addCheckbox(arrayType, i));
   contentContainer.innerHTML = addItemContent(arrayType, i);
   priorityContainer.innerHTML = addPriorityImg(arrayType, i);
   cancelContainer.innerHTML = '&#10005;';
