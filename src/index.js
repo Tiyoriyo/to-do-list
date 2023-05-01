@@ -40,7 +40,7 @@ const addCheckbox = (arrayType, i) => {
   const subDiv = document.createElement('div');
   const label = document.createElement('label');
 
-  mainDiv.className = 'pretty p-default p-curve p-pulse p-bigger';
+  mainDiv.className = 'pretty p-default p-curve p-bigger';
   input.type = 'checkbox';
   subDiv.classList.add('state');
 
