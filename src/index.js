@@ -167,7 +167,7 @@ setInterval(() => {
   updateItems();
 }, 1);
 
-// InputContainer Script
+// ------------------ InputContainer Script ------------------
 let type;
 let date;
 let time;
@@ -272,6 +272,8 @@ timeInput.addEventListener('click', () => {
     additionalButtonOkClass: 'confirmBtn',
   });
 });
+
+// ------------------ InputField Scripts ------------------
 
 window.onload = render(mode);
 
