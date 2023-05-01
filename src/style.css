@@ -206,6 +206,41 @@ body {
     width: 24px;
 }
 
+/* vv Popup Styles vv */
+
+.mainPopupContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.popupInputfield {
+    display: flex;
+    gap: 10px;
+}
+
+.popupLabel {
+    width: 40px;
+}
+
+.popupName {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    outline: none;
+    padding: 2px 10px;
+}
+
+.popupTextArea {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    outline: none;
+    min-height: 50px;
+    max-height: 200px;
+    width: 175px;
+    resize: vertical;
+    padding: 2px 10px;
+}
+
 .popupContainer {
     display: flex;
     justify-content: center;
@@ -214,7 +249,7 @@ body {
 .popupDate {
     appearance: none;
     border: 1px solid rgb(0, 0, 0, 0.2);
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 2px 10px;
 }
 
@@ -239,7 +274,7 @@ body {
 .clearBtn {
     appearance: none;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
+    border-radius: 3px;
     padding: 2px 5px;
     box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
@@ -288,7 +323,7 @@ body {
     background-color: rgb(233, 144, 0);
 }
 
-
+/* ^^ Popup Stlyes ^^ */
 
 /* ^^^ Content Container CSS Styles VVV */
 

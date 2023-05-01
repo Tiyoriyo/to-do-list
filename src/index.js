@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import './style.css';
 import popupS from 'popups';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { format } from 'date-fns';
 import logo from './images/logo.png';
 import starFill from './images/starFill.png';
@@ -64,6 +65,7 @@ const addCheckbox = (arrayType, i) => {
       setTimeout(() => { render(mode); }, 250);
     }
   });
+  mainDiv.addEventListener('click', (e) => { e.stopPropagation(); });
 
   return mainDiv;
 };
@@ -91,6 +93,7 @@ const addPriorityImg = (array, i) => {
   star.classList.add('star');
 
   star.addEventListener('click', (e) => {
+    e.stopPropagation();
     if (!array[i].priority) {
       array[i].setProperty('priority');
       star.src = starFill;
@@ -122,7 +125,60 @@ const renderTask = (array, i) => {
   contentContainer.innerHTML = addItemContent(array, i);
   priorityContainer.appendChild(addPriorityImg(array, i));
   cancelContainer.innerHTML = '&#10005;';
-  cancelContainer.addEventListener('click', () => {
+
+  mainContainer.addEventListener('click', () => {
+    popupS.window({
+      mode: 'confirm',
+      content: `
+      <div class="mainPopupContainer">
+        <div class="popupInputfield">
+          <label class="popupLabel">Name</label>
+          <input type="text" class="popupName" autocomplete="__away">
+        </div>
+        <div class="popupInputfield">
+          <label class="popupLabel">Type</label>
+          <select class="popupSelect">
+            <option value='General'>None</option>
+            <option value='Personal'>Personal</option>
+            <option value='Work'>Work</option>
+            <option value='Social'>Social</option>
+          </select>
+        </div>
+        <div class="popupInputfield">
+          <label class="popupLabel">Date</label>
+          <input type="date" class="popupDate">
+        </div>
+        <div class="popupInputfield">
+          <label class="popupLabel">Time</label>
+          <input type="time" class="popupTime">
+        </div>
+        <div class="popupInputfield">
+          <label class="popupLabel">Notes</label>
+          <textarea class="popupTextArea"></textarea>
+        </div>
+      </div>
+      `,
+      labelOk: 'Confirm',
+      additionalButtonCancelClass: 'cancelBtn',
+      additionalButtonOkClass: 'confirmBtn',
+      additionalButtonHolderClass: 'popupButtons',
+      onOpen: () => {
+        const name = document.querySelector('.popupName');
+        const type = document.querySelector('.popupSelect');
+        const date = document.querySelector('.popupDate');
+        const time = document.querySelector('.popupTime');
+        const notes = document.querySelector('.popupNotes');
+
+        name.value = array[i].name;
+        type.value = array[i].getType();
+        date.value = format(array[i].getDateTime(), 'yyyy-MM-dd');
+        time.value = array[i].getTime();
+      },
+    });
+  });
+
+  cancelContainer.addEventListener('click', (e) => {
+    e.stopPropagation();
     array.splice(i, 1);
     render(mode);
   });

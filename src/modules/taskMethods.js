@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { format } from 'date-fns';
+import { addDays, format } from 'date-fns';
 
 /* eslint-disable func-names */
 Storage.prototype.setObj = function (key, obj) {
@@ -62,6 +62,13 @@ const proto = {
 
   getFormattedTime() {
     return format(this.getDateTime(), 'p');
+  },
+
+  getTime() {
+    if (this.time === '24:00') {
+      return '00:00';
+    }
+    return this.time;
   },
 
   getType() {
@@ -161,13 +168,13 @@ const Task = (name, type, date, time, notes, status) => ({
 export function createTask(inputName, inputType, inputDate, inputTime) {
   const name = inputName;
   const type = inputType || 'General';
-  const date = inputDate || new Date();
+  const date = inputDate || addDays(new Date(), 1);
   let time;
 
   if (inputTime) {
     time = inputTime;
   } else if (!inputTime && !inputDate) {
-    time = '24:00';
+    time = '00:00';
   } else if (!inputTime && inputDate) {
     time = '12:00';
   }
