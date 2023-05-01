@@ -33,6 +33,7 @@ const updateItems = () => {
 const taskArray = getTaskArray();
 const completeTaskArray = getCompleteTasks();
 const overdueArray = getOverdueArray();
+const mode = 'all';
 
 const taskContainer = document.querySelector('.taskContainer');
 
@@ -41,13 +42,12 @@ const addCheckbox = (arrayType, i) => {
   const input = document.createElement('input');
   const subDiv = document.createElement('div');
   const label = document.createElement('label');
+  mainDiv.append(input, subDiv);
+  subDiv.append(label);
 
   mainDiv.className = 'pretty p-default p-curve p-bigger';
   input.type = 'checkbox';
   subDiv.classList.add('state');
-
-  mainDiv.append(input, subDiv);
-  subDiv.append(label);
 
   if (arrayType === completeTaskArray) {
     input.checked = true;
@@ -56,14 +56,10 @@ const addCheckbox = (arrayType, i) => {
   input.addEventListener('change', (e) => {
     if (e.target.checked) {
       taskComplete(i);
-      setTimeout(() => {
-        renderAllTasks();
-      }, 250);
+      setTimeout(() => { render(mode); }, 250);
     } else if (!e.target.checked) {
       taskUncomplete(i);
-      setTimeout(() => {
-        renderAllTasks();
-      }, 250);
+      setTimeout(() => { render(mode); }, 250);
     }
   });
 
@@ -73,7 +69,7 @@ const addCheckbox = (arrayType, i) => {
 const addItemContent = (array, i) => {
   const upperContent = document.createElement('div');
   const lowerContent = document.createElement('div');
-  upperContent.classList.add('whiteFont');
+  upperContent.classList.add('upperContent', 'whiteFont');
   lowerContent.classList.add('lowerContent', 'whiteFont');
 
   upperContent.innerHTML = `${array[i].name}`;
@@ -161,7 +157,7 @@ const render = (filter) => {
   }
 };
 
-window.onload = render('all');
+window.onload = render(mode);
 
 setInterval(() => {
   updateItems();
