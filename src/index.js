@@ -185,13 +185,8 @@ inputTextField.addEventListener('keypress', (e) => {
   }
 });
 
-inputTextField.addEventListener('focus', () => {
-  inputTextField.placeholder = 'Try adding a task';
-});
-
-inputTextField.addEventListener('focusout', () => {
-  inputTextField.placeholder = 'Add a task';
-});
+inputTextField.addEventListener('focus', () => { inputTextField.placeholder = 'Try adding a task'; });
+inputTextField.addEventListener('focusout', () => { inputTextField.placeholder = 'Add a task'; });
 
 window.onload = render(mode);
 
