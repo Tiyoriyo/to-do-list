@@ -33,6 +33,11 @@ body {
     color: #e6e0d5;
 }
 
+.completed {
+    text-decoration: line-through;
+    color: rgb(196, 196, 196);
+}
+
 .mainContainer {
     display: flex;
     width: 1100px;
@@ -119,10 +124,6 @@ body {
     height: 100%;
 }
 
-.upperContent, .lowerContent {
-    color: white;
-}
-
 .lowerContent {
     display: flex;
     font-size: 12px;
@@ -146,6 +147,7 @@ body {
     align-self: flex-start;
     margin-right: 5px;
     margin-top: 1px;
+
 }
 
 .inputContainer {

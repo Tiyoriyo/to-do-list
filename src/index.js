@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
 import './style.css';
 import logo from './images/logo.png';
@@ -71,11 +72,16 @@ const addCheckbox = (arrayType, i) => {
 const addItemContent = (arrayType, i) => {
   const upperContent = document.createElement('div');
   const lowerContent = document.createElement('div');
-  upperContent.classList.add('upperContent');
-  lowerContent.classList.add('lowerContent');
+  upperContent.classList.add('whiteFont');
+  lowerContent.classList.add('lowerContent', 'whiteFont');
 
   upperContent.innerHTML = `${arrayType[i].name}`;
   lowerContent.innerHTML = `${arrayType[i].getType()} - ${arrayType[i].getFormattedDate()} - ${arrayType[i].getFormattedTime()}`;
+
+  if (arrayType === completeTaskArray) {
+    upperContent.classList.add('completed');
+    lowerContent.classList.add('completed');
+  }
 
   return upperContent.outerHTML + lowerContent.outerHTML;
 };
