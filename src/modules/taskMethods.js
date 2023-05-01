@@ -189,7 +189,7 @@ const taskUncomplete = (index) => {
   taskArray.push(arrayItem);
 };
 
-const getCompleteTasks = () => completeTaskArray;
+export function getCompleteTasks() { return completeTaskArray; }
 
 const getAllTasks = () => taskArray;
 
