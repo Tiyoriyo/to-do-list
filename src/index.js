@@ -8,7 +8,7 @@ import typeImg from './images/edit.png';
 import dateImg from './images/date.png';
 import timeImg from './images/time.png';
 import getTaskArray, {
-  getOverdueArray, getCompleteTasks, taskComplete, taskUncomplete,
+  getOverdueArray, getCompleteTasks, taskComplete, taskUncomplete, createTask,
 } from './modules/taskMethods';
 
 const logoImg = document.querySelector('.logoImg');
@@ -157,11 +157,22 @@ const render = (filter) => {
   }
 };
 
-window.onload = render(mode);
-
 setInterval(() => {
   updateItems();
 }, 1);
+
+// InputContainer Script
+
+const inputTextField = document.querySelector('.inputText');
+inputTextField.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    createTask(inputTextField.value);
+    inputTextField.value = '';
+    render(mode);
+  }
+});
+
+window.onload = render(mode);
 
 const debug = () => {
   console.log(taskArray);

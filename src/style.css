@@ -102,6 +102,7 @@ body {
     flex: auto;
     width: 65%;
     gap: 5px;
+    overflow-y: scroll;
 }
 
 .taskContainerTitle {
@@ -164,7 +165,7 @@ body {
     height: 50px;
     border-radius: 10px;
     gap: 15px;
-    margin-top: auto;
+    margin-top: 15px;
     margin-bottom: 15px;
 }
 

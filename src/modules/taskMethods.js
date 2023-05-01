@@ -158,7 +158,7 @@ const Task = (name, type, date, time, notes, status) => ({
   name, priority: false, type, date, time, notes, status,
 });
 
-const createTask = (inputName, inputType, inputDate, inputTime) => {
+export function createTask(inputName, inputType, inputDate, inputTime) {
   const name = inputName;
   const type = inputType || 'General';
   const date = inputDate || new Date();
@@ -188,7 +188,7 @@ const createTask = (inputName, inputType, inputDate, inputTime) => {
   task.date.setHours(0, 0, 0);
   taskArray.push(task);
   console.log(taskArray);
-};
+}
 
 export function taskComplete(index) {
   const arrayItem = taskArray[index];
