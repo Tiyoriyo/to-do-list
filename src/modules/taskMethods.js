@@ -174,7 +174,6 @@ export function createTask(inputName, inputType, inputDate, inputTime) {
   const type = inputType || 'General';
   let date;
   let time;
-
   if (!inputDate && !inputTime) {
     date = addDays(new Date(), 1);
   } else if (!inputDate && inputTime) {
@@ -192,7 +191,6 @@ export function createTask(inputName, inputType, inputDate, inputTime) {
   }
 
   const task = Task(name, type, date, time);
-  console.log(task, task.date);
   Object.setPrototypeOf(task, proto);
   task.date.setHours(0, 0, 0);
   taskArray.push(task);

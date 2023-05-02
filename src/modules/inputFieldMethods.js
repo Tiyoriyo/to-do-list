@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import popupS from 'popups';
 import format from 'date-fns/format';
 import { createTask } from './taskMethods';
@@ -22,7 +23,6 @@ export function resetInputs() {
 
 // Task Creating Dom Update Function
 export function insertNewTask() {
-  console.log(inputTextField.value);
   createTask(inputTextField.value, type, date, time);
   resetInputs();
   removeSelectedClass();
@@ -38,8 +38,9 @@ export const popupHolder = {
       mode: 'confirm',
       content: `
     <div class="popupContainer">
+      <label>Type</label>
       <select class="popupSelect">
-        <option value='none'>None</option>
+        <option value='general'>General</option>
         <option value='personal'>Personal</option>
         <option value='work'>Work</option>
         <option value='social'>Social</option>
@@ -63,8 +64,13 @@ export const popupHolder = {
   date: () => {
     popupS.window({
       mode: 'confirm',
-      content: `<input type="date" class="popupDate">
-    <button class="clearBtn">Clear</button>`,
+      content: `
+      <div class="popupContainer">
+        <label>Date</label>
+        <input type="date" class="popupDate">
+        <button class="clearBtn">Clear</button>
+      </div>
+    `,
       labelOk: 'Confirm',
       onOpen: () => {
         const input = document.querySelector('.popupDate');
@@ -84,8 +90,13 @@ export const popupHolder = {
   time: () => {
     popupS.window({
       mode: 'confirm',
-      content: `<input type="time" class="popupTime">
-    <button class="clearBtn">Clear</button>`,
+      content: `
+      <div class="popupContainer">
+        <label>Time</label>
+        <input type="time" class="popupTime">
+        <button class="clearBtn">Clear</button>
+      </div>
+      `,
       labelOk: 'Confirm',
       onOpen: () => {
         const input = document.querySelector('.popupTime');
