@@ -5,7 +5,8 @@ import { format } from 'date-fns';
 import starFill from '../images/starFill.png';
 import starNoFill from '../images/starNoFill.png';
 import getTaskArray, {
-  getCompleteTasks, getOverdueArray, getTypeTasks, taskComplete, taskUncomplete,
+  getCompleteTasks, getLaterTasks, getOverdueArray, getTodayTasks,
+  getTomorrowTasks, getTypeTasks, taskComplete, taskUncomplete,
 } from './taskMethods';
 
 let mode = 'all';
@@ -17,24 +18,7 @@ const taskContainer = document.querySelector('.taskContainer');
 
 export function getMode() { return mode; }
 
-export function setMode(string) {
-  switch (string) {
-    case 'all':
-      mode = 'all';
-      break;
-    case 'personal':
-      mode = 'personal';
-      break;
-    case 'work':
-      mode = 'work';
-      break;
-    case 'social':
-      mode = 'social';
-      break;
-    default:
-      break;
-  }
-}
+export function setMode(string) { mode = string; }
 
 const addCheckbox = (array, i) => {
   const mainDiv = document.createElement('div');
@@ -250,6 +234,43 @@ const renderType = (string) => {
   }
 };
 
+const renderTime = (string) => {
+  let array;
+
+  switch (string) {
+    case 'today':
+      array = getTodayTasks();
+      break;
+    case 'tomorrow':
+      array = getTomorrowTasks();
+      break;
+    case 'later':
+      array = getLaterTasks();
+      break;
+    default:
+      break;
+  }
+
+  if (array.length) {
+    const title = document.createElement('h2');
+    taskContainer.append(title);
+    title.classList.add('taskContainerTitle');
+    title.textContent = 'Tasks Due';
+    for (let i = 0; i < array.length; i += 1) {
+      taskContainer.append(renderTask(array, i));
+    }
+  } else {
+    const title = document.createElement('h2');
+    taskContainer.append(title);
+    title.classList.add('taskContainerTitle');
+    title.textContent = 'Tasks Due';
+    const subTitle = document.createElement('h2');
+    taskContainer.append(subTitle);
+    subTitle.classList.add('taskContainerSubTitle');
+    subTitle.textContent = 'None';
+  }
+};
+
 export default function render() {
   taskContainer.innerHTML = '';
   switch (mode) {
@@ -264,6 +285,15 @@ export default function render() {
       break;
     case 'social':
       renderType('social');
+      break;
+    case 'today':
+      renderTime('today');
+      break;
+    case 'tomorrow':
+      renderTime('tomorrow');
+      break;
+    case 'later':
+      renderTime('later');
       break;
     default:
       break;

@@ -1,6 +1,4 @@
-import render, { setMode, getMode } from './renderMethods';
-
-const mode = getMode();
+import render, { setMode } from './renderMethods';
 
 export default function removeSelectedClass() {
   const categoryLists = document.querySelectorAll('.categoryList');
@@ -13,5 +11,5 @@ export function selectFilter(e, string) {
   removeSelectedClass();
   e.target.classList.add('selected');
   setMode(string);
-  render(mode);
+  render();
 }

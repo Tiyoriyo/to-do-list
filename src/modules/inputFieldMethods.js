@@ -22,6 +22,7 @@ export function resetInputs() {
 
 // Task Creating Dom Update Function
 export function insertNewTask() {
+  console.log(inputTextField.value);
   createTask(inputTextField.value, type, date, time);
   resetInputs();
   removeSelectedClass();

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { addDays, format } from 'date-fns';
+import { addDays, compareAsc, format } from 'date-fns';
 
 /* eslint-disable func-names */
 Storage.prototype.setObj = function (key, obj) {
@@ -52,7 +52,7 @@ const proto = {
     const { hourString } = this.getHourMinute(this.time);
     const { minuteString } = this.getHourMinute(this.time);
     const dateTimeCombined = new Date(this.date);
-    dateTimeCombined.setHours(hourString, minuteString, 0);
+    dateTimeCombined.setHours(hourString, minuteString, 0, 0);
     return dateTimeCombined;
   },
 
@@ -93,6 +93,12 @@ const proto = {
   getIndex() {
     return taskArray.indexOf(this);
   },
+};
+
+window.onbeforeunload = function () {
+  localStorage.setObj('taskArray', taskArray);
+  localStorage.setObj('completeTaskArray', completeTaskArray);
+  localStorage.setObj('overdueArray', overdueArray);
 };
 
 const updateItems = () => {
@@ -159,12 +165,6 @@ const loadTaskArrays = (() => {
   updateItems();
 })();
 
-window.onbeforeunload = function () {
-  localStorage.setObj('taskArray', taskArray);
-  localStorage.setObj('completeTaskArray', completeTaskArray);
-  localStorage.setObj('overdueArray', overdueArray);
-};
-
 const Task = (name, type, date, time, notes, status) => ({
   name, priority: false, type, date, time, notes, status,
 });
@@ -172,8 +172,16 @@ const Task = (name, type, date, time, notes, status) => ({
 export function createTask(inputName, inputType, inputDate, inputTime) {
   const name = inputName;
   const type = inputType || 'General';
-  const date = inputDate || addDays(new Date(), 1);
+  let date;
   let time;
+
+  if (!inputDate && !inputTime) {
+    date = addDays(new Date(), 1);
+  } else if (!inputDate && inputTime) {
+    date = new Date();
+  } else {
+    date = inputDate;
+  }
 
   if (inputTime) {
     time = inputTime;
@@ -184,7 +192,7 @@ export function createTask(inputName, inputType, inputDate, inputTime) {
   }
 
   const task = Task(name, type, date, time);
-
+  console.log(task, task.date);
   Object.setPrototypeOf(task, proto);
   task.date.setHours(0, 0, 0);
   taskArray.push(task);
@@ -206,11 +214,11 @@ export function taskUncomplete(index) {
 
 export function getCompleteTasks() { return completeTaskArray; }
 
-const getTodayTasks = () => {
+export function getTodayTasks() {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow.setHours(0, 0, 0);
+  tomorrow.setHours(0, 0, 0, 0);
 
   const todayTasks = taskArray.filter((task) => {
     const taskDateTime = task.getDateTime();
@@ -221,13 +229,13 @@ const getTodayTasks = () => {
   });
 
   return todayTasks;
-};
+}
 
 export default function getTaskArray() { return taskArray; }
 
 export function getOverdueArray() { return overdueArray; }
 
-const getTomorrowTasks = () => {
+export function getTomorrowTasks() {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -243,18 +251,18 @@ const getTomorrowTasks = () => {
   });
 
   return tomorrowTasks;
-};
+}
 
-const getLaterTasks = () => {
+export function getLaterTasks() {
   const today = new Date();
   const tomorrowDate = new Date(today);
-  tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+  tomorrowDate.setDate(tomorrowDate.getDate() + 2);
   tomorrowDate.setHours(0, 0, 0);
 
   const laterTasks = taskArray.filter((task) => task.getDateTime() > tomorrowDate);
 
   return laterTasks;
-};
+}
 
 const compareDate = (a, b) => {
   if (a.getDateTime() > b.getDateTime()) {

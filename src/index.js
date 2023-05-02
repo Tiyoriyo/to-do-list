@@ -34,6 +34,9 @@ allBtn.addEventListener('click', (e) => { selectFilter(e, 'all'); });
 personalBtn.addEventListener('click', (e) => { selectFilter(e, 'personal'); });
 workBtn.addEventListener('click', (e) => { selectFilter(e, 'work'); });
 socialBtn.addEventListener('click', (e) => { selectFilter(e, 'social'); });
+todayBtn.addEventListener('click', (e) => { selectFilter(e, 'today'); });
+tomorrowBtn.addEventListener('click', (e) => { selectFilter(e, 'tomorrow'); });
+laterBtn.addEventListener('click', (e) => { selectFilter(e, 'later'); });
 
 // ------------------ InputContainer Script ------------------
 
