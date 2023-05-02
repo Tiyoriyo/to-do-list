@@ -58,6 +58,9 @@ const addItemContent = (array, i) => {
 
   upperContent.innerHTML = `${array[i].name}`;
   lowerContent.innerHTML = `${array[i].getType()} - ${array[i].getFormattedDate()} - ${array[i].getFormattedTime()}`;
+  if (array[i].notes) {
+    lowerContent.innerHTML += ' - Note';
+  }
 
   if (array === completeTaskArray) {
     upperContent.classList.add('completed');
@@ -173,7 +176,12 @@ const renderTask = (array, i) => {
 
   cancelContainer.addEventListener('click', (e) => {
     e.stopPropagation();
-    taskArray.splice(array[i].getIndex(), 1);
+    if (array === completeTaskArray || array === overdueArray) {
+      array.splice(i, 1);
+    } else {
+      taskArray.splice(array[i].getIndex(), 1);
+    }
+
     render(mode);
   });
 
@@ -271,6 +279,48 @@ const renderTime = (string) => {
   }
 };
 
+const renderCompleted = () => {
+  if (completeTaskArray.length) {
+    const title = document.createElement('h2');
+    taskContainer.append(title);
+    title.classList.add('taskContainerTitle');
+    title.textContent = 'Tasks Completed';
+    for (let i = 0; i < completeTaskArray.length; i += 1) {
+      taskContainer.append(renderTask(completeTaskArray, i));
+    }
+  } else {
+    const title = document.createElement('h2');
+    taskContainer.append(title);
+    title.classList.add('taskContainerTitle');
+    title.textContent = 'Tasks Due';
+    const subTitle = document.createElement('h2');
+    taskContainer.append(subTitle);
+    subTitle.classList.add('taskContainerSubTitle');
+    subTitle.textContent = 'None';
+  }
+};
+
+const renderOverdue = () => {
+  if (overdueArray.length) {
+    const title = document.createElement('h2');
+    taskContainer.append(title);
+    title.classList.add('taskContainerTitle');
+    title.textContent = 'Tasks Due';
+    for (let i = 0; i < overdueArray.length; i += 1) {
+      taskContainer.append(renderTask(overdueArray, i));
+    }
+  } else {
+    const title = document.createElement('h2');
+    taskContainer.append(title);
+    title.classList.add('taskContainerTitle');
+    title.textContent = 'Tasks Due';
+    const subTitle = document.createElement('h2');
+    taskContainer.append(subTitle);
+    subTitle.classList.add('taskContainerSubTitle');
+    subTitle.textContent = 'None';
+  }
+};
+
 export default function render() {
   taskContainer.innerHTML = '';
   switch (mode) {
@@ -294,6 +344,12 @@ export default function render() {
       break;
     case 'later':
       renderTime('later');
+      break;
+    case 'completed':
+      renderCompleted();
+      break;
+    case 'overdue':
+      renderOverdue();
       break;
     default:
       break;

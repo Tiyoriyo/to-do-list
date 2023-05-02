@@ -28,6 +28,8 @@ const socialBtn = document.querySelector('#socialLi');
 const todayBtn = document.querySelector('#todayLi');
 const tomorrowBtn = document.querySelector('#tomorrowLi');
 const laterBtn = document.querySelector('#laterLi');
+const completedBtn = document.querySelector('#completedLi');
+const overdueBtn = document.querySelector('#overdueLi');
 
 // Add event listeners that filter tasks
 allBtn.addEventListener('click', (e) => { selectFilter(e, 'all'); });
@@ -37,6 +39,8 @@ socialBtn.addEventListener('click', (e) => { selectFilter(e, 'social'); });
 todayBtn.addEventListener('click', (e) => { selectFilter(e, 'today'); });
 tomorrowBtn.addEventListener('click', (e) => { selectFilter(e, 'tomorrow'); });
 laterBtn.addEventListener('click', (e) => { selectFilter(e, 'later'); });
+completedBtn.addEventListener('click', (e) => { selectFilter(e, 'completed'); });
+overdueBtn.addEventListener('click', (e) => { selectFilter(e, 'overdue'); });
 
 // ------------------ InputContainer Script ------------------
 
