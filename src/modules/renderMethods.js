@@ -155,7 +155,7 @@ const renderTask = (array, i) => {
         type.value = array[i].getType().toLowerCase();
         date.value = format(array[i].getDateTime(), 'yyyy-MM-dd');
         time.value = array[i].getTime();
-        notes.value = array[i].notes;
+        notes.value = (array[i].notes) ? array[i].notes : '';
       },
       onSubmit: () => {
         const name = document.querySelector('.popupName');
