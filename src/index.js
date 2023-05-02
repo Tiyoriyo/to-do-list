@@ -261,12 +261,25 @@ const todayBtn = document.querySelector('#todayLi');
 const tomorrowBtn = document.querySelector('#tomorrowLi');
 const laterBtn = document.querySelector('#laterLi');
 
-allBtn.addEventListener('click', () => {
+const removeSelectedClass = () => {
+  const categoryLists = document.querySelectorAll('.categoryList');
+  const combinedCategoryList = [...categoryLists[0].children]
+    .concat([...categoryLists[1].children]);
+  combinedCategoryList.forEach((item) => {
+    item.classList.remove('selected');
+  });
+};
+
+allBtn.addEventListener('click', (e) => {
+  removeSelectedClass();
+  e.target.classList.add('selected');
   mode = 'all';
   render(mode);
 });
 
-personalBtn.addEventListener('click', () => {
+personalBtn.addEventListener('click', (e) => {
+  removeSelectedClass();
+  e.target.classList.add('selected');
   mode = 'personal';
   render(mode);
 });
