@@ -263,6 +263,12 @@ const render = () => {
     case 'personal':
       renderType('personal');
       break;
+    case 'work':
+      renderType('work');
+      break;
+    case 'social':
+      renderType('social');
+      break;
     default:
       break;
   }
@@ -286,9 +292,7 @@ const removeSelectedClass = () => {
   const categoryLists = document.querySelectorAll('.categoryList');
   const combinedCategoryList = [...categoryLists[0].children]
     .concat([...categoryLists[1].children]);
-  combinedCategoryList.forEach((item) => {
-    item.classList.remove('selected');
-  });
+  combinedCategoryList.forEach((item) => { item.classList.remove('selected'); });
 };
 
 allBtn.addEventListener('click', (e) => {
@@ -302,6 +306,20 @@ personalBtn.addEventListener('click', (e) => {
   removeSelectedClass();
   e.target.classList.add('selected');
   mode = 'personal';
+  render(mode);
+});
+
+workBtn.addEventListener('click', (e) => {
+  removeSelectedClass();
+  e.target.classList.add('selected');
+  mode = 'work';
+  render(mode);
+});
+
+socialBtn.addEventListener('click', (e) => {
+  removeSelectedClass();
+  e.target.classList.add('selected');
+  mode = 'social';
   render(mode);
 });
 
