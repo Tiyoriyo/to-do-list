@@ -224,12 +224,24 @@ const renderAll = () => {
 
 const renderType = (string) => {
   const array = getTypeTasks(string);
-  const title = document.createElement('h2');
-  taskContainer.append(title);
-  title.classList.add('taskContainerTitle');
-  title.textContent = 'Tasks Due';
-  for (let i = 0; i < array.length; i += 1) {
-    taskContainer.append(renderTask(array, i));
+
+  if (array.length) {
+    const title = document.createElement('h2');
+    taskContainer.append(title);
+    title.classList.add('taskContainerTitle');
+    title.textContent = 'Tasks Due';
+    for (let i = 0; i < array.length; i += 1) {
+      taskContainer.append(renderTask(array, i));
+    }
+  } else {
+    const title = document.createElement('h2');
+    taskContainer.append(title);
+    title.classList.add('taskContainerTitle');
+    title.textContent = 'Tasks Due';
+    const subTitle = document.createElement('h2');
+    taskContainer.append(subTitle);
+    subTitle.classList.add('taskContainerSubTitle');
+    subTitle.textContent = 'None';
   }
 };
 
