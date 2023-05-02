@@ -61,7 +61,7 @@ const addCheckbox = (array, i) => {
       taskComplete(array, i);
       setTimeout(() => { render(mode); }, 250);
     } else if (!e.target.checked) {
-      taskUncomplete(array, i);
+      taskUncomplete(i);
       setTimeout(() => { render(mode); }, 250);
     }
   });
@@ -193,7 +193,7 @@ const renderTask = (array, i) => {
 
   cancelContainer.addEventListener('click', (e) => {
     e.stopPropagation();
-    array.splice(i, 1);
+    taskArray.splice(array[i].getIndex(), 1);
     render(mode);
   });
 
@@ -209,6 +209,15 @@ const renderAll = () => {
     for (let i = 0; i < taskArray.length; i += 1) {
       taskContainer.append(renderTask(taskArray, i));
     }
+  } else {
+    const title = document.createElement('h2');
+    taskContainer.append(title);
+    title.classList.add('taskContainerTitle');
+    title.textContent = 'Tasks Due';
+    const subTitle = document.createElement('h2');
+    taskContainer.append(subTitle);
+    subTitle.classList.add('taskContainerSubTitle');
+    subTitle.textContent = 'None';
   }
 
   if (completeTaskArray.length) {

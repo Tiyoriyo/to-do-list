@@ -208,6 +208,7 @@ export function taskComplete(array, index) {
 }
 
 export function taskUncomplete(index) {
+  console.log(index);
   const arrayItem = completeTaskArray[index];
   completeTaskArray[index].setProperty('status', false);
   completeTaskArray.splice(index, 1);
