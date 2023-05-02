@@ -89,6 +89,10 @@ const proto = {
     }
     return result;
   },
+
+  getIndex() {
+    return taskArray.indexOf(this);
+  },
 };
 
 const updateItems = () => {
@@ -196,10 +200,10 @@ export function createTask(inputName, inputType, inputDate, inputTime) {
   taskArray.push(task);
 }
 
-export function taskComplete(index) {
-  const arrayItem = taskArray[index];
-  taskArray[index].setProperty('status', true);
-  taskArray.splice(index, 1);
+export function taskComplete(array, index) {
+  const arrayItem = array[index];
+  array[index].setProperty('status', true);
+  taskArray.splice(arrayItem.getIndex(), 1);
   completeTaskArray.push(arrayItem);
 }
 
@@ -285,7 +289,7 @@ const getDueTasks = () => {
   return result;
 };
 
-const getTypeTasks = (string) => {
+export function getTypeTasks(string) {
   let result;
   switch (string) {
     case 'personal':
@@ -302,4 +306,4 @@ const getTypeTasks = (string) => {
       break;
   }
   return result;
-};
+}

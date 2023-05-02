@@ -11,7 +11,7 @@ import typeImg from './images/edit.png';
 import dateImg from './images/date.png';
 import timeImg from './images/time.png';
 import getTaskArray, {
-  getOverdueArray, getCompleteTasks, taskComplete, taskUncomplete, createTask,
+  getOverdueArray, getCompleteTasks, taskComplete, taskUncomplete, createTask, getTypeTasks,
 } from './modules/taskMethods';
 
 const logoImg = document.querySelector('.logoImg');
@@ -40,7 +40,7 @@ let mode = 'all';
 
 const taskContainer = document.querySelector('.taskContainer');
 
-const addCheckbox = (arrayType, i) => {
+const addCheckbox = (array, i) => {
   const mainDiv = document.createElement('div');
   const input = document.createElement('input');
   const subDiv = document.createElement('div');
@@ -52,16 +52,16 @@ const addCheckbox = (arrayType, i) => {
   input.type = 'checkbox';
   subDiv.classList.add('state');
 
-  if (arrayType === completeTaskArray) {
+  if (array === completeTaskArray) {
     input.checked = true;
   }
 
   input.addEventListener('change', (e) => {
     if (e.target.checked) {
-      taskComplete(i);
+      taskComplete(array, i);
       setTimeout(() => { render(mode); }, 250);
     } else if (!e.target.checked) {
-      taskUncomplete(i);
+      taskUncomplete(array, i);
       setTimeout(() => { render(mode); }, 250);
     }
   });
@@ -108,7 +108,6 @@ const addPriorityImg = (array, i) => {
 
 const renderTask = (array, i) => {
   const mainContainer = document.createElement('div');
-
   const checkboxContainer = document.createElement('div');
   const contentContainer = document.createElement('div');
   const priorityContainer = document.createElement('div');
@@ -223,11 +222,25 @@ const renderAll = () => {
   }
 };
 
+const renderType = (string) => {
+  const array = getTypeTasks(string);
+  const title = document.createElement('h2');
+  taskContainer.append(title);
+  title.classList.add('taskContainerTitle');
+  title.textContent = 'Tasks Due';
+  for (let i = 0; i < array.length; i += 1) {
+    taskContainer.append(renderTask(array, i));
+  }
+};
+
 const render = () => {
   taskContainer.innerHTML = '';
   switch (mode) {
     case 'all':
       renderAll();
+      break;
+    case 'personal':
+      renderType('personal');
       break;
     default:
       break;
@@ -238,6 +251,27 @@ setInterval(() => {
   updateItems();
 }, 1);
 
+// --------------------- Sidebar Script -------------------------
+
+const allBtn = document.querySelector('#allLi');
+const personalBtn = document.querySelector('#personalLi');
+const workBtn = document.querySelector('#workLi');
+const socialBtn = document.querySelector('#socialLi');
+const todayBtn = document.querySelector('#todayLi');
+const tomorrowBtn = document.querySelector('#tomorrowLi');
+const laterBtn = document.querySelector('#laterLi');
+
+allBtn.addEventListener('click', () => {
+  mode = 'all';
+  render(mode);
+});
+
+personalBtn.addEventListener('click', () => {
+  mode = 'personal';
+  render(mode);
+});
+
+// --------------------- Sidebar Script -------------------------
 // ------------------ InputContainer Script ------------------
 let type;
 let date;
