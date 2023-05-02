@@ -183,16 +183,6 @@ export function createTask(inputName, inputType, inputDate, inputTime) {
     time = '12:00';
   }
 
-  //   if (!date && !time) {
-  //     task = Task(name, type, new Date(), '24:00');
-  //   } else if (date && !time) {
-  //     task = Task(name, type, date, '12:00');
-  //   } else if (!date && time) {
-  //     task = Task(name, type, new Date(), time);
-  //   } else {
-  //     task = Task(name, type, date, time);
-  //   }
-
   const task = Task(name, type, date, time);
 
   Object.setPrototypeOf(task, proto);
@@ -208,7 +198,6 @@ export function taskComplete(array, index) {
 }
 
 export function taskUncomplete(index) {
-  console.log(index);
   const arrayItem = completeTaskArray[index];
   completeTaskArray[index].setProperty('status', false);
   completeTaskArray.splice(index, 1);
@@ -216,8 +205,6 @@ export function taskUncomplete(index) {
 }
 
 export function getCompleteTasks() { return completeTaskArray; }
-
-const getAllTasks = () => taskArray;
 
 const getTodayTasks = () => {
   const today = new Date();
