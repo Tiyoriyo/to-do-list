@@ -341,6 +341,9 @@ addButton.addEventListener('click', () => {
   if (inputTextField.value.length > 0) {
     createTask(inputTextField.value, type, date, time);
     resetInputs();
+    removeSelectedClass();
+    allBtn.classList.add('selected');
+    mode = 'all';
     render(mode);
   }
 });
@@ -350,6 +353,9 @@ inputTextField.addEventListener('keypress', (e) => {
   if (e.key === 'Enter' && inputTextField.value.length > 0) {
     createTask(inputTextField.value, type, date, time);
     resetInputs();
+    removeSelectedClass();
+    allBtn.classList.add('selected');
+    mode = 'all';
     render(mode);
   }
 });
