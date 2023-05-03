@@ -258,12 +258,12 @@ const renderArray = (string) => { // Render Array Type
   }
 };
 
-export default function render() {
+export default function render() { // Render Call Function
   taskContainer.innerHTML = '';
   renderArray(mode);
 }
 
-const updateItems = () => {
+const updateItems = () => { // Overdue Checker
   for (let i = 0; i < taskArray.length; i += 1) {
     if (taskArray[i].getDateTime() <= new Date()) {
       overdueArray.push(taskArray[i]);
@@ -273,6 +273,6 @@ const updateItems = () => {
   }
 };
 
-setInterval(() => {
+setInterval(() => { // Overdue Interval Checker
   updateItems();
 }, 1);
