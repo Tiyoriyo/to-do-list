@@ -94,11 +94,13 @@ const addTaskPriorityStar = (array, i) => { // Priority Star Render
   image.src = array[i].priority ? starFill : starNoFill;
   image.classList.add('star');
 
-  image.addEventListener('click', (e) => {
-    e.stopPropagation();
-    array[i].setProperty('priority');
-    e.target.src = (array[i].priority) ? starFill : starNoFill;
-  });
+  if (array !== overdueArray) {
+    image.addEventListener('click', (e) => {
+      e.stopPropagation();
+      array[i].setProperty('priority');
+      e.target.src = (array[i].priority) ? starFill : starNoFill;
+    });
+  }
 
   return image;
 };
@@ -124,71 +126,73 @@ const renderTask = (array, i) => { // Task Item Render
   cancelContainer.innerHTML = '&#10005;';
 
   // Task Properties Popup
-  mainContainer.addEventListener('click', () => {
-    popupS.window({
-      mode: 'confirm',
-      content: `
-        <div class="mainPopupContainer">
-          <div class="popupInputfield">
-            <label class="popupLabel">Name</label>
-            <input type="text" class="popupName" autocomplete="__away">
+  if (array !== overdueArray) {
+    mainContainer.addEventListener('click', () => {
+      popupS.window({
+        mode: 'confirm',
+        content: `
+          <div class="mainPopupContainer">
+            <div class="popupInputfield">
+              <label class="popupLabel">Name</label>
+              <input type="text" class="popupName" autocomplete="__away">
+            </div>
+            <div class="popupInputfield">
+              <label class="popupLabel">Type</label>
+              <select class="popupSelect">
+                <option value='general'>General</option>
+                <option value='personal'>Personal</option>
+                <option value='work'>Work</option>
+                <option value='social'>Social</option>
+              </select>
+            </div>
+            <div class="popupInputfield">
+              <label class="popupLabel">Date</label>
+              <input type="date" class="popupDate">
+            </div>
+            <div class="popupInputfield">
+              <label class="popupLabel">Time</label>
+              <input type="time" class="popupTime">
+            </div>
+            <div class="popupInputfield">
+              <label class="popupLabel">Notes</label>
+              <textarea class="popupTextArea"></textarea>
+            </div>
           </div>
-          <div class="popupInputfield">
-            <label class="popupLabel">Type</label>
-            <select class="popupSelect">
-              <option value='general'>General</option>
-              <option value='personal'>Personal</option>
-              <option value='work'>Work</option>
-              <option value='social'>Social</option>
-            </select>
-          </div>
-          <div class="popupInputfield">
-            <label class="popupLabel">Date</label>
-            <input type="date" class="popupDate">
-          </div>
-          <div class="popupInputfield">
-            <label class="popupLabel">Time</label>
-            <input type="time" class="popupTime">
-          </div>
-          <div class="popupInputfield">
-            <label class="popupLabel">Notes</label>
-            <textarea class="popupTextArea"></textarea>
-          </div>
-        </div>
-        `,
-      labelOk: 'Confirm',
-      additionalButtonCancelClass: 'cancelBtn',
-      additionalButtonOkClass: 'confirmBtn',
-      additionalButtonHolderClass: 'popupButtons',
-      onOpen: () => {
-        const name = document.querySelector('.popupName');
-        const type = document.querySelector('.popupSelect');
-        const date = document.querySelector('.popupDate');
-        const time = document.querySelector('.popupTime');
-        const notes = document.querySelector('.popupTextArea');
+          `,
+        labelOk: 'Confirm',
+        additionalButtonCancelClass: 'cancelBtn',
+        additionalButtonOkClass: 'confirmBtn',
+        additionalButtonHolderClass: 'popupButtons',
+        onOpen: () => {
+          const name = document.querySelector('.popupName');
+          const type = document.querySelector('.popupSelect');
+          const date = document.querySelector('.popupDate');
+          const time = document.querySelector('.popupTime');
+          const notes = document.querySelector('.popupTextArea');
 
-        name.value = array[i].name;
-        type.value = array[i].type;
-        date.value = format(array[i].getDateTime(), 'yyyy-MM-dd'); // Set Compatible Date Value
-        time.value = array[i].time;
-        notes.value = array[i].notes;
-      },
-      onSubmit: () => {
-        const name = document.querySelector('.popupName');
-        const type = document.querySelector('.popupSelect');
-        const date = document.querySelector('.popupDate');
-        const time = document.querySelector('.popupTime');
-        const notes = document.querySelector('.popupTextArea');
+          name.value = array[i].name;
+          type.value = array[i].type;
+          date.value = format(array[i].getDateTime(), 'yyyy-MM-dd'); // Set Compatible Date Value
+          time.value = array[i].time;
+          notes.value = array[i].notes;
+        },
+        onSubmit: () => {
+          const name = document.querySelector('.popupName');
+          const type = document.querySelector('.popupSelect');
+          const date = document.querySelector('.popupDate');
+          const time = document.querySelector('.popupTime');
+          const notes = document.querySelector('.popupTextArea');
 
-        array[i].setProperty('name', name.value);
-        array[i].setProperty('type', type.value);
-        array[i].setProperty('date', new Date(date.value));
-        array[i].setProperty('time', time.value);
-        array[i].setProperty('notes', notes.value);
-        render();
-      },
+          array[i].setProperty('name', name.value);
+          array[i].setProperty('type', type.value);
+          array[i].setProperty('date', new Date(date.value));
+          array[i].setProperty('time', time.value);
+          array[i].setProperty('notes', notes.value);
+          render();
+        },
+      });
     });
-  });
+  }
 
   // Remove Task Button
   cancelContainer.addEventListener('click', (e) => {
