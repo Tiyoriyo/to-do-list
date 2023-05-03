@@ -34,7 +34,7 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
   subDiv.append(label);
 
   // EventListenerSetup
-  if (array === taskArray || array === completeTaskArray) {
+  if (array === taskArray || array === completeTaskArray) { // Event Listener All & Completed
     if (array === completeTaskArray) { input.checked = true; }
     input.addEventListener('change', (e) => {
       if (e.target.checked) {
@@ -45,7 +45,7 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
         render();
       }
     });
-  } else if (array === overdueArray) {
+  } else if (array === overdueArray) { // Event Listener Overdue
     input.addEventListener('change', (e) => {
       if (e.target.checked) {
         remakeOverdueTask(array[i]);
@@ -54,7 +54,7 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
       }
     });
   } else {
-    input.addEventListener('change', (e) => {
+    input.addEventListener('change', (e) => { // Event Listener Time & Type
       if (e.target.checked) {
         taskComplete(array, i);
         render(mode);
