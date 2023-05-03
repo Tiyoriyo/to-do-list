@@ -203,6 +203,15 @@ export function remakeOverdueTask(task) {
   if (priority) { task.setProperty('priority'); }
 }
 
+const compareDate = (a, b) => {
+  if (a.getDateTime() > b.getDateTime()) {
+    return 1;
+  } if (a.getDateTime() < b.getDateTime()) {
+    return -1;
+  }
+  return 0;
+};
+
 export function taskComplete(array, index) {
   const arrayItem = array[index];
   array[index].setProperty('status', true);
@@ -217,7 +226,7 @@ export function taskUncomplete(index) {
   taskArray.push(arrayItem);
 }
 
-export function getCompleteTasks() { return completeTaskArray; }
+export function getCompleteTasks() { return completeTaskArray.sort(compareDate); }
 
 export function getTodayTasks() {
   const today = new Date();
@@ -233,7 +242,7 @@ export function getTodayTasks() {
     return false;
   });
 
-  return todayTasks;
+  return todayTasks.sort(compareDate);
 }
 
 export default function getTaskArray() { return taskArray; }
@@ -255,7 +264,7 @@ export function getTomorrowTasks() {
     return false;
   });
 
-  return tomorrowTasks;
+  return tomorrowTasks.sort(compareDate);
 }
 
 export function getLaterTasks() {
@@ -266,17 +275,8 @@ export function getLaterTasks() {
 
   const laterTasks = taskArray.filter((task) => task.getDateTime() > tomorrowDate);
 
-  return laterTasks;
+  return laterTasks.sort(compareDate);
 }
-
-const compareDate = (a, b) => {
-  if (a.getDateTime() > b.getDateTime()) {
-    return 1;
-  } if (a.getDateTime() < b.getDateTime()) {
-    return -1;
-  }
-  return 0;
-};
 
 export function getTypeTasks(string) {
   let result;
@@ -303,12 +303,5 @@ export function getTypeTasks(string) {
       result = taskArray;
       break;
   }
-  return result;
+  return result.sort(compareDate);
 }
-
-function debug() {
-  console.log(taskArray);
-  console.log(completeTaskArray);
-}
-
-window.debug = debug;
