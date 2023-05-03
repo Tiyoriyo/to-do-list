@@ -48,7 +48,7 @@ overdueBtn.addEventListener('click', (e) => { selectFilter(e, 'overdue'); });
 const addButton = document.querySelector('.addButton');
 const inputTextField = document.querySelector('.inputText');
 addButton.addEventListener('click', () => { if (inputTextField.value.length > 0) { insertNewTask(); } });
-inputTextField.addEventListener('keypress', (e) => { if (e.key === 'Enter' && inputTextField.value.length > 0) { insertNewTask(inputTextField.value); } });
+inputTextField.addEventListener('keypress', (e) => { if (e.key === 'Enter' && inputTextField.value.length > 0) { insertNewTask(); } });
 
 // Add inputField text placeholder event listeners that change text
 inputTextField.addEventListener('focus', () => { inputTextField.placeholder = 'Try adding a task'; });
