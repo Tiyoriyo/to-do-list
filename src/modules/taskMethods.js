@@ -64,13 +64,6 @@ const proto = {
     return format(this.getDateTime(), 'p');
   },
 
-  getTime() {
-    if (this.time === '24:00') {
-      return '00:00';
-    }
-    return this.time;
-  },
-
   getType() {
     let result;
     switch (this.type) {
@@ -172,9 +165,10 @@ const Task = (name, type, date, time, notes, status) => ({
 export function createTask(inputName, inputType, inputDate, inputTime, inputNotes) {
   const name = inputName;
   const type = inputType || 'general';
+  const notes = (inputNotes === undefined) ? '' : inputNotes;
+
   let date;
   let time;
-  const notes = inputNotes || '';
   if (!inputDate && !inputTime) {
     date = addDays(new Date(), 1);
   } else if (!inputDate && inputTime) {
@@ -191,7 +185,7 @@ export function createTask(inputName, inputType, inputDate, inputTime, inputNote
     time = '12:00';
   }
 
-  const task = Task(name, type, date, time);
+  const task = Task(name, type, date, time, notes);
   Object.setPrototypeOf(task, proto);
   task.date.setHours(0, 0, 0);
   taskArray.push(task);
