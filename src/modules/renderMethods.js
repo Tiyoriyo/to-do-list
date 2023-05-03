@@ -22,7 +22,7 @@ export function setMode(string) { mode = string; }
 // main container that houses tasks
 const taskContainer = document.querySelector('.taskContainer');
 
-const addCheckbox = (array, i) => { // checkbox render
+const addTaskCheckbox = (array, i) => { // checkbox render
   // DOM Elements
   const mainDiv = document.createElement('div');
   const input = document.createElement('input');
@@ -82,7 +82,7 @@ const addTaskContent = (array, i) => { // Task Information Render
   return upperContent.outerHTML + lowerContent.outerHTML;
 };
 
-const addPriorityStar = (array, i) => { // Add priority star
+const addTaskPriorityStar = (array, i) => { // Priority Star Render
   // DOM Elements
   const image = new Image();
   image.src = array[i].priority ? starFill : starNoFill;
@@ -111,9 +111,9 @@ const renderTask = (array, i) => {
   priorityContainer.classList.add('priorityContainer', 'preventSelect');
   cancelContainer.classList.add('cancelContainer', 'preventSelect');
 
-  checkboxContainer.appendChild(addCheckbox(array, i));
+  checkboxContainer.appendChild(addTaskCheckbox(array, i));
   contentContainer.innerHTML = addTaskContent(array, i);
-  priorityContainer.appendChild(addPriorityStar(array, i));
+  priorityContainer.appendChild(addTaskPriorityStar(array, i));
   cancelContainer.innerHTML = '&#10005;';
 
   mainContainer.addEventListener('click', () => {
