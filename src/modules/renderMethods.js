@@ -9,18 +9,20 @@ import getTaskArray, {
   getTomorrowTasks, getTypeTasks, taskComplete, taskUncomplete, remakeOverdueTask,
 } from './taskMethods';
 
+// mode & array lists
 let mode = 'all';
 const taskArray = getTaskArray();
 const completeTaskArray = getCompleteTasks();
 const overdueArray = getOverdueArray();
 
-const taskContainer = document.querySelector('.taskContainer');
-
+// mode getter & setter
 export function getMode() { return mode; }
-
 export function setMode(string) { mode = string; }
 
-const addCheckbox = (array, i) => {
+// main container that houses tasks
+const taskContainer = document.querySelector('.taskContainer');
+
+const addCheckbox = (array, i) => { // checkbox render
   // DOM Elements
   const mainDiv = document.createElement('div');
   const input = document.createElement('input');
@@ -59,18 +61,19 @@ const addCheckbox = (array, i) => {
   return mainDiv;
 };
 
-const addItemContent = (array, i) => {
+const addTaskContent = (array, i) => { // Task Information Render
+  // DOM Elements
   const upperContent = document.createElement('div');
   const lowerContent = document.createElement('div');
   upperContent.classList.add('upperContent', 'whiteFont');
   lowerContent.classList.add('lowerContent', 'whiteFont');
 
+  // Insert Content
   upperContent.innerHTML = `${array[i].name}`;
   lowerContent.innerHTML = `${array[i].getType()} - ${array[i].getFormattedDate()} - ${array[i].getFormattedTime()}`;
-  if (array[i].notes) {
-    lowerContent.innerHTML += ' - Note';
-  }
+  if (array[i].notes) { lowerContent.innerHTML += ' - Note'; }
 
+  // If task is completed, add completed styling
   if (array === completeTaskArray) {
     upperContent.classList.add('completed');
     lowerContent.classList.add('completed');
@@ -113,7 +116,7 @@ const renderTask = (array, i) => {
   cancelContainer.classList.add('cancelContainer', 'preventSelect');
 
   checkboxContainer.appendChild(addCheckbox(array, i));
-  contentContainer.innerHTML = addItemContent(array, i);
+  contentContainer.innerHTML = addTaskContent(array, i);
   priorityContainer.appendChild(addPriorityImg(array, i));
   cancelContainer.innerHTML = '&#10005;';
 
