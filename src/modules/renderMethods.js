@@ -39,10 +39,10 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
     input.addEventListener('change', (e) => {
       if (e.target.checked) {
         taskComplete(array, i);
-        render(mode);
+        render();
       } else if (!e.target.checked) {
         taskUncomplete(i);
-        render(mode);
+        render();
       }
     });
   } else if (array === overdueArray) {
@@ -50,6 +50,13 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
       if (e.target.checked) {
         remakeOverdueTask(array[i]);
         array.splice(i, 1);
+        render(mode);
+      }
+    });
+  } else {
+    input.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        taskComplete(array, i);
         render(mode);
       }
     });
