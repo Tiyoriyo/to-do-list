@@ -169,11 +169,12 @@ const Task = (name, type, date, time, notes, status) => ({
   name, priority: false, type, date, time, notes, status,
 });
 
-export function createTask(inputName, inputType, inputDate, inputTime) {
+export function createTask(inputName, inputType, inputDate, inputTime, inputNotes) {
   const name = inputName;
   const type = inputType || 'General';
   let date;
   let time;
+  const notes = inputNotes || '';
   if (!inputDate && !inputTime) {
     date = addDays(new Date(), 1);
   } else if (!inputDate && inputTime) {
@@ -194,6 +195,18 @@ export function createTask(inputName, inputType, inputDate, inputTime) {
   Object.setPrototypeOf(task, proto);
   task.date.setHours(0, 0, 0);
   taskArray.push(task);
+}
+
+export function remakeOverdueTask(task) {
+  const { name } = task;
+  const { type } = task;
+  const { priority } = task;
+  const { notes } = task;
+
+  console.log(name, type, priority, notes);
+
+  const newTask = createTask(name, type, undefined, undefined, notes);
+  if (priority) { task.setProperty('priority'); }
 }
 
 export function taskComplete(array, index) {

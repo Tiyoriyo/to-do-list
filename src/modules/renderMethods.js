@@ -6,7 +6,7 @@ import starFill from '../images/starFill.png';
 import starNoFill from '../images/starNoFill.png';
 import getTaskArray, {
   getCompleteTasks, getLaterTasks, getOverdueArray, getTodayTasks,
-  getTomorrowTasks, getTypeTasks, taskComplete, taskUncomplete,
+  getTomorrowTasks, getTypeTasks, taskComplete, taskUncomplete, remakeOverdueTask,
 } from './taskMethods';
 
 let mode = 'all';
@@ -34,17 +34,26 @@ const addCheckbox = (array, i) => {
 
   if (array === completeTaskArray) {
     input.checked = true;
-  }
+  } else if (array === overdueArray) {
+    input.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        remakeOverdueTask(array[i]);
+        array.splice(i, 1);
 
-  input.addEventListener('change', (e) => {
-    if (e.target.checked) {
-      taskComplete(array, i);
-      setTimeout(() => { render(mode); }, 250);
-    } else if (!e.target.checked) {
-      taskUncomplete(i);
-      setTimeout(() => { render(mode); }, 250);
-    }
-  });
+        render(mode);
+      }
+    });
+  } else {
+    input.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        taskComplete(array, i);
+        setTimeout(() => { render(mode); }, 250);
+      } else if (!e.target.checked) {
+        taskUncomplete(i);
+        setTimeout(() => { render(mode); }, 250);
+      }
+    });
+  }
   mainDiv.addEventListener('click', (e) => { e.stopPropagation(); });
 
   return mainDiv;
@@ -305,7 +314,7 @@ const renderOverdue = () => {
     const title = document.createElement('h2');
     taskContainer.append(title);
     title.classList.add('taskContainerTitle');
-    title.textContent = 'Tasks Due';
+    title.textContent = 'Overdue Tasks';
     for (let i = 0; i < overdueArray.length; i += 1) {
       taskContainer.append(renderTask(overdueArray, i));
     }
