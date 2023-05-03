@@ -278,18 +278,6 @@ const compareDate = (a, b) => {
   return 0;
 };
 
-const getDueTasks = () => {
-  const today = new Date();
-  const dueTasks = taskArray.filter((task) => {
-    if (task.getDateTime() > today) {
-      return true;
-    }
-    return false;
-  });
-  const result = dueTasks.sort(compareDate);
-  return result;
-};
-
 export function getTypeTasks(string) {
   let result;
   switch (string) {
@@ -301,6 +289,15 @@ export function getTypeTasks(string) {
       break;
     case 'social':
       result = taskArray.filter((task) => task.type === 'social');
+      break;
+    case 'today':
+      result = getTodayTasks();
+      break;
+    case 'tomorrow':
+      result = getTomorrowTasks();
+      break;
+    case 'later':
+      result = getLaterTasks();
       break;
     default:
       result = taskArray;

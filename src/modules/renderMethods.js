@@ -5,8 +5,7 @@ import { format } from 'date-fns';
 import starFill from '../images/starFill.png';
 import starNoFill from '../images/starNoFill.png';
 import getTaskArray, {
-  getCompleteTasks, getLaterTasks, getOverdueArray, getTodayTasks,
-  getTomorrowTasks, getTypeTasks, taskComplete, taskUncomplete, remakeOverdueTask,
+  getCompleteTasks, getOverdueArray, getTypeTasks, taskComplete, taskUncomplete, remakeOverdueTask,
 } from './taskMethods';
 
 // mode & array lists
@@ -97,7 +96,8 @@ const addTaskPriorityStar = (array, i) => { // Priority Star Render
   return image;
 };
 
-const renderTask = (array, i) => {
+const renderTask = (array, i) => { // Task Item Render
+  // DOM Elements
   const mainContainer = document.createElement('div');
   const checkboxContainer = document.createElement('div');
   const contentContainer = document.createElement('div');
@@ -110,11 +110,13 @@ const renderTask = (array, i) => {
   cancelContainer.classList.add('cancelContainer', 'preventSelect');
   mainContainer.append(checkboxContainer, contentContainer, priorityContainer, cancelContainer);
 
+  // Add content to DOM elements
   checkboxContainer.appendChild(addTaskCheckbox(array, i));
   contentContainer.innerHTML = addTaskContent(array, i);
   priorityContainer.appendChild(addTaskPriorityStar(array, i));
   cancelContainer.innerHTML = '&#10005;';
 
+  // Task Properties Popup
   mainContainer.addEventListener('click', () => {
     popupS.window({
       mode: 'confirm',
@@ -181,6 +183,7 @@ const renderTask = (array, i) => {
     });
   });
 
+  // Remove Task Button
   cancelContainer.addEventListener('click', (e) => {
     e.stopPropagation();
     if (array === taskArray || array === completeTaskArray || array === overdueArray) {
@@ -194,172 +197,66 @@ const renderTask = (array, i) => {
   return mainContainer;
 };
 
-const renderAll = () => {
-  if (taskArray.length) {
-    const title = document.createElement('h2');
-    taskContainer.append(title);
-    title.classList.add('taskContainerTitle');
-    title.textContent = 'Tasks Due';
-    for (let i = 0; i < taskArray.length; i += 1) {
-      taskContainer.append(renderTask(taskArray, i));
-    }
-  } else {
-    const title = document.createElement('h2');
-    taskContainer.append(title);
-    title.classList.add('taskContainerTitle');
-    title.textContent = 'Tasks Due';
-    const subTitle = document.createElement('h2');
-    taskContainer.append(subTitle);
-    subTitle.classList.add('taskContainerSubTitle');
-    subTitle.textContent = 'None';
-  }
-
-  if (completeTaskArray.length) {
-    const title = document.createElement('h2');
-    taskContainer.append(title);
-    title.classList.add('taskContainerTitle');
-    title.textContent = 'Completed Tasks';
-    for (let i = 0; i < completeTaskArray.length; i += 1) {
-      taskContainer.append(renderTask(completeTaskArray, i));
-    }
-  }
-};
-
-const renderType = (string) => {
-  const array = getTypeTasks(string);
-
-  if (array.length) {
-    const title = document.createElement('h2');
-    taskContainer.append(title);
-    title.classList.add('taskContainerTitle');
-    title.textContent = 'Tasks Due';
-    for (let i = 0; i < array.length; i += 1) {
-      taskContainer.append(renderTask(array, i));
-    }
-  } else {
-    const title = document.createElement('h2');
-    taskContainer.append(title);
-    title.classList.add('taskContainerTitle');
-    title.textContent = 'Tasks Due';
-    const subTitle = document.createElement('h2');
-    taskContainer.append(subTitle);
-    subTitle.classList.add('taskContainerSubTitle');
-    subTitle.textContent = 'None';
-  }
-};
-
-const renderTime = (string) => {
+const renderArray = (string) => {
   let array;
+  let textContent;
+
+  if (string === 'all') {
+    array = taskArray;
+  } else if (string === 'completed') {
+    array = completeTaskArray;
+  } else if (string === 'overdue') {
+    array = overdueArray;
+  } else {
+    array = getTypeTasks(string);
+  }
 
   switch (string) {
-    case 'today':
-      array = getTodayTasks();
+    case 'completed':
+      textContent = 'Tasks Completed';
       break;
-    case 'tomorrow':
-      array = getTomorrowTasks();
-      break;
-    case 'later':
-      array = getLaterTasks();
+    case 'overdue':
+      textContent = 'Tasks Overdue';
       break;
     default:
+      textContent = 'Tasks Due';
       break;
   }
 
   if (array.length) {
     const title = document.createElement('h2');
-    taskContainer.append(title);
     title.classList.add('taskContainerTitle');
-    title.textContent = 'Tasks Due';
+    title.textContent = textContent;
+    taskContainer.append(title);
     for (let i = 0; i < array.length; i += 1) {
       taskContainer.append(renderTask(array, i));
     }
   } else {
     const title = document.createElement('h2');
-    taskContainer.append(title);
-    title.classList.add('taskContainerTitle');
-    title.textContent = 'Tasks Due';
     const subTitle = document.createElement('h2');
-    taskContainer.append(subTitle);
+    title.classList.add('taskContainerTitle');
+    title.textContent = textContent;
     subTitle.classList.add('taskContainerSubTitle');
     subTitle.textContent = 'None';
+    taskContainer.append(title, subTitle);
   }
-};
 
-const renderCompleted = () => {
-  if (completeTaskArray.length) {
-    const title = document.createElement('h2');
-    taskContainer.append(title);
-    title.classList.add('taskContainerTitle');
-    title.textContent = 'Tasks Completed';
-    for (let i = 0; i < completeTaskArray.length; i += 1) {
-      taskContainer.append(renderTask(completeTaskArray, i));
+  if (array === taskArray) {
+    if (completeTaskArray.length) {
+      const title = document.createElement('h2');
+      taskContainer.append(title);
+      title.classList.add('taskContainerTitle');
+      title.textContent = 'Completed Tasks';
+      for (let i = 0; i < completeTaskArray.length; i += 1) {
+        taskContainer.append(renderTask(completeTaskArray, i));
+      }
     }
-  } else {
-    const title = document.createElement('h2');
-    taskContainer.append(title);
-    title.classList.add('taskContainerTitle');
-    title.textContent = 'Tasks Due';
-    const subTitle = document.createElement('h2');
-    taskContainer.append(subTitle);
-    subTitle.classList.add('taskContainerSubTitle');
-    subTitle.textContent = 'None';
-  }
-};
-
-const renderOverdue = () => {
-  if (overdueArray.length) {
-    const title = document.createElement('h2');
-    taskContainer.append(title);
-    title.classList.add('taskContainerTitle');
-    title.textContent = 'Overdue Tasks';
-    for (let i = 0; i < overdueArray.length; i += 1) {
-      taskContainer.append(renderTask(overdueArray, i));
-    }
-  } else {
-    const title = document.createElement('h2');
-    taskContainer.append(title);
-    title.classList.add('taskContainerTitle');
-    title.textContent = 'Tasks Due';
-    const subTitle = document.createElement('h2');
-    taskContainer.append(subTitle);
-    subTitle.classList.add('taskContainerSubTitle');
-    subTitle.textContent = 'None';
   }
 };
 
 export default function render() {
   taskContainer.innerHTML = '';
-  switch (mode) {
-    case 'all':
-      renderAll();
-      break;
-    case 'personal':
-      renderType('personal');
-      break;
-    case 'work':
-      renderType('work');
-      break;
-    case 'social':
-      renderType('social');
-      break;
-    case 'today':
-      renderTime('today');
-      break;
-    case 'tomorrow':
-      renderTime('tomorrow');
-      break;
-    case 'later':
-      renderTime('later');
-      break;
-    case 'completed':
-      renderCompleted();
-      break;
-    case 'overdue':
-      renderOverdue();
-      break;
-    default:
-      break;
-  }
+  renderArray(mode);
 }
 
 const updateItems = () => {
@@ -367,7 +264,7 @@ const updateItems = () => {
     if (taskArray[i].getDateTime() <= new Date()) {
       overdueArray.push(taskArray[i]);
       taskArray.splice(i, 1);
-      render(mode);
+      render();
     }
   }
 };
