@@ -82,23 +82,19 @@ const addTaskContent = (array, i) => { // Task Information Render
   return upperContent.outerHTML + lowerContent.outerHTML;
 };
 
-const addPriorityImg = (array, i) => {
-  const star = new Image();
-  star.src = array[i].priority ? starFill : starNoFill;
-  star.classList.add('star');
+const addPriorityStar = (array, i) => { // Add priority star
+  // DOM Elements
+  const image = new Image();
+  image.src = array[i].priority ? starFill : starNoFill;
+  image.classList.add('star');
 
-  star.addEventListener('click', (e) => {
+  image.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (!array[i].priority) {
-      array[i].setProperty('priority');
-      star.src = starFill;
-    } else if (array[i].priority) {
-      array[i].setProperty('priority');
-      e.target.src = starNoFill;
-    }
+    array[i].setProperty('priority');
+    e.target.src = (array[i].priority) ? starFill : starNoFill;
   });
 
-  return star;
+  return image;
 };
 
 const renderTask = (array, i) => {
@@ -117,7 +113,7 @@ const renderTask = (array, i) => {
 
   checkboxContainer.appendChild(addCheckbox(array, i));
   contentContainer.innerHTML = addTaskContent(array, i);
-  priorityContainer.appendChild(addPriorityImg(array, i));
+  priorityContainer.appendChild(addPriorityStar(array, i));
   cancelContainer.innerHTML = '&#10005;';
 
   mainContainer.addEventListener('click', () => {
