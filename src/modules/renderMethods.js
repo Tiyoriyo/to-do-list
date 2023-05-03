@@ -21,26 +21,27 @@ export function getMode() { return mode; }
 export function setMode(string) { mode = string; }
 
 const addCheckbox = (array, i) => {
+  // DOM Elements
   const mainDiv = document.createElement('div');
   const input = document.createElement('input');
   const subDiv = document.createElement('div');
   const label = document.createElement('label');
-  mainDiv.append(input, subDiv);
-  subDiv.append(label);
-
   mainDiv.className = 'pretty p-default p-curve p-bigger';
   input.type = 'checkbox';
   subDiv.classList.add('state');
+  mainDiv.append(input, subDiv);
+  subDiv.append(label);
 
-  if (array === completeTaskArray) {
-    input.checked = true;
+  // EventListenerSetup
+  if (array === taskArray || array === completeTaskArray) {
+    if (array === completeTaskArray) { input.checked = true; }
     input.addEventListener('change', (e) => {
       if (e.target.checked) {
         taskComplete(array, i);
-        setTimeout(() => { render(mode); }, 250);
+        render(mode);
       } else if (!e.target.checked) {
         taskUncomplete(i);
-        setTimeout(() => { render(mode); }, 250);
+        render(mode);
       }
     });
   } else if (array === overdueArray) {
@@ -51,19 +52,10 @@ const addCheckbox = (array, i) => {
         render(mode);
       }
     });
-  } else {
-    input.addEventListener('change', (e) => {
-      if (e.target.checked) {
-        taskComplete(array, i);
-        setTimeout(() => { render(mode); }, 250);
-      } else if (!e.target.checked) {
-        taskUncomplete(i);
-        setTimeout(() => { render(mode); }, 250);
-      }
-    });
   }
-  mainDiv.addEventListener('click', (e) => { e.stopPropagation(); });
 
+  // Stop checkbox opening property edit popup
+  mainDiv.addEventListener('click', (e) => { e.stopPropagation(); });
   return mainDiv;
 };
 
