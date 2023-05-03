@@ -197,10 +197,11 @@ const renderTask = (array, i) => { // Task Item Render
   return mainContainer;
 };
 
-const renderArray = (string) => {
+const renderArray = (string) => { // Render Array Type
   let array;
   let textContent;
 
+  // Get Array Based on Input String
   if (string === 'all') {
     array = taskArray;
   } else if (string === 'completed') {
@@ -211,6 +212,7 @@ const renderArray = (string) => {
     array = getTypeTasks(string);
   }
 
+  // Set Text Content based on Input String Type
   switch (string) {
     case 'completed':
       textContent = 'Tasks Completed';
@@ -223,6 +225,7 @@ const renderArray = (string) => {
       break;
   }
 
+  // Add Task Container Contents
   if (array.length) {
     const title = document.createElement('h2');
     title.classList.add('taskContainerTitle');
@@ -241,7 +244,8 @@ const renderArray = (string) => {
     taskContainer.append(title, subTitle);
   }
 
-  if (array === taskArray) {
+  // If All Filter Render Completed Task Array Underneath
+  if (string === 'all') {
     if (completeTaskArray.length) {
       const title = document.createElement('h2');
       taskContainer.append(title);
