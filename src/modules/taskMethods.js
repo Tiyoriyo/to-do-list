@@ -171,7 +171,7 @@ const Task = (name, type, date, time, notes, status) => ({
 
 export function createTask(inputName, inputType, inputDate, inputTime, inputNotes) {
   const name = inputName;
-  const type = inputType || 'General';
+  const type = inputType || 'general';
   let date;
   let time;
   const notes = inputNotes || '';
@@ -314,3 +314,10 @@ export function getTypeTasks(string) {
   }
   return result;
 }
+
+function debug() {
+  console.log(taskArray);
+  console.log(completeTaskArray);
+}
+
+window.debug = debug;
