@@ -22,7 +22,7 @@ export function setMode(string) { mode = string; }
 // main container that houses tasks
 const taskContainer = document.querySelector('.taskContainer');
 
-const addTaskCheckbox = (array, i) => { // checkbox render
+const addTaskCheckbox = (array, i) => { // Checkbox render
   // DOM Elements
   const mainDiv = document.createElement('div');
   const input = document.createElement('input');
@@ -103,13 +103,12 @@ const renderTask = (array, i) => {
   const contentContainer = document.createElement('div');
   const priorityContainer = document.createElement('div');
   const cancelContainer = document.createElement('div');
-  mainContainer.append(checkboxContainer, contentContainer, priorityContainer, cancelContainer);
-
   mainContainer.classList.add('itemContainer');
   checkboxContainer.classList.add('checkboxContainer');
   contentContainer.classList.add('contentContainer');
   priorityContainer.classList.add('priorityContainer', 'preventSelect');
   cancelContainer.classList.add('cancelContainer', 'preventSelect');
+  mainContainer.append(checkboxContainer, contentContainer, priorityContainer, cancelContainer);
 
   checkboxContainer.appendChild(addTaskCheckbox(array, i));
   contentContainer.innerHTML = addTaskContent(array, i);
@@ -128,7 +127,7 @@ const renderTask = (array, i) => {
           <div class="popupInputfield">
             <label class="popupLabel">Type</label>
             <select class="popupSelect">
-              <option value='general'>None</option>
+              <option value='general'>General</option>
               <option value='personal'>Personal</option>
               <option value='work'>Work</option>
               <option value='social'>Social</option>
@@ -160,10 +159,10 @@ const renderTask = (array, i) => {
         const notes = document.querySelector('.popupTextArea');
 
         name.value = array[i].name;
-        type.value = array[i].getType().toLowerCase();
-        date.value = format(array[i].getDateTime(), 'yyyy-MM-dd');
-        time.value = array[i].getTime();
-        notes.value = (array[i].notes) ? array[i].notes : '';
+        type.value = array[i].type;
+        date.value = format(array[i].getDateTime(), 'yyyy-MM-dd'); // Set Compatible Date Value
+        time.value = array[i].time;
+        notes.value = array[i].notes;
       },
       onSubmit: () => {
         const name = document.querySelector('.popupName');
@@ -184,13 +183,12 @@ const renderTask = (array, i) => {
 
   cancelContainer.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (array === completeTaskArray || array === overdueArray) {
+    if (array === taskArray || array === completeTaskArray || array === overdueArray) {
       array.splice(i, 1);
     } else {
       taskArray.splice(array[i].getIndex(), 1);
     }
-
-    render(mode);
+    render();
   });
 
   return mainContainer;
