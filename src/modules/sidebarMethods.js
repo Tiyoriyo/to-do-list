@@ -1,3 +1,4 @@
+import clickAudio from '../sound/click.mp3';
 import render, { setMode } from './renderMethods';
 
 export default function removeSelectedClass() {
@@ -8,6 +9,8 @@ export default function removeSelectedClass() {
 }
 
 export function selectFilter(e, string) {
+  const audio = new Audio(clickAudio);
+  audio.play();
   removeSelectedClass();
   e.target.classList.add('selected');
   setMode(string);

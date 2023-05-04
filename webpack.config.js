@@ -28,6 +28,10 @@ module.exports = {
         test: /\.png$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.mp3$/i,
+        type: 'asset/resource',
+      },
     ],
   },
 };
