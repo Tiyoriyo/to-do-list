@@ -52,11 +52,11 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
       if (e.target.checked) {
         remakeOverdueTask(array[i]);
         array.splice(i, 1);
-        render(mode);
+        render();
       }
     });
   } else {
-    input.addEventListener('change', (e) => { // Event Listener Time & Type
+    input.addEventListener('change', (e) => { // Event Listener Time & Type Filters
       if (e.target.checked) {
         taskComplete(array, i);
         render();
@@ -213,6 +213,8 @@ const renderTask = (array, i) => { // Task Item Render
   return mainContainer;
 };
 
+let completeShow = false;
+
 const renderArray = (string) => { // Render Array Type
   let array;
   let textContent;
@@ -257,6 +259,7 @@ const renderArray = (string) => { // Render Array Type
 
   // If All Filter Render Completed Task Array Underneath
   if (string === 'all') {
+    console.log('test');
     if (completeTaskArray.length) {
       const headerDiv = document.createElement('div');
       const completeTitle = document.createElement('h2');
@@ -269,13 +272,22 @@ const renderArray = (string) => { // Render Array Type
       headerDiv.append(completeTitle, showButton);
       taskContainer.append(headerDiv);
 
+      if (completeShow) {
+        showButton.textContent = 'Hide';
+        for (let i = 0; i < completeTaskArray.length; i += 1) {
+          taskContainer.append(renderTask(completeTaskArray, i));
+        }
+      }
+
       showButton.addEventListener('click', () => {
         if (showButton.textContent === 'Show') {
+          completeShow = !completeShow;
           showButton.textContent = 'Hide';
           for (let i = 0; i < completeTaskArray.length; i += 1) {
             taskContainer.append(renderTask(completeTaskArray, i));
           }
         } else {
+          completeShow = !completeShow;
           showButton.textContent = 'Show';
           for (let i = 0; i < completeTaskArray.length; i += 1) {
             const { length } = taskContainer.children;
