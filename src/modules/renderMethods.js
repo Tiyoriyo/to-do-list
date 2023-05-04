@@ -20,6 +20,7 @@ export function setMode(string) { mode = string; }
 
 // main container that houses tasks
 const taskContainer = document.querySelector('.taskContainer');
+const title = document.querySelector('.contentTitle');
 
 const addTaskCheckbox = (array, i) => { // Checkbox render
   // DOM Elements
@@ -36,6 +37,7 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
   // EventListenerSetup
   if (array === taskArray || array === completeTaskArray) { // Event Listener All & Completed
     if (array === completeTaskArray) { input.checked = true; }
+
     input.addEventListener('change', (e) => {
       if (e.target.checked) {
         taskComplete(array, i);
@@ -57,7 +59,7 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
     input.addEventListener('change', (e) => { // Event Listener Time & Type
       if (e.target.checked) {
         taskComplete(array, i);
-        render(mode);
+        render();
       }
     });
   }
@@ -80,10 +82,10 @@ const addTaskContent = (array, i) => { // Task Information Render
   if (array[i].notes) { lowerContent.innerHTML += ' - Note'; }
 
   // If task is completed, add completed styling
-  if (array === completeTaskArray) {
-    upperContent.classList.add('completed');
-    lowerContent.classList.add('completed');
-  }
+  // if (array === completeTaskArray) {
+  //   upperContent.classList.add('completed');
+  //   lowerContent.classList.add('completed');
+  // }
 
   return upperContent.outerHTML + lowerContent.outerHTML;
 };
@@ -117,6 +119,9 @@ const renderTask = (array, i) => { // Task Item Render
   contentContainer.classList.add('contentContainer');
   priorityContainer.classList.add('priorityContainer', 'preventSelect');
   cancelContainer.classList.add('cancelContainer', 'preventSelect');
+
+  if (array === completeTaskArray) { mainContainer.classList.add('completed'); }
+
   mainContainer.append(checkboxContainer, contentContainer, priorityContainer, cancelContainer);
 
   // Add content to DOM elements
@@ -238,29 +243,21 @@ const renderArray = (string) => { // Render Array Type
 
   // Add Task Container Contents
   if (array.length) {
-    const title = document.createElement('h2');
-    title.classList.add('taskContainerTitle');
     title.textContent = textContent;
-    taskContainer.append(title);
     for (let i = 0; i < array.length; i += 1) {
       taskContainer.append(renderTask(array, i));
     }
   } else {
-    const title = document.createElement('h2');
     const subTitle = document.createElement('h2');
-    title.classList.add('taskContainerTitle');
     title.textContent = textContent;
     subTitle.classList.add('taskContainerSubTitle');
     subTitle.textContent = 'None';
-    taskContainer.append(title, subTitle);
+    taskContainer.append(subTitle);
   }
 
   // If All Filter Render Completed Task Array Underneath
   if (string === 'all') {
     if (completeTaskArray.length) {
-      const title = document.createElement('h2');
-      taskContainer.append(title);
-      title.classList.add('taskContainerTitle');
       title.textContent = 'Completed Tasks';
       for (let i = 0; i < completeTaskArray.length; i += 1) {
         taskContainer.append(renderTask(completeTaskArray, i));
