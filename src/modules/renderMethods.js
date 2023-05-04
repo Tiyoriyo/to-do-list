@@ -235,6 +235,13 @@ const renderArray = (string) => { // Render Array Type
     array = getTypeTasks(string);
   }
 
+  function capitalizeFirstLetter(inputString) {
+    const firstLetterUpperCase = inputString[0].toUpperCase();
+    const restOfWord = inputString.substr(1);
+    const result = firstLetterUpperCase + restOfWord;
+    return result;
+  }
+
   // Set Text Content based on Input String Type
   switch (string) {
     case 'completed':
@@ -244,7 +251,7 @@ const renderArray = (string) => { // Render Array Type
       textContent = 'Tasks Overdue';
       break;
     default:
-      textContent = 'Tasks Due';
+      textContent = `Tasks Due - ${capitalizeFirstLetter(string)}`;
       break;
   }
 
