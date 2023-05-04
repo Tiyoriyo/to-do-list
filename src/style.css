@@ -12,9 +12,17 @@
 body {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #fefdf9;
+}
+
+.sig {
+    font-family: monospace;
+    margin-top: 5px;
+    font-style: italic;
+    font-size: 12px;
 }
 
 /* Universal Styles */
