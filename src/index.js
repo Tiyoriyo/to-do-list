@@ -1,4 +1,6 @@
 import './style.css';
+import './popupS.css';
+import './pretty-checkbox.min.css';
 import logo from './images/logo.png';
 import typeImg from './images/edit.png';
 import dateImg from './images/date.png';
