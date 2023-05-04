@@ -258,7 +258,10 @@ const renderArray = (string) => { // Render Array Type
   // If All Filter Render Completed Task Array Underneath
   if (string === 'all') {
     if (completeTaskArray.length) {
-      title.textContent = 'Completed Tasks';
+      const completeTitle = document.createElement('h2');
+      completeTitle.classList.add('taskContainerTitle');
+      completeTitle.textContent = 'Completed Tasks';
+      taskContainer.append(completeTitle);
       for (let i = 0; i < completeTaskArray.length; i += 1) {
         taskContainer.append(renderTask(completeTaskArray, i));
       }
