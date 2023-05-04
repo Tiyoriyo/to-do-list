@@ -3,12 +3,11 @@ import popupS from 'popups';
 import format from 'date-fns/format';
 import { createTask } from './taskMethods';
 import removeSelectedClass from './sidebarMethods';
-import render, { getMode } from './renderMethods';
+import render, { setMode } from './renderMethods';
 
 const inputTextField = document.querySelector('.inputText');
 const allBtn = document.querySelector('#allLi');
 
-let mode = getMode();
 let type;
 let date;
 let time;
@@ -45,8 +44,8 @@ export function insertNewTask() {
   resetInputs();
   removeSelectedClass();
   allBtn.classList.add('selected');
-  mode = 'all';
-  render(mode);
+  setMode('all');
+  render();
 }
 
 // Object Container for Popup Modules
