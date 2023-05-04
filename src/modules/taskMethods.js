@@ -24,7 +24,7 @@ const proto = {
         this.priority = !this.priority;
         break;
       case 'type':
-        if (input === 'personal' || input === 'work' || input === 'social') { this.type = input; }
+        if (input === 'personal' || input === 'work' || input === 'social' || input === 'general') { this.type = input; }
         break;
       case 'date':
         this.date = input;
