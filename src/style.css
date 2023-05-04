@@ -36,7 +36,6 @@ body {
 .completed {
     text-decoration: line-through;
     color: #bcb6ab;
-    background-color: #7f7b73!important;
 }
 
 .mainContainer {

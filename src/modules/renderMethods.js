@@ -41,10 +41,14 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
     input.addEventListener('change', (e) => {
       if (e.target.checked) {
         taskComplete(array, i);
-        render();
+        setTimeout(() => {
+          render();
+        }, 150);
       } else if (!e.target.checked) {
         taskUncomplete(i);
-        render();
+        setTimeout(() => {
+          render();
+        }, 150);
       }
     });
   } else if (array === overdueArray) { // Event Listener Overdue
@@ -52,14 +56,18 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
       if (e.target.checked) {
         remakeOverdueTask(array[i]);
         array.splice(i, 1);
-        render();
+        setTimeout(() => {
+          render();
+        }, 150);
       }
     });
   } else {
     input.addEventListener('change', (e) => { // Event Listener Time & Type Filters
       if (e.target.checked) {
         taskComplete(array, i);
-        render();
+        setTimeout(() => {
+          render();
+        }, 150);
       }
     });
   }
@@ -82,10 +90,10 @@ const addTaskContent = (array, i) => { // Task Information Render
   if (array[i].notes) { lowerContent.innerHTML += ' - Note'; }
 
   // If task is completed, add completed styling
-  // if (array === completeTaskArray) {
-  //   upperContent.classList.add('completed');
-  //   lowerContent.classList.add('completed');
-  // }
+  if (array === completeTaskArray) {
+    upperContent.classList.add('completed');
+    lowerContent.classList.add('completed');
+  }
 
   return upperContent.outerHTML + lowerContent.outerHTML;
 };
@@ -119,9 +127,6 @@ const renderTask = (array, i) => { // Task Item Render
   contentContainer.classList.add('contentContainer');
   priorityContainer.classList.add('priorityContainer', 'preventSelect');
   cancelContainer.classList.add('cancelContainer', 'preventSelect');
-
-  if (array === completeTaskArray) { mainContainer.classList.add('completed'); }
-
   mainContainer.append(checkboxContainer, contentContainer, priorityContainer, cancelContainer);
 
   // Add content to DOM elements
