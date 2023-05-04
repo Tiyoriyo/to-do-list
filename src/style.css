@@ -110,6 +110,8 @@ body {
     color: #53504a;
     margin-top: 30px;
     align-self: flex-start;
+    width: 100%;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.3);
 }
 
 .taskContainer {
@@ -121,6 +123,7 @@ body {
     overflow-y: scroll;
     padding-bottom: 15px;
     padding-right: 10px;
+    margin-top: 10px;
 }
 
 .taskContainerTitle {
