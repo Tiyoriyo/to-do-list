@@ -96,7 +96,7 @@ const addTaskPriorityStar = (array, i) => { // Priority Star Render
   image.src = array[i].priority ? starFill : starNoFill;
   image.classList.add('star');
 
-  if (array !== overdueArray) {
+  if (array !== overdueArray && array !== completeTaskArray) {
     image.addEventListener('click', (e) => {
       e.stopPropagation();
       array[i].setProperty('priority');
@@ -131,7 +131,7 @@ const renderTask = (array, i) => { // Task Item Render
   cancelContainer.innerHTML = '&#10005;';
 
   // Task Properties Popup
-  if (array !== overdueArray) {
+  if (array !== overdueArray && array !== completeTaskArray) {
     mainContainer.addEventListener('click', () => {
       popupS.window({
         mode: 'confirm',
@@ -259,7 +259,6 @@ const renderArray = (string) => { // Render Array Type
 
   // If All Filter Render Completed Task Array Underneath
   if (string === 'all') {
-    console.log('test');
     if (completeTaskArray.length) {
       const headerDiv = document.createElement('div');
       const completeTitle = document.createElement('h2');
@@ -272,6 +271,7 @@ const renderArray = (string) => { // Render Array Type
       headerDiv.append(completeTitle, showButton);
       taskContainer.append(headerDiv);
 
+      // If completeShow is true during render, show complete items;
       if (completeShow) {
         showButton.textContent = 'Hide';
         for (let i = 0; i < completeTaskArray.length; i += 1) {
@@ -279,6 +279,7 @@ const renderArray = (string) => { // Render Array Type
         }
       }
 
+      // Show / Hide Completed Items click event
       showButton.addEventListener('click', () => {
         if (showButton.textContent === 'Show') {
           completeShow = !completeShow;
