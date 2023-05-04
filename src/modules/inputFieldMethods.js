@@ -21,9 +21,27 @@ export function resetInputs() {
   time = undefined;
 }
 
+function checkInvalidInput(string) {
+  const trimmedString = string.trim();
+  const check = /^[a-zA-Z0-9 ."'!#$%&]*$/.test(string);
+
+  if (!trimmedString || !check) {
+    return false;
+  }
+  return true;
+}
+
 // Task Creating Dom Update Function
 export function insertNewTask() {
-  createTask(inputTextField.value, type, date, time);
+  const inputName = String(inputTextField.value);
+  const check = checkInvalidInput(inputName);
+
+  if (!check) {
+    alert('Check if there are non letters/numbers, or if the textfield is empty');
+    return;
+  }
+
+  createTask(inputName, type, date, time);
   resetInputs();
   removeSelectedClass();
   allBtn.classList.add('selected');
