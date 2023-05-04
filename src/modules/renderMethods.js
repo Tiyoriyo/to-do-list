@@ -2,6 +2,8 @@
 /* eslint-disable no-use-before-define */
 import popupS from 'popups';
 import { format } from 'date-fns';
+import bellAudio from '../sound/bell.mp3';
+import scribbleAudio from '../sound/scribble.mp3';
 import starFill from '../images/starFill.png';
 import starNoFill from '../images/starNoFill.png';
 import getTaskArray, {
@@ -35,16 +37,19 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
   subDiv.append(label);
 
   // EventListenerSetup
+  const bell = new Audio(bellAudio);
+  const scribble = new Audio(scribbleAudio);
   if (array === taskArray || array === completeTaskArray) { // Event Listener All & Completed
     if (array === completeTaskArray) { input.checked = true; }
-
     input.addEventListener('change', (e) => {
       if (e.target.checked) {
+        bell.play();
         taskComplete(array, i);
         setTimeout(() => {
           render();
         }, 150);
       } else if (!e.target.checked) {
+        scribble.play();
         taskUncomplete(i);
         setTimeout(() => {
           render();
@@ -54,6 +59,7 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
   } else if (array === overdueArray) { // Event Listener Overdue
     input.addEventListener('change', (e) => {
       if (e.target.checked) {
+        scribble.play();
         remakeOverdueTask(array[i]);
         array.splice(i, 1);
         setTimeout(() => {
@@ -64,6 +70,7 @@ const addTaskCheckbox = (array, i) => { // Checkbox render
   } else {
     input.addEventListener('change', (e) => { // Event Listener Time & Type Filters
       if (e.target.checked) {
+        bell.play();
         taskComplete(array, i);
         setTimeout(() => {
           render();

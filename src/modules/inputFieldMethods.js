@@ -4,6 +4,7 @@ import format from 'date-fns/format';
 import { createTask } from './taskMethods';
 import removeSelectedClass from './sidebarMethods';
 import render, { setMode } from './renderMethods';
+import scribbleAudio from '../sound/scribble.mp3';
 
 const inputTextField = document.querySelector('.inputText');
 const allBtn = document.querySelector('#allLi');
@@ -39,6 +40,9 @@ export function insertNewTask() {
     alert('Check if there are non letters/numbers, or if the textfield is empty');
     return;
   }
+
+  const scribble = new Audio(scribbleAudio);
+  scribble.play();
 
   createTask(inputName, type, date, time);
   resetInputs();
