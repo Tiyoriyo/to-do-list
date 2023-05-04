@@ -258,13 +258,31 @@ const renderArray = (string) => { // Render Array Type
   // If All Filter Render Completed Task Array Underneath
   if (string === 'all') {
     if (completeTaskArray.length) {
+      const headerDiv = document.createElement('div');
       const completeTitle = document.createElement('h2');
-      completeTitle.classList.add('taskContainerTitle');
+      const showButton = document.createElement('button');
+      headerDiv.classList.add('completeHeader');
+      completeTitle.classList.add('completeTaskContainerTitle');
+      showButton.classList.add('completeShowBtn', 'show');
       completeTitle.textContent = 'Completed Tasks';
-      taskContainer.append(completeTitle);
-      for (let i = 0; i < completeTaskArray.length; i += 1) {
-        taskContainer.append(renderTask(completeTaskArray, i));
-      }
+      showButton.textContent = 'Show';
+      headerDiv.append(completeTitle, showButton);
+      taskContainer.append(headerDiv);
+
+      showButton.addEventListener('click', () => {
+        if (showButton.textContent === 'Show') {
+          showButton.textContent = 'Hide';
+          for (let i = 0; i < completeTaskArray.length; i += 1) {
+            taskContainer.append(renderTask(completeTaskArray, i));
+          }
+        } else {
+          showButton.textContent = 'Show';
+          for (let i = 0; i < completeTaskArray.length; i += 1) {
+            const { length } = taskContainer.children;
+            taskContainer.children[length - 1].remove();
+          }
+        }
+      });
     }
   }
 };
